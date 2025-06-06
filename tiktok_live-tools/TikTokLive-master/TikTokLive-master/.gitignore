@@ -1,0 +1,13 @@
+.idea
+dist
+venv
+TikTokLive.egg-info
+.pypirc
+dev
+test.py
+.env
+build
+badges.py
+proto-testing
+all-proto
+headers.py

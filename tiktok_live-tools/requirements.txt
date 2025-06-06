@@ -1,0 +1,4 @@
+TikTokLive==5.0.0
+flask==2.0.1
+pyee==8.2.2
+requests==2.26.0 
