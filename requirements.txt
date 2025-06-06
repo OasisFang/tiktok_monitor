@@ -1,4 +1,7 @@
-TikTokLive==5.0.0
+git+https://github.com/isaackogan/TikTokLive.git
 flask==2.0.1
-pyee==8.2.2
-requests==2.26.0 
+flask-socketio==5.3.6
+pyee==9.0.4
+requests==2.26.0
+dacite>=1.6.0
+werkzeug==2.0.1 

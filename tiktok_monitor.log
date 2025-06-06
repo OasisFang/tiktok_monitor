@@ -1,0 +1,366 @@
+2025-06-07 01:42:15,942 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/api-live/user/room/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-BZ&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=4&is_fullscreen=false&is_page_visible=true&screen_height=2880&screen_width=5120&tz_name=America/Belize&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=BZ&region=BZ&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@example_user/live&root_referer=https://www.tiktok.com/@example_user/live&device_id=28024401882045139633&uniqueId=example_user&sourceType=54 "HTTP/1.1 200 OK"
+2025-06-07 01:42:15,943 - __main__ - ERROR - 检查直播状态失败: TikTokLive v6.5.3 -> The requested user 'example_user' is not capable of going LIVE on TikTok, or has never gone live on TikTok, or does not exist.
+2025-06-07 01:42:15,943 - __main__ - INFO - @example_user 当前未在直播
+2025-06-07 01:42:41,538 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/api-live/user/room/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-ZA&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=11&is_fullscreen=false&is_page_visible=true&screen_height=1440&screen_width=2560&tz_name=Africa/Johannesburg&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=ZA&region=ZA&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@example_user/live&root_referer=https://www.tiktok.com/@example_user/live&device_id=29013713488601034184&uniqueId=example_user&sourceType=54 "HTTP/1.1 200 OK"
+2025-06-07 01:42:41,538 - __main__ - ERROR - 检查直播状态失败: TikTokLive v6.5.3 -> The requested user 'example_user' is not capable of going LIVE on TikTok, or has never gone live on TikTok, or does not exist.
+2025-06-07 01:42:41,538 - __main__ - INFO - @example_user 当前未在直播
+2025-06-07 01:44:25,895 - werkzeug - INFO -  * Restarting with stat
+2025-06-07 01:44:26,847 - werkzeug - WARNING -  * Debugger is active!
+2025-06-07 01:44:26,853 - werkzeug - INFO -  * Debugger PIN: 137-971-508
+2025-06-07 01:44:27,007 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-07 01:44:27,007 - werkzeug - INFO -  * Running on http://192.168.0.50:5000/ (Press CTRL+C to quit)
+2025-06-07 01:44:44,231 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:44:44] "GET / HTTP/1.1" 200 -
+2025-06-07 01:44:44,475 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:44:44] "[33mGET /list_monitors HTTP/1.1[0m" 404 -
+2025-06-07 01:44:44,549 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:44:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-07 01:44:54,487 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:44:54] "[33mGET /update_chart_data HTTP/1.1[0m" 404 -
+2025-06-07 01:44:58,558 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:44:58] "[33mPOST /start_monitor HTTP/1.1[0m" 404 -
+2025-06-07 01:45:04,979 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:45:04] "[33mGET /update_chart_data HTTP/1.1[0m" 404 -
+2025-06-07 01:45:14,981 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:45:14] "[33mGET /update_chart_data HTTP/1.1[0m" 404 -
+2025-06-07 01:45:16,577 - werkzeug - INFO -  * Detected change in 'c:\\Users\\zilai\\Desktop\\monitor\\main.py', reloading
+2025-06-07 01:45:16,668 - werkzeug - INFO -  * Restarting with stat
+2025-06-07 01:45:17,558 - werkzeug - WARNING -  * Debugger is active!
+2025-06-07 01:45:17,562 - werkzeug - INFO -  * Debugger PIN: 137-971-508
+2025-06-07 01:45:17,688 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-07 01:45:17,688 - werkzeug - INFO -  * Running on http://192.168.0.50:5000/ (Press CTRL+C to quit)
+2025-06-07 01:45:25,696 - werkzeug - INFO -  * Restarting with stat
+2025-06-07 01:45:26,601 - werkzeug - WARNING -  * Debugger is active!
+2025-06-07 01:45:26,608 - werkzeug - INFO -  * Debugger PIN: 137-971-508
+2025-06-07 01:45:26,737 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-07 01:45:26,737 - werkzeug - INFO -  * Running on http://192.168.0.50:5000/ (Press CTRL+C to quit)
+2025-06-07 01:45:26,750 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:45:26] "[33mGET /update_chart_data HTTP/1.1[0m" 404 -
+2025-06-07 01:45:31,534 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:45:31] "GET / HTTP/1.1" 200 -
+2025-06-07 01:45:31,601 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:45:31] "[33mGET /list_monitors HTTP/1.1[0m" 404 -
+2025-06-07 01:45:41,602 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:45:41] "[33mGET /update_chart_data HTTP/1.1[0m" 404 -
+2025-06-07 01:45:44,322 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:45:44] "[33mPOST /start_monitor HTTP/1.1[0m" 404 -
+2025-06-07 01:45:51,998 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:45:51] "[33mGET /update_chart_data HTTP/1.1[0m" 404 -
+2025-06-07 01:46:16,224 - werkzeug - INFO -  * Restarting with stat
+2025-06-07 01:46:17,187 - werkzeug - WARNING -  * Debugger is active!
+2025-06-07 01:46:17,187 - werkzeug - INFO -  * Debugger PIN: 137-971-508
+2025-06-07 01:46:17,320 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-07 01:46:17,320 - werkzeug - INFO -  * Running on http://192.168.0.50:5000/ (Press CTRL+C to quit)
+2025-06-07 01:46:21,981 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:46:21] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 01:46:31,154 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:46:31] "GET / HTTP/1.1" 200 -
+2025-06-07 01:46:31,196 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:46:31] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-07 01:46:31,201 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:46:31] "[33mGET /get_stream_data?unique_id=monitors HTTP/1.1[0m" 404 -
+2025-06-07 01:46:31,981 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:46:31] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 01:46:39,608 - __main__ - INFO - 初始化 TikTok 监控器: @starlightcrystal8
+2025-06-07 01:46:39,608 - __main__ - INFO - 开始监控 @starlightcrystal8 的直播...
+2025-06-07 01:46:40,293 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@starlightcrystal8/live? "HTTP/1.1 200 OK"
+2025-06-07 01:46:40,792 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/check_alive/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-ZA&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014_7%29%20AppleWebKit%2F605.1.15%20%28KHTML%2C%20like%20Gecko%29%20Version%2F17.6%20Safari%2F605.1.15&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=12&is_fullscreen=false&is_page_visible=true&screen_height=2048&screen_width=1152&tz_name=Africa/Johannesburg&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=ZA&region=ZA&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@starlightcrystal8/live&root_referer=https://www.tiktok.com/@starlightcrystal8/live&device_id=13866987006159174612&room_id=7512830611878234898&room_ids=7512830611878234898 "HTTP/1.1 200 OK"
+2025-06-07 01:46:41,197 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:46:41] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 01:46:41,230 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-ZA&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014_7%29%20AppleWebKit%2F605.1.15%20%28KHTML%2C%20like%20Gecko%29%20Version%2F17.6%20Safari%2F605.1.15&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=12&is_fullscreen=false&is_page_visible=true&screen_height=2048&screen_width=1152&tz_name=Africa/Johannesburg&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=ZA&region=ZA&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@starlightcrystal8/live&root_referer=https://www.tiktok.com/@starlightcrystal8/live&device_id=62420349609812986257&room_id=7512830611878234898 "HTTP/1.1 200 OK"
+2025-06-07 01:46:41,980 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:46:41] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 01:46:42,070 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-ZA&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014_7%29%20AppleWebKit%2F605.1.15%20%28KHTML%2C%20like%20Gecko%29%20Version%2F17.6%20Safari%2F605.1.15&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=12&is_fullscreen=false&is_page_visible=true&screen_height=2048&screen_width=1152&tz_name=Africa/Johannesburg&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=ZA&region=ZA&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@starlightcrystal8/live&root_referer=https://www.tiktok.com/@starlightcrystal8/live&device_id=65702969214906273270&room_id=7512830611878234898 "HTTP/1.1 200 OK"
+2025-06-07 01:46:43,848 - httpx - INFO - HTTP Request: GET https://tiktok.eulerstream.com/webcast/fetch/?client=ttlive-python&room_id=7512830611878234898&user_agent=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+14_7%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Version%2F17.6+Safari%2F605.1.15 "HTTP/1.1 200 OK"
+2025-06-07 01:46:44,727 - __main__ - INFO - 已连接到直播间 @starlightcrystal8 (房间ID: 7512830611878234898)
+2025-06-07 01:46:44,727 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 151, in on_comment
+    'user_id': event.user.user_id
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:44,727 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 151, in on_comment
+    'user_id': event.user.user_id
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:44,731 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 151, in on_comment
+    'user_id': event.user.user_id
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:44,731 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 151, in on_comment
+    'user_id': event.user.user_id
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:44,731 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 151, in on_comment
+    'user_id': event.user.user_id
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:44,731 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 151, in on_comment
+    'user_id': event.user.user_id
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:44,738 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 122, in on_room_user_seq
+    self.stats['viewer_count'] = event.viewer_count
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RoomUserSeqEvent' object has no attribute 'viewer_count'
+2025-06-07 01:46:46,439 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 122, in on_room_user_seq
+    self.stats['viewer_count'] = event.viewer_count
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RoomUserSeqEvent' object has no attribute 'viewer_count'
+2025-06-07 01:46:46,439 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 151, in on_comment
+    'user_id': event.user.user_id
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:48,920 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 122, in on_room_user_seq
+    self.stats['viewer_count'] = event.viewer_count
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RoomUserSeqEvent' object has no attribute 'viewer_count'
+2025-06-07 01:46:49,817 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 122, in on_room_user_seq
+    self.stats['viewer_count'] = event.viewer_count
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RoomUserSeqEvent' object has no attribute 'viewer_count'
+2025-06-07 01:46:49,817 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 151, in on_comment
+    'user_id': event.user.user_id
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:49,820 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...e 'user_id'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 132, in on_join
+    user_id = event.user.user_id
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExtendedUser' object has no attribute 'user_id'
+2025-06-07 01:46:51,992 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 01:46:51] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 01:46:52,998 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 122, in on_room_user_seq
+    self.stats['viewer_count'] = event.viewer_count
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RoomUserSeqEvent' object has no attribute 'viewer_count'
+2025-06-07 01:46:53,757 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 122, in on_room_user_seq
+    self.stats['viewer_count'] = event.viewer_count
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RoomUserSeqEvent' object has no attribute 'viewer_count'
+2025-06-07 01:46:56,947 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 122, in on_room_user_seq
+    self.stats['viewer_count'] = event.viewer_count
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RoomUserSeqEvent' object has no attribute 'viewer_count'
+2025-06-07 01:46:57,678 - asyncio - ERROR - Exception in callback AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65
+handle: <Handle AsyncIOEventEmitter._emit_run.<locals>.callback(<Task finishe...ewer_count'")>) at C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py:65>
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\asyncio.py", line 71, in callback
+    self.emit("error", exc)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 179, in emit
+    self._emit_handle_potential_error(event, args[0] if args else None)
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pyee\base.py", line 139, in _emit_handle_potential_error
+    raise error
+  File "c:\Users\zilai\Desktop\monitor\main.py", line 122, in on_room_user_seq
+    self.stats['viewer_count'] = event.viewer_count
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\betterproto\__init__.py", line 846, in __getattribute__
+    value = super().__getattribute__(name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RoomUserSeqEvent' object has no attribute 'viewer_count'
