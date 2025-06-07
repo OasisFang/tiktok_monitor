@@ -181,7 +181,6 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="d-flex align-items-center mb-3">
-                                <img src="" alt="头像" class="avatar-img me-3" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
                                 <div>
                                     <h5 class="mb-0 host-name"></h5>
                                     <p class="mb-0 text-muted room-title"></p>
@@ -202,7 +201,6 @@
                             <div class="progress">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                                     style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                    实时数据更新中...
                                 </div>
                             </div>
                         </div>
@@ -313,15 +311,23 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
     <script>
         // 全局变量
         let charts = {};
         let activeStreams = {};
         let currentUid = null;
         let updateInterval;
+        let socket = null;
 
         // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
+            // 初始化 Socket.IO 连接
+            socket = io();
+            
+            // Socket.IO 事件监听
+            setupSocketEvents();
+            
             // 绑定开始监控按钮事件
             document.getElementById('startMonitorBtn').addEventListener('click', startMonitor);
             
@@ -334,17 +340,222 @@
             // 设置定时更新
             updateInterval = setInterval(updateAllData, 10000); // 10秒更新一次
         });
+        
+        // 设置 Socket.IO 事件监听
+        function setupSocketEvents() {
+            // 连接事件
+            socket.on('connect', function() {
+                console.log('已连接到服务器');
+            });
+            
+            // 断开连接事件
+            socket.on('disconnect', function() {
+                console.log('与服务器断开连接');
+            });
+            
+            // 观众数量更新事件
+            socket.on('viewer_count', function(data) {
+                console.log('收到观众数量更新:', data);
+                if (activeStreams[data.unique_id]) {
+                    activeStreams[data.unique_id].current_viewers = data.count;
+                    
+                    // 更新当前显示的直播间数据
+                    if (data.unique_id === currentUid) {
+                        document.querySelector('.current-viewers').textContent = data.count;
+                        
+                        // 更新图表
+                        if (charts[data.unique_id]) {
+                            const chart = charts[data.unique_id];
+                            
+                            // 添加新数据点
+                            chart.data.labels.push(data.timestamp);
+                            chart.data.datasets[0].data.push(data.count);
+                            
+                            // 保持最多显示100个数据点
+                            if (chart.data.labels.length > 100) {
+                                chart.data.labels.shift();
+                                chart.data.datasets[0].data.shift();
+                            }
+                            
+                            chart.update();
+                        }
+                    }
+                    
+                    // 更新流卡片
+                    const streamCard = document.getElementById(`stream-card-${data.unique_id}`);
+                    if (streamCard) {
+                        streamCard.querySelector('.current-viewers').textContent = `👁️ ${data.count} 观众`;
+                    }
+                }
+            });
+            
+            // 评论事件
+            socket.on('comment', function(data) {
+                console.log('收到评论:', data);
+                if (data.unique_id === currentUid) {
+                    const commentContainer = document.querySelector('.comment-container');
+                    
+                    // 移除"暂无评论"提示
+                    if (commentContainer.querySelector('.text-center')) {
+                        commentContainer.innerHTML = '';
+                    }
+                    
+                    // 添加新评论
+                    const commentTime = moment(data.timestamp).format('HH:mm:ss');
+                    const commentItem = document.createElement('div');
+                    commentItem.className = 'list-group-item comment-item';
+                    commentItem.innerHTML = `
+                        <small class="text-muted">${commentTime}</small>
+                        <span class="comment-user">${data.user.nickname}:</span>
+                        <span class="comment-text">${data.comment}</span>
+                    `;
+                    
+                    // 插入到容器开头
+                    commentContainer.insertBefore(commentItem, commentContainer.firstChild);
+                    
+                    // 限制显示数量
+                    if (commentContainer.children.length > 50) {
+                        commentContainer.removeChild(commentContainer.lastChild);
+                    }
+                    
+                    // 更新统计信息
+                    if (activeStreams[data.unique_id]) {
+                        activeStreams[data.unique_id].total_comments = 
+                            (activeStreams[data.unique_id].total_comments || 0) + 1;
+                    }
+                }
+            });
+            
+            // 礼物事件
+            socket.on('gift', function(data) {
+                console.log('收到礼物:', data);
+                if (data.unique_id === currentUid) {
+                    const giftContainer = document.querySelector('.gift-container');
+                    
+                    // 移除"暂无礼物记录"提示
+                    if (giftContainer.querySelector('.text-center')) {
+                        giftContainer.innerHTML = '';
+                    }
+                    
+                    // 添加新礼物记录
+                    const giftTime = moment(data.timestamp).format('HH:mm:ss');
+                    const giftItem = document.createElement('div');
+                    giftItem.className = 'list-group-item gift-item';
+                    giftItem.innerHTML = `
+                        <small class="text-muted">${giftTime}</small>
+                        <span class="gift-user">${data.user.nickname}</span>
+                        送出了 ${data.gift.count}个 ${data.gift.name}
+                    `;
+                    
+                    // 插入到容器开头
+                    giftContainer.insertBefore(giftItem, giftContainer.firstChild);
+                    
+                    // 限制显示数量
+                    if (giftContainer.children.length > 50) {
+                        giftContainer.removeChild(giftContainer.lastChild);
+                    }
+                    
+                    // 更新统计信息
+                    if (activeStreams[data.unique_id]) {
+                        activeStreams[data.unique_id].total_gifts = 
+                            (activeStreams[data.unique_id].total_gifts || 0) + 1;
+                        
+                        // 更新礼物数量显示
+                        if (currentUid === data.unique_id) {
+                            document.querySelector('.total-gifts').textContent = 
+                                activeStreams[data.unique_id].total_gifts;
+                        }
+                    }
+                }
+            });
+            
+            // 点赞事件
+            socket.on('like', function(data) {
+                console.log('收到点赞:', data);
+                if (activeStreams[data.unique_id]) {
+                    // 不在前端累加点赞数，而是使用服务器提供的总数
+                    if (data.total_likes !== undefined) {
+                        activeStreams[data.unique_id].total_likes = data.total_likes;
+                    } else if (data.count) {
+                        // 兼容旧版本事件，如果没有total_likes则记录增量
+                        console.log('使用增量更新点赞数');
+                        activeStreams[data.unique_id].total_likes = 
+                            (activeStreams[data.unique_id].total_likes || 0) + data.count;
+                    }
+                    
+                    // 更新点赞数量显示
+                    if (currentUid === data.unique_id) {
+                        document.querySelector('.total-likes').textContent = 
+                            activeStreams[data.unique_id].total_likes;
+                    }
+                }
+            });
+            
+            // 增加对update事件的处理
+            socket.on('update', function(data) {
+                console.log('收到数据更新:', data);
+                if (activeStreams[data.unique_id]) {
+                    // 更新本地数据
+                    activeStreams[data.unique_id].current_viewers = data.viewer_count;
+                    activeStreams[data.unique_id].total_viewers = data.total_viewers;
+                    activeStreams[data.unique_id].total_likes = data.like_count;
+                    activeStreams[data.unique_id].total_comments = data.comment_count;
+                    activeStreams[data.unique_id].total_gifts = data.gift_count;
+                    
+                    // 如果是当前显示的直播，更新UI
+                    if (currentUid === data.unique_id) {
+                        // 更新观众数
+                        document.querySelector('.current-viewers').textContent = data.viewer_count;
+                        
+                        // 更新累计观众
+                        document.querySelector('.total-viewers').textContent = data.total_viewers;
+                        
+                        // 更新点赞数
+                        document.querySelector('.total-likes').textContent = data.like_count;
+                        
+                        // 更新礼物数
+                        document.querySelector('.total-gifts').textContent = data.gift_count;
+                    }
+                    
+                    // 更新流卡片
+                    const streamCard = document.getElementById(`stream-card-${data.unique_id}`);
+                    if (streamCard) {
+                        streamCard.querySelector('.current-viewers').textContent = `👁️ ${data.viewer_count} 观众`;
+                    }
+                }
+            });
+            
+            // 增加连接错误处理
+            socket.on('connect_error', function(error) {
+                console.error('SocketIO连接错误:', error);
+            });
+            
+            // 增加重连事件处理
+            socket.on('reconnect', function(attemptNumber) {
+                console.log(`SocketIO重连成功，尝试次数: ${attemptNumber}`);
+                // 重连后刷新数据
+                fetchActiveMonitors();
+            });
+        }
 
         // 获取活跃监控列表
         function fetchActiveMonitors() {
             fetch('/list_monitors')
                 .then(response => response.json())
                 .then(data => {
-                    if (Object.keys(data).length > 0) {
+                    if (data.monitors && data.monitors.length > 0) {
                         // 如果有活跃监控，获取它们的数据并显示
-                        Object.keys(data).forEach(uid => {
+                        data.monitors.forEach(uid => {
                             fetchStreamData(uid);
                         });
+                    } else {
+                        // 没有活跃监控，显示空状态
+                        document.getElementById('content-area').innerHTML = `
+                            <div class="col-12 text-center py-5">
+                                <h3>请添加监控或选择一个已有的直播</h3>
+                                <p>使用上方的"添加监控"按钮开始新的监控</p>
+                            </div>
+                        `;
                     }
                 })
                 .catch(error => console.error('获取监控列表失败:', error));
@@ -355,6 +566,39 @@
             fetch(`/get_stream_data?unique_id=${uid}`)
                 .then(response => response.json())
                 .then(data => {
+                    // 判断请求结果状态
+                    if (data.status === 'not_found') {
+                        console.log(`直播间 ${uid} 不存在或已关闭`);
+                        
+                        // 从激活的流列表中移除
+                        delete activeStreams[uid];
+                        
+                        // 如果是当前显示的流，清空内容区域
+                        if (uid === currentUid) {
+                            currentUid = null;
+                            document.getElementById('content-area').innerHTML = `
+                                <div class="col-12 text-center py-5">
+                                    <h3>请添加监控或选择一个已有的直播</h3>
+                                    <p>使用上方的"添加监控"按钮开始新的监控</p>
+                                </div>
+                            `;
+                            
+                            // 如果还有其他流，显示第一个
+                            const remainingUids = Object.keys(activeStreams);
+                            if (remainingUids.length > 0) {
+                                displayStreamData(remainingUids[0]);
+                            }
+                        }
+                        
+                        // 移除流卡片
+                        const card = document.getElementById(`stream-card-${uid}`);
+                        if (card) {
+                            card.remove();
+                        }
+                        
+                        return;
+                    }
+                    
                     // 存储数据
                     activeStreams[uid] = data;
                     
@@ -394,7 +638,11 @@
             // 更新卡片内容
             const roomInfo = data.room_info || {};
             streamCard.querySelector('.host-name').textContent = roomInfo.host_name || uid.replace('@', '');
-            streamCard.querySelector('.stream-avatar').src = roomInfo.avatar_url || 'https://via.placeholder.com/50';
+            // 不显示头像图片
+            const avatarImg = streamCard.querySelector('.stream-avatar');
+            if (avatarImg) {
+                avatarImg.style.display = 'none';
+            }
             streamCard.querySelector('.room-title').textContent = roomInfo.room_title || '未知直播间';
             
             // 更新状态徽章
@@ -446,7 +694,11 @@
             
             // 更新基本信息
             const roomInfo = data.room_info || {};
-            content.querySelector('.avatar-img').src = roomInfo.avatar_url || 'https://via.placeholder.com/60';
+            // 隐藏头像
+            const avatarImg = content.querySelector('.avatar-img');
+            if (avatarImg) {
+                avatarImg.style.display = 'none';
+            }
             content.querySelector('.host-name').textContent = roomInfo.host_name || uid.replace('@', '');
             content.querySelector('.room-title').textContent = roomInfo.room_title || '未知直播间';
             content.querySelector('.room-id').textContent = roomInfo.room_id || '-';
@@ -582,6 +834,8 @@
             startBtn.disabled = true;
             startBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 启动中...';
             
+            console.log(`正在发送请求启动监控: ${roomId}`);
+            
             // 发送请求启动监控
             fetch('/start_monitor', {
                 method: 'POST',
@@ -590,9 +844,17 @@
                 },
                 body: JSON.stringify({ unique_id: roomId })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log(`收到服务器响应，状态码: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`服务器返回错误状态码: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log(`解析响应数据:`, data);
                 if (data.status === 'success') {
+                    console.log(`监控启动成功: ${data.unique_id || roomId}`);
                     // 关闭模态框
                     const modal = bootstrap.Modal.getInstance(document.getElementById('startMonitorModal'));
                     modal.hide();
@@ -602,20 +864,23 @@
                     
                     // 5秒后获取数据
                     setTimeout(() => {
+                        console.log(`开始获取直播数据: ${data.unique_id || roomId}`);
                         fetchStreamData(data.unique_id || roomId);
                     }, 5000);
                 } else {
-                    alert(`启动失败: ${data.message}`);
+                    console.error(`启动失败: ${data.message || data.error || '未知错误'}`);
+                    alert(`启动失败: ${data.message || data.error || '未知错误'}`);
                 }
             })
             .catch(error => {
-                console.error('启动监控时出错:', error);
-                alert('启动监控时出错，请查看控制台获取详细信息');
+                console.error('启动监控时发生错误:', error);
+                alert(`启动监控时出错: ${error.message || '请查看控制台获取详细信息'}`);
             })
             .finally(() => {
                 // 恢复按钮状态
                 startBtn.disabled = false;
                 startBtn.innerHTML = '开始监控';
+                console.log('重置添加监控按钮状态');
             });
         }
 

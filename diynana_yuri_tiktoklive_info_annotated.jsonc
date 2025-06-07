@@ -1,0 +1,75 @@
+// diynana_yuri_tiktoklive_info_annotated.jsonc
+// 本文件为注释版，说明原始 JSON 文件中包含的主要字段与结构
+{
+  // 房间信息对象，包含直播间基础与统计数据
+  "room_info": {
+    // 房间唯一 ID（数值与字符串双写，id/id_str）
+    "id": 7512984430680525576,           // 房间 ID
+    "id_str": "7512984430680525576",   // 房间 ID 字符串
+
+    // 直播标题与封面
+    "title": "直播间标题",              // 直播间标题
+    "cover": {
+      "url_list": [                      // 封面图片 URL 列表
+        "https://.../cover1.jpg",
+        "https://.../cover2.jpg"
+      ]
+    },
+
+    // 统计信息
+    "stats": {
+      "total_user": 5048,               // 总观众数
+      "digg_count": 0,                  // 点赞数
+      "comment_count": 0,               // 评论数
+      "replay_viewers": 4194            // 回放观看数
+    },
+
+    // 流媒体地址信息
+    "stream_url": {
+      "flv_pull_url": {                 // 各种分辨率的 FLV 拉流地址
+        "SD1": "https://..._ld.flv?sign=...",
+        "HD1": "https://..._hd.flv?sign=...",
+        // ...
+      },
+      "hls_pull_url": "https://.../index.m3u8?sign=...",  // HLS 拉流地址
+      "rtmp_pull_url": "https://..._or4.flv?sign=...",   // RTMP 拉流地址
+      "candidate_resolution": [          // 支持的分辨率列表
+        "SD1", "SD2", "HD1", "FULL_HD1"
+      ]
+    },
+
+    // 直播状态与时间戳
+    "status": 2,                        // 直播状态，2=直播中，0=已结束
+    "create_time": 1749253039,         // 直播创建时间（Unix 时间戳）
+    "start_time": 0                    // 直播开始时间（部分接口可能为 0）
+  },
+
+  // 礼物信息对象，包含可赠送礼物列表与配置
+  "gift_info": {
+    // 所有礼物列表
+    "gifts": [
+      {
+        "id": 13998,                    // 礼物 ID
+        "name": "Heart Rain",          // 礼物名称
+        "diamond_count": 149,           // 礼物价值（钻石数）
+        "describe": "sent Heart Rain", // 描述文本
+        "icon": {
+          "url_list": [                // 礼物图标 URL 列表
+            "https://.../resource.png"
+          ]
+        },
+        "batch_gift_info": {
+          "available_counts": [5,20,50,100]  // 批量赠送可选数量
+        }
+      },
+      // ... 更多礼物项
+    ],
+
+    // 礼物标签优先级映射（可用于排序显示）
+    "gift_label_priorities": {
+      "0": 9999,
+      "1": 400
+      // ...
+    }
+  }
+} 
