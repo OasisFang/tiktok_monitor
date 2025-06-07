@@ -5150,3 +5150,131 @@ TypeError: TikTokLiveClient.__init__() got an unexpected keyword argument 'log_l
 2025-06-07 17:16:40,774 - TikTokLive - DEBUG - Received Event 'WebsocketResponseEvent' [-1 bytes]
 2025-06-07 17:16:40,774 - TikTokLive - DEBUG - Received Event 'RoomUserSeqEvent' [-1 bytes]
 2025-06-07 17:16:40,787 - __main__ - INFO - 获取到观众数量: 102，使用属性: m_total
+2025-06-07 17:41:31,684 - werkzeug - INFO -  * Restarting with stat
+2025-06-07 17:41:32,589 - werkzeug - WARNING -  * Debugger is active!
+2025-06-07 17:41:32,589 - werkzeug - INFO -  * Debugger PIN: 137-971-508
+2025-06-07 17:41:32,721 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-07 17:41:32,721 - werkzeug - INFO -  * Running on http://192.168.0.50:5000/ (Press CTRL+C to quit)
+2025-06-07 17:41:32,836 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:32] "GET /socket.io/?EIO=4&transport=polling&t=PT9LdCr HTTP/1.1" 200 -
+2025-06-07 17:41:32,836 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:32] "GET /socket.io/?EIO=4&transport=polling&t=PT9LdCr HTTP/1.1" 200 -
+2025-06-07 17:41:32,836 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:32] "POST /socket.io/?EIO=4&transport=polling&t=PT9LdSf&sid=oHETpDzk6yfRI0kGAAAA HTTP/1.1" 200 -
+2025-06-07 17:41:32,836 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:32] "POST /socket.io/?EIO=4&transport=polling&t=PT9LdSf&sid=s6uIXZixGUI17USCAAAB HTTP/1.1" 200 -
+2025-06-07 17:41:32,845 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:32] "GET /socket.io/?EIO=4&transport=polling&t=PT9LdSf.0&sid=s6uIXZixGUI17USCAAAB HTTP/1.1" 200 -
+2025-06-07 17:41:32,845 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:32] "GET /socket.io/?EIO=4&transport=polling&t=PT9LdSg&sid=oHETpDzk6yfRI0kGAAAA HTTP/1.1" 200 -
+2025-06-07 17:41:32,865 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:32] "GET /socket.io/?EIO=4&transport=polling&t=PT9LdSl&sid=oHETpDzk6yfRI0kGAAAA HTTP/1.1" 200 -
+2025-06-07 17:41:41,483 - __main__ - DEBUG - 访问首页
+2025-06-07 17:41:41,494 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:41] "GET / HTTP/1.1" 200 -
+2025-06-07 17:41:41,608 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:41] "GET /socket.io/?EIO=4&transport=polling&t=PT9Lfbd HTTP/1.1" 200 -
+2025-06-07 17:41:41,609 - __main__ - DEBUG - 获取监控列表，当前活跃监控: []
+2025-06-07 17:41:41,610 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:41] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-07 17:41:41,610 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:41] "POST /socket.io/?EIO=4&transport=polling&t=PT9Lfbi&sid=XV8JDMd8gOh8ENx6AAAE HTTP/1.1" 200 -
+2025-06-07 17:41:41,615 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:41] "GET /socket.io/?EIO=4&transport=polling&t=PT9Lfbj&sid=XV8JDMd8gOh8ENx6AAAE HTTP/1.1" 200 -
+2025-06-07 17:41:41,661 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:41] "GET /socket.io/?EIO=4&transport=polling&t=PT9LfcQ&sid=XV8JDMd8gOh8ENx6AAAE HTTP/1.1" 200 -
+2025-06-07 17:41:41,669 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:41] "GET /socket.io/?EIO=4&transport=polling&t=PT9LfcZ&sid=XV8JDMd8gOh8ENx6AAAE HTTP/1.1" 200 -
+2025-06-07 17:41:46,731 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:46] "GET /socket.io/?EIO=4&transport=websocket&sid=XV8JDMd8gOh8ENx6AAAE HTTP/1.1" 200 -
+2025-06-07 17:41:46,731 - __main__ - DEBUG - 访问首页
+2025-06-07 17:41:46,731 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:46] "GET / HTTP/1.1" 200 -
+2025-06-07 17:41:46,820 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:46] "GET /socket.io/?EIO=4&transport=polling&t=PT9Lgt4 HTTP/1.1" 200 -
+2025-06-07 17:41:46,820 - __main__ - DEBUG - 获取监控列表，当前活跃监控: []
+2025-06-07 17:41:46,820 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:46] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-07 17:41:46,827 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:46] "POST /socket.io/?EIO=4&transport=polling&t=PT9LgtA&sid=ZTn7JgeD97wDoNomAAAG HTTP/1.1" 200 -
+2025-06-07 17:41:46,828 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:46] "GET /socket.io/?EIO=4&transport=polling&t=PT9LgtA.0&sid=ZTn7JgeD97wDoNomAAAG HTTP/1.1" 200 -
+2025-06-07 17:41:46,843 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:46] "GET /socket.io/?EIO=4&transport=polling&t=PT9LgtN&sid=ZTn7JgeD97wDoNomAAAG HTTP/1.1" 200 -
+2025-06-07 17:41:54,754 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:54] "GET /socket.io/?EIO=4&transport=websocket&sid=ZTn7JgeD97wDoNomAAAG HTTP/1.1" 200 -
+2025-06-07 17:41:54,762 - __main__ - DEBUG - 访问首页
+2025-06-07 17:41:54,763 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:54] "GET / HTTP/1.1" 200 -
+2025-06-07 17:41:54,781 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:54] "GET /socket.io/?EIO=4&transport=polling&t=PT9LipP HTTP/1.1" 200 -
+2025-06-07 17:41:54,781 - __main__ - DEBUG - 获取监控列表，当前活跃监控: []
+2025-06-07 17:41:54,781 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:54] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-07 17:41:54,818 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:54] "POST /socket.io/?EIO=4&transport=polling&t=PT9Lipg&sid=rgt6MJWggU-jItI6AAAI HTTP/1.1" 200 -
+2025-06-07 17:41:54,818 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:54] "GET /socket.io/?EIO=4&transport=polling&t=PT9Lipg.0&sid=rgt6MJWggU-jItI6AAAI HTTP/1.1" 200 -
+2025-06-07 17:41:55,241 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:55] "GET /socket.io/?EIO=4&transport=websocket&sid=rgt6MJWggU-jItI6AAAI HTTP/1.1" 200 -
+2025-06-07 17:41:55,246 - __main__ - DEBUG - 访问首页
+2025-06-07 17:41:55,247 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:55] "GET / HTTP/1.1" 200 -
+2025-06-07 17:41:55,266 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:55] "GET /socket.io/?EIO=4&transport=polling&t=PT9Liw_ HTTP/1.1" 200 -
+2025-06-07 17:41:55,267 - __main__ - DEBUG - 获取监控列表，当前活跃监控: []
+2025-06-07 17:41:55,267 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:55] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-07 17:41:55,311 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:55] "POST /socket.io/?EIO=4&transport=polling&t=PT9LixC&sid=WxK2GkjgtnD9cn2uAAAK HTTP/1.1" 200 -
+2025-06-07 17:41:55,311 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:41:55] "GET /socket.io/?EIO=4&transport=polling&t=PT9LixD&sid=WxK2GkjgtnD9cn2uAAAK HTTP/1.1" 200 -
+2025-06-07 17:42:05,831 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:05] "GET /get_stream_data?unique_id=nikonikodiy HTTP/1.1" 200 -
+2025-06-07 17:42:05,831 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:42:05,831 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:05] "GET /get_stream_data?unique_id=nikonikodiy HTTP/1.1" 200 -
+2025-06-07 17:42:05,831 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:42:05,831 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:42:15,839 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:15] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:42:25,840 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:25] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:42:35,834 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:35] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:42:45,833 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:45] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:42:55,845 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:42:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:43:05,842 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:43:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:43:05,842 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:43:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:43:05,842 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:43:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:44:05,830 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:44:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:44:05,830 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:44:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:44:05,830 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:44:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:45:05,841 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:45:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:45:05,841 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:45:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:45:05,841 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:45:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:46:05,843 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:46:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:46:05,845 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:46:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:46:05,845 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:46:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:46:45,897 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:46:45] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:46:55,833 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:46:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:47:05,847 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:47:05,849 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:47:05,850 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:47:15,829 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:15] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:47:25,829 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:25] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:47:35,830 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:35] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:47:45,840 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:45] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:47:56,547 - werkzeug - INFO -  * Restarting with stat
+2025-06-07 17:47:57,462 - werkzeug - WARNING -  * Debugger is active!
+2025-06-07 17:47:57,462 - werkzeug - INFO -  * Debugger PIN: 137-971-508
+2025-06-07 17:47:57,601 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-07 17:47:57,601 - werkzeug - INFO -  * Running on http://192.168.0.50:5000/ (Press CTRL+C to quit)
+2025-06-07 17:47:57,842 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:57] "GET /socket.io/?EIO=4&transport=polling&t=PT9N4jP HTTP/1.1" 200 -
+2025-06-07 17:47:57,844 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:57] "GET /socket.io/?EIO=4&transport=polling&t=PT9N4jP HTTP/1.1" 200 -
+2025-06-07 17:47:57,847 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:57] "POST /socket.io/?EIO=4&transport=polling&t=PT9N5SK&sid=2DbVDDdrpgXhdQwJAAAA HTTP/1.1" 200 -
+2025-06-07 17:47:57,848 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:57] "GET /socket.io/?EIO=4&transport=polling&t=PT9N5SL&sid=2DbVDDdrpgXhdQwJAAAA HTTP/1.1" 200 -
+2025-06-07 17:47:57,849 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:57] "POST /socket.io/?EIO=4&transport=polling&t=PT9N5SN&sid=6bBF-v-9sUvoRbVSAAAB HTTP/1.1" 200 -
+2025-06-07 17:47:57,849 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:57] "GET /socket.io/?EIO=4&transport=polling&t=PT9N5SN.0&sid=6bBF-v-9sUvoRbVSAAAB HTTP/1.1" 200 -
+2025-06-07 17:47:57,851 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:57] "GET /socket.io/?EIO=4&transport=polling&t=PT9N5SP&sid=2DbVDDdrpgXhdQwJAAAA HTTP/1.1" 200 -
+2025-06-07 17:47:57,861 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:57] "GET /socket.io/?EIO=4&transport=polling&t=PT9N5SR&sid=6bBF-v-9sUvoRbVSAAAB HTTP/1.1" 200 -
+2025-06-07 17:47:58,830 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:58] "GET /socket.io/?EIO=4&transport=polling&t=PT9N5hj HTTP/1.1" 200 -
+2025-06-07 17:47:58,833 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:58] "POST /socket.io/?EIO=4&transport=polling&t=PT9N5hm&sid=QToFEaggmE-eaBNhAAAE HTTP/1.1" 200 -
+2025-06-07 17:47:58,834 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:47:58] "GET /socket.io/?EIO=4&transport=polling&t=PT9N5hm.0&sid=QToFEaggmE-eaBNhAAAE HTTP/1.1" 200 -
+2025-06-07 17:48:02,403 - __main__ - DEBUG - 访问首页
+2025-06-07 17:48:02,414 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:02] "GET / HTTP/1.1" 200 -
+2025-06-07 17:48:02,536 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:02] "GET /socket.io/?EIO=4&transport=polling&t=PT9N6bZ HTTP/1.1" 200 -
+2025-06-07 17:48:02,537 - __main__ - DEBUG - 获取监控列表，当前活跃监控: []
+2025-06-07 17:48:02,537 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:02] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-07 17:48:02,582 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:02] "POST /socket.io/?EIO=4&transport=polling&t=PT9N6cK&sid=JuB05W8LecTlcjq5AAAG HTTP/1.1" 200 -
+2025-06-07 17:48:02,586 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:02] "GET /socket.io/?EIO=4&transport=polling&t=PT9N6cL&sid=JuB05W8LecTlcjq5AAAG HTTP/1.1" 200 -
+2025-06-07 17:48:02,588 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:02] "GET /socket.io/?EIO=4&transport=polling&t=PT9N6cU&sid=JuB05W8LecTlcjq5AAAG HTTP/1.1" 200 -
+2025-06-07 17:48:03,463 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:03] "GET /socket.io/?EIO=4&transport=websocket&sid=6bBF-v-9sUvoRbVSAAAB HTTP/1.1" 200 -
+2025-06-07 17:48:04,141 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:04] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:48:05,438 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:48:05,513 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:05] "GET /socket.io/?EIO=4&transport=websocket&sid=QToFEaggmE-eaBNhAAAE HTTP/1.1" 200 -
+2025-06-07 17:48:05,855 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:05] "GET /socket.io/?EIO=4&transport=websocket&sid=2DbVDDdrpgXhdQwJAAAA HTTP/1.1" 200 -
+2025-06-07 17:48:09,621 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:09] "GET /socket.io/?EIO=4&transport=websocket&sid=JuB05W8LecTlcjq5AAAG HTTP/1.1" 200 -
+2025-06-07 17:48:09,637 - __main__ - DEBUG - 访问首页
+2025-06-07 17:48:09,637 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:09] "GET / HTTP/1.1" 200 -
+2025-06-07 17:48:09,718 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:09] "GET /socket.io/?EIO=4&transport=polling&t=PT9N8Lr HTTP/1.1" 200 -
+2025-06-07 17:48:09,718 - __main__ - DEBUG - 获取监控列表，当前活跃监控: []
+2025-06-07 17:48:09,718 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:09] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-07 17:48:09,721 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:09] "POST /socket.io/?EIO=4&transport=polling&t=PT9N8Lu&sid=HqdrbMPXj-d9cpoBAAAI HTTP/1.1" 200 -
+2025-06-07 17:48:09,723 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:09] "GET /socket.io/?EIO=4&transport=polling&t=PT9N8Lu.0&sid=HqdrbMPXj-d9cpoBAAAI HTTP/1.1" 200 -
+2025-06-07 17:48:09,734 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:09] "GET /socket.io/?EIO=4&transport=polling&t=PT9N8M4&sid=HqdrbMPXj-d9cpoBAAAI HTTP/1.1" 200 -
+2025-06-07 17:48:19,842 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:19] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:48:29,830 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:29] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:48:39,827 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:39] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:48:49,834 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:49] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:48:59,835 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:48:59] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:49:09,834 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:49:09] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:49:19,835 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:49:19] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:50:05,834 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:50:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:51:05,832 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:51:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:52:05,829 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:52:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-07 17:53:05,833 - werkzeug - INFO - 192.168.0.50 - - [07/Jun/2025 17:53:05] "GET /update_chart_data HTTP/1.1" 200 -

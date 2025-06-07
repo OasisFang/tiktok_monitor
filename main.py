@@ -105,8 +105,6 @@ class TikTokLiveMonitor:
         async def on_connect(event: ConnectEvent):
             """连接事件"""
             self.is_live = True
-            self.stats['start_time'] = datetime.now()
-            self.stats['room_id'] = self.client.room_id
             logger.info(f"已连接到直播间 @{event.unique_id} (房间ID: {self.client.room_id})")
             
             # 获取房间信息
@@ -115,11 +113,33 @@ class TikTokLiveMonitor:
                 
                 # 直播状态
                 self.stats['stream_status'] = self.client.room_info.get('status', 0)
+                self.is_live = self.stats['stream_status'] == 2
                 
                 # 基本信息
                 self.stats['title'] = self.client.room_info.get('title', '')
                 self.stats['cover'] = self.client.room_info.get('cover', {})
+                
+                # 获取实际开播时间
                 self.stats['create_time'] = self.client.room_info.get('create_time', 0)
+                if self.stats['create_time'] > 0:
+                    # 将Unix时间戳转换为datetime对象
+                    self.stats['start_time'] = datetime.fromtimestamp(self.stats['create_time'])
+                elif not self.stats.get('start_time'):
+                    # 如果没有获取到有效的创建时间且还没设置过，才使用当前时间
+                    self.stats['start_time'] = datetime.now()
+                
+                # 获取实时点赞数
+                if 'stats' in self.client.room_info:
+                    stats_data = self.client.room_info['stats']
+                    # 更新点赞数
+                    if 'like_count' in stats_data:
+                        self.stats['like_count'] = stats_data['like_count']
+                    # 更新评论数
+                    if 'comment_count' in stats_data:
+                        self.stats['comment_count'] = stats_data['comment_count']
+                    # 更新累计观众数
+                    if 'total_user' in stats_data:
+                        self.stats['total_viewers'] = stats_data['total_user']
                 
                 # 流地址
                 self.stats['stream_url'] = self.client.room_info.get('stream_url', {})
@@ -129,6 +149,9 @@ class TikTokLiveMonitor:
                     'room_info': self.stats['room_info']
                 })
             
+            # 保存房间ID
+            self.stats['room_id'] = self.client.room_id
+        
         @self.client.on(DisconnectEvent)
         async def on_disconnect(event: DisconnectEvent):
             """断开连接事件"""
@@ -200,15 +223,17 @@ class TikTokLiveMonitor:
                 
                 # 更新图表数据
                 # 只有每分钟更新一次图表数据
-                current_minute = datetime.now().strftime('%H:%M')
+                current_time = datetime.now()
+                current_minute = current_time.strftime('%Y-%m-%d %H:%M')
+                
                 # 检查是否已经有该分钟的数据点
                 if not self.stats['chart_data']['timestamps'] or not self.stats['chart_data']['timestamps'][-1].startswith(current_minute):
-                    current_time = datetime.now().strftime('%H:%M:%S')
-                    self.stats['chart_data']['timestamps'].append(current_time)
+                    formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S')
+                    self.stats['chart_data']['timestamps'].append(formatted_time)
                     self.stats['chart_data']['viewer_counts'].append(self.stats['current_viewers'])
                     
-                    # 保持图表数据长度合理
-                    max_points = 100
+                    # 保持图表数据为半小时（30个数据点，每分钟一个）
+                    max_points = 30
                     if len(self.stats['chart_data']['timestamps']) > max_points:
                         self.stats['chart_data']['timestamps'] = self.stats['chart_data']['timestamps'][-max_points:]
                         self.stats['chart_data']['viewer_counts'] = self.stats['chart_data']['viewer_counts'][-max_points:]
@@ -311,7 +336,8 @@ class TikTokLiveMonitor:
                 # 记录点赞信息
                 logger.info(f"收到点赞: 用户={user_id}, 数量={like_count}")
                 
-                # 更新统计
+                # 只增加点赞计数器，不覆盖实际的总点赞数
+                # 总点赞数会在房间信息更新时得到更准确的值
                 self.stats['like_count'] += like_count
                 
                 # 发送到前端
@@ -568,7 +594,15 @@ class TikTokLiveMonitor:
                 # 基本信息
                 self.stats['title'] = room_info.get('title', '')
                 self.stats['cover'] = room_info.get('cover', {})
+                
+                # 获取实际开播时间
                 self.stats['create_time'] = room_info.get('create_time', 0)
+                if self.stats['create_time'] > 0:
+                    # 将Unix时间戳转换为datetime对象
+                    self.stats['start_time'] = datetime.fromtimestamp(self.stats['create_time'])
+                elif not self.stats.get('start_time'):
+                    # 如果没有获取到有效的创建时间且还没设置过，才使用当前时间
+                    self.stats['start_time'] = datetime.now()
                 
                 # 流地址
                 self.stats['stream_url'] = room_info.get('stream_url', {})
@@ -577,24 +611,29 @@ class TikTokLiveMonitor:
                 if 'stats' in room_info:
                     stats = room_info['stats']
                     # 累计观众
-                    self.stats['total_viewers'] = stats.get('total_user', 0)
-                    self.stats['like_count'] = stats.get('like_count', 0)
-                    self.stats['comment_count'] = stats.get('comment_count', 0)
-                    
+                    if 'total_user' in stats:
+                        self.stats['total_viewers'] = stats.get('total_user', 0)
+                    # 实时点赞数
+                    if 'like_count' in stats:
+                        self.stats['like_count'] = stats.get('like_count', 0)
+                    # 评论数
+                    if 'comment_count' in stats:
+                        self.stats['comment_count'] = stats.get('comment_count', 0)
+                
                 # 当前在线人数 - 从room_info['user_count']获取
                 self.stats['current_viewers'] = room_info.get('user_count', 0)
                 
                 # 更新图表数据
                 # 只有每分钟更新一次图表数据
-                current_minute = datetime.now().strftime('%H:%M')
+                current_minute = datetime.now().strftime('%Y-%m-%d %H:%M')
                 # 检查是否已经有该分钟的数据点
                 if not self.stats['chart_data']['timestamps'] or not self.stats['chart_data']['timestamps'][-1].startswith(current_minute):
-                    current_time = datetime.now().strftime('%H:%M:%S')
+                    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     self.stats['chart_data']['timestamps'].append(current_time)
                     self.stats['chart_data']['viewer_counts'].append(self.stats['current_viewers'])
                     
                     # 保持图表数据长度合理
-                    max_points = 100
+                    max_points = 30
                     if len(self.stats['chart_data']['timestamps']) > max_points:
                         self.stats['chart_data']['timestamps'] = self.stats['chart_data']['timestamps'][-max_points:]
                         self.stats['chart_data']['viewer_counts'] = self.stats['chart_data']['viewer_counts'][-max_points:]
@@ -882,6 +921,7 @@ def start_monitor():
             logger.debug(f"创建监控实例: {unique_id}")
             # 创建新的监控实例
             monitor = TikTokLiveMonitor(unique_id)
+            monitor.is_running = True  # 提前设置运行状态
             active_monitors[unique_id] = monitor
             
             print(f"启动监控线程: {unique_id}")
@@ -891,10 +931,7 @@ def start_monitor():
             thread.start()
             monitor_threads[unique_id] = thread
             
-            # 等待一小段时间确保线程启动
-            time.sleep(0.5)
-            
-            # 立即返回成功状态，并发送初始数据
+            # 立即发送初始数据
             monitor._send_default_data()
             
             print(f"成功启动监控: {unique_id}")

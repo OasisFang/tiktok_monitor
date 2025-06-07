@@ -184,7 +184,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="d-flex align-items-center mb-3">
-                                <img src="" alt="头像" class="avatar-img me-3" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                                <!-- 移除头像图片 -->
                                 <div>
                                     <h5 class="mb-0 host-name"></h5>
                                     <p class="mb-0 text-muted room-title"></p>
@@ -300,7 +300,6 @@
         <div class="card stream-card">
             <div class="card-body p-3">
                 <div class="stream-info">
-                    <img src="" alt="头像" class="stream-avatar">
                     <div>
                         <h6 class="mb-0 host-name"></h6>
                         <span class="badge status-badge"></span>
@@ -640,7 +639,6 @@
             // 更新卡片内容
             const roomInfo = data.room_info || {};
             streamCard.querySelector('.host-name').textContent = roomInfo.host_name || uid.replace('@', '');
-            streamCard.querySelector('.stream-avatar').src = roomInfo.avatar_url || 'https://via.placeholder.com/50';
             streamCard.querySelector('.room-title').textContent = roomInfo.room_title || '未知直播间';
             
             // 更新状态徽章
@@ -659,11 +657,11 @@
             }
         }
 
-        // 显示流详细数据
+        // 显示流数据
         function displayStreamData(uid) {
             // 更新当前选中的UID
             currentUid = uid;
-            
+
             // 更新卡片高亮状态
             document.querySelectorAll('.stream-card').forEach(card => {
                 if (card.getAttribute('data-uid') === uid) {
@@ -672,65 +670,76 @@
                     card.classList.remove('active-stream-card');
                 }
             });
-            
+
+            // 获取数据
             const data = activeStreams[uid];
-            if (!data) return;
-            
+            if (!data) {
+                // 如果数据不存在，可能是新添加的，需要从服务器获取
+                fetch(`/get_stream_data?unique_id=${uid}`)
+                    .then(response => response.json())
+                    .then(streamData => {
+                        if (streamData.status !== 'not_found') {
+                            activeStreams[uid] = streamData;
+                            displayStreamData(uid); // 重新调用以渲染
+                        }
+                    });
+                return;
+            }
+
             // 清空内容区域
             const contentArea = document.getElementById('content-area');
             contentArea.innerHTML = '';
-            
+
             // 使用模板创建内容
             const template = document.getElementById('stream-content-template');
             const content = template.content.cloneNode(true);
             
-            // 设置停止按钮的数据属性
-            content.querySelector('.stop-monitor-btn').setAttribute('data-uid', uid);
-            content.querySelector('.stop-monitor-btn').addEventListener('click', function() {
-                stopMonitor(uid);
-            });
-            
+            // 绑定停止按钮事件
+            content.querySelector('.stop-monitor-btn').addEventListener('click', () => stopMonitor(uid));
+
             // 更新基本信息
             const roomInfo = data.room_info || {};
-            content.querySelector('.avatar-img').src = roomInfo.avatar_url || 'https://via.placeholder.com/60';
             content.querySelector('.host-name').textContent = roomInfo.host_name || uid.replace('@', '');
-            content.querySelector('.room-title').textContent = roomInfo.room_title || '未知直播间';
-            content.querySelector('.room-id').textContent = roomInfo.room_id || '-';
-            
-            // 更新状态
+            content.querySelector('.room-title').textContent = data.title || '未知直播间';
+            content.querySelector('.room-id').textContent = data.room_id || '-';
+
+            // 更新状态徽章
             const statusBadge = content.querySelector('.status-badge');
             statusBadge.textContent = data.is_live ? '在线' : '离线';
-            statusBadge.className = `status-badge badge ${data.is_live ? 'bg-success' : 'bg-secondary'}`;
-            
-            // 更新时间
-            if (data.start_time) {
-                const startTime = moment(data.start_time);
-                content.querySelector('.start-time').textContent = startTime.format('YYYY-MM-DD HH:mm:ss');
-                
-                if (data.is_live) {
-                    // 计算直播时长
-                    const duration = moment.duration(moment().diff(startTime));
-                    const hours = Math.floor(duration.asHours());
-                    const minutes = Math.floor(duration.asMinutes()) % 60;
-                    content.querySelector('.duration').textContent = `${hours}小时${minutes}分钟`;
-                } else {
-                    content.querySelector('.duration').textContent = '-';
-                }
-            } else {
-                content.querySelector('.start-time').textContent = '-';
-                content.querySelector('.duration').textContent = '-';
-            }
-            
+            statusBadge.className = `badge status-badge ${data.is_live ? 'bg-success' : 'bg-secondary'}`;
+
             // 更新统计数据
-            content.querySelector('.current-viewers').textContent = data.current_viewers || 0;
-            content.querySelector('.total-viewers').textContent = data.total_viewers || 0;
-            content.querySelector('.total-likes').textContent = data.total_likes || 0;
-            content.querySelector('.total-gifts').textContent = data.total_gifts || 0;
-            
+            content.querySelector('.current-viewers').textContent = formatNumber(data.current_viewers);
+            content.querySelector('.total-viewers').textContent = formatNumber(data.total_viewers);
+            content.querySelector('.total-likes').textContent = formatNumber(data.total_likes);
+            content.querySelector('.total-gifts').textContent = formatNumber(data.total_gifts);
+            content.querySelector('.total-comments').textContent = formatNumber(data.total_comments);
+
+            // 更新开始时间
+            let startTimeText = '未知';
+            let durationText = '-';
+            if (data.create_time && data.create_time > 0) {
+                const startTime = new Date(data.create_time * 1000);
+                startTimeText = startTime.toLocaleString('zh-CN', {
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit'
+                });
+
+                if (data.is_live) {
+                    const now = new Date();
+                    const durationMs = now - startTime;
+                    const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
+                    const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+                    durationText = `${durationHours}小时${durationMinutes}分钟`;
+                }
+            }
+            content.querySelector('.start-time').textContent = startTimeText;
+            content.querySelector('.duration').textContent = durationText;
+
             // 添加到内容区域
             contentArea.appendChild(content);
             
-            // 初始化图表
+            // 初始化或更新图表
             initChart(uid, data.chart_data);
             
             // 更新礼物和评论
@@ -747,7 +756,10 @@
             }
             
             // 准备数据
-            const timestamps = chartData?.timestamps || [];
+            const timestamps = (chartData?.timestamps || []).map(ts => {
+                const date = new Date(ts);
+                return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            });
             const viewerCounts = chartData?.viewer_counts || [];
             
             // 创建新图表
@@ -775,6 +787,43 @@
                 }
             });
         }
+        
+        // 更新图表数据
+        function updateAllCharts() {
+            fetch('/update_chart_data')
+                .then(response => response.json())
+                .then(data => {
+                    for (const uid in data) {
+                        if (activeStreams[uid]) {
+                            // 更新缓存数据
+                            activeStreams[uid].chart_data = data[uid].chart_data;
+                            activeStreams[uid].current_viewers = data[uid].current_viewers;
+                            activeStreams[uid].like_count = data[uid].like_count;
+                            activeStreams[uid].comment_count = data[uid].comment_count;
+                            activeStreams[uid].gift_count = data[uid].gift_count;
+                            
+                            // 如果是当前显示的流，则更新图表和统计数据
+                            if (uid === currentUid) {
+                                // 更新统计
+                                document.querySelector('.current-viewers').textContent = formatNumber(data[uid].current_viewers);
+                                document.querySelector('.total-likes').textContent = formatNumber(data[uid].like_count);
+                                
+                                // 更新图表
+                                if (charts[uid]) {
+                                    const timestamps = (data[uid].chart_data.timestamps || []).map(ts => {
+                                        const date = new Date(ts);
+                                        return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+                                    });
+                                    charts[uid].data.labels = timestamps;
+                                    charts[uid].data.datasets[0].data = data[uid].chart_data.viewer_counts || [];
+                                    charts[uid].update();
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch(error => console.error('更新图表数据时出错:', error));
+        }
 
         // 更新礼物和评论
         function updateGiftsAndComments(uid, data) {
@@ -785,16 +834,16 @@
                 data.gifts.slice().reverse().forEach(gift => {
                     const giftTime = moment(gift.timestamp).format('HH:mm:ss');
                     const giftItem = document.createElement('div');
-                    giftItem.className = 'list-group-item gift-item';
+                    giftItem.className = 'gift-item';
                     giftItem.innerHTML = `
-                        <small class="text-muted">${giftTime}</small>
-                        <span class="gift-user">${gift.user}</span>
-                        送出了 ${gift.gift_count}个 ${gift.gift_name}
+                        <span class="text-muted small">${giftTime}</span>
+                        <span class="gift-user text-warning">${gift.user}</span>
+                        <span>送出 ${gift.gift_name} x ${gift.gift_count}</span>
                     `;
                     giftContainer.appendChild(giftItem);
                 });
             }
-            
+
             // 更新评论
             const commentContainer = document.querySelector('.comment-container');
             if (data.comments && data.comments.length > 0) {
@@ -802,15 +851,36 @@
                 data.comments.slice().reverse().forEach(comment => {
                     const commentTime = moment(comment.timestamp).format('HH:mm:ss');
                     const commentItem = document.createElement('div');
-                    commentItem.className = 'list-group-item comment-item';
+                    commentItem.className = 'comment-item';
                     commentItem.innerHTML = `
-                        <small class="text-muted">${commentTime}</small>
-                        <span class="comment-user">${comment.user}:</span>
+                        <span class="text-muted small">${commentTime}</span>
+                        <span class="comment-user text-primary">${comment.user}:</span>
                         <span class="comment-text">${comment.comment}</span>
                     `;
                     commentContainer.appendChild(commentItem);
                 });
             }
+        }
+
+        // 格式化数字显示
+        function formatNumber(num) {
+            if (num === undefined || num === null) return "0";
+            
+            // 确保输入是数字
+            num = Number(num);
+            
+            if (isNaN(num)) return "0";
+            
+            // 小于1000的数字直接返回
+            if (num < 1000) return num.toString();
+            
+            // 大于1000的数字显示为k格式
+            if (num < 1000000) {
+                return (num / 1000).toFixed(1) + 'k';
+            }
+            
+            // 大于1000000的数字显示为M格式
+            return (num / 1000000).toFixed(1) + 'M';
         }
 
         // 启动监控
@@ -848,19 +918,30 @@
             .then(data => {
                 console.log("解析响应数据:", data);
                 if (data.status === 'success') {
-                    // 关闭模态框
+                    showToast('成功', data.message, 'success');
                     const modal = bootstrap.Modal.getInstance(document.getElementById('startMonitorModal'));
                     modal.hide();
                     
-                    // 重置表单
-                    roomIdInput.value = '';
-                    
-                    // 5秒后获取数据
-                    setTimeout(() => {
-                        fetchStreamData(data.unique_id || roomId);
-                    }, 5000);
+                    // 主动获取新监控的数据并更新UI
+                    const uid = data.unique_id;
+                    fetch(`/get_stream_data?unique_id=${uid}`)
+                        .then(response => response.json())
+                        .then(streamData => {
+                            if (streamData.status !== 'not_found') {
+                                activeStreams[uid] = streamData;
+                                updateStreamCard(uid, streamData);
+                                displayStreamData(uid);
+                            } else {
+                                showToast('错误', `无法获取 ${uid} 的初始数据`, 'danger');
+                            }
+                        })
+                        .catch(error => {
+                            showToast('错误', `获取 ${uid} 的初始数据失败`, 'danger');
+                            console.error('Error fetching initial stream data:', error);
+                        });
+
                 } else {
-                    alert(`启动失败: ${data.error || data.message}`);
+                    showToast('错误', data.error || '启动监控失败', 'danger');
                 }
             })
             .catch(error => {
@@ -988,6 +1069,68 @@
                 .then(response => response.json())
                 .catch(error => console.error('更新图表数据时出错:', error));
         }
+
+        // 定时更新数据
+        let updateTimerId = null;
+        
+        function startAutoUpdate() {
+            // 先清除可能存在的定时器
+            if (updateTimerId) {
+                clearInterval(updateTimerId);
+            }
+            
+            // 每60秒更新一次数据
+            updateTimerId = setInterval(() => {
+                if (currentUid) {
+                    // 更新直播时长
+                    const startTimeEl = document.querySelector('.start-time');
+                    const durationEl = document.querySelector('.duration');
+                    
+                    if (startTimeEl && startTimeEl.textContent !== '未知' && 
+                        document.querySelector('.status-badge').textContent === '在线') {
+                        // 解析开始时间
+                        const startTimeText = startTimeEl.textContent;
+                        const startTime = new Date(startTimeText);
+                        
+                        // 计算新的时长
+                        const now = new Date();
+                        const durationMs = now - startTime;
+                        const durationHours = Math.floor(durationMs / (1000 * 60 * 60));
+                        const durationMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+                        durationEl.textContent = `${durationHours}小时${durationMinutes}分钟`;
+                    }
+                    
+                    // 刷新直播数据
+                    fetch(`/get_stream_data?unique_id=${currentUid}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status !== 'not_found') {
+                                // 更新统计数据
+                                const content = document.getElementById('stream-data-content');
+                                content.querySelector('.current-viewers').textContent = formatNumber(data.current_viewers);
+                                content.querySelector('.total-viewers').textContent = formatNumber(data.total_viewers);
+                                content.querySelector('.total-likes').textContent = formatNumber(data.total_likes);
+                                content.querySelector('.total-gifts').textContent = formatNumber(data.total_gifts);
+                                content.querySelector('.total-comments').textContent = formatNumber(data.total_comments);
+                                
+                                // 更新图表
+                                updateAllCharts();
+                                
+                                // 更新礼物和评论
+                                updateGiftsAndComments(currentUid, data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('自动更新数据失败:', error);
+                        });
+                }
+            }, 60000);
+        }
+        
+        // 页面加载完成后开始自动更新
+        document.addEventListener('DOMContentLoaded', () => {
+            startAutoUpdate();
+        });
     </script>
 </body>
 
