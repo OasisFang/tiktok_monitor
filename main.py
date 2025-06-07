@@ -1,13 +1,18 @@
+import os
+import re
+import json
+import uuid
+import httpx
 import asyncio
 import logging
-import os
-import json
 import threading
+import time
+from logging.handlers import TimedRotatingFileHandler
 from datetime import datetime
 from typing import Dict, Optional, List, Set
-import time
 from flask import Flask, render_template, jsonify, request, send_from_directory
 from flask_socketio import SocketIO
+import nest_asyncio
 
 from TikTokLive import TikTokLiveClient
 from TikTokLive.client.logger import LogLevel
@@ -21,7 +26,7 @@ from TikTokLive.client.web.routes.fetch_room_id_live_html import FailedParseRoom
 
 # 配置日志
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,  # 改为 DEBUG 级别以显示更多信息
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.FileHandler('tiktok_monitor.log', encoding='utf-8'),
@@ -55,7 +60,7 @@ class TikTokLiveMonitor:
         self.client: Optional[TikTokLiveClient] = TikTokLiveClient(
             unique_id=unique_id
         )
-        self.client.logger.setLevel(LogLevel.INFO.value)
+        self.client.logger.setLevel(LogLevel.DEBUG.value)
         self.is_running = False
         self.is_live = False
         
@@ -317,7 +322,6 @@ class TikTokLiveMonitor:
                         'user_id': user_id
                     },
                     'count': like_count,
-                    'total_likes': self.stats['like_count'],  # 发送总点赞数
                     'timestamp': datetime.now().isoformat()
                 })
                 
@@ -610,10 +614,12 @@ class TikTokLiveMonitor:
             # 如果已经连接，不再重新连接
             if self.client.connected:
                 logger.info(f"@{self.unique_id} 已经连接，不再重新连接")
+                print(f"@{self.unique_id} 已经连接，不再重新连接")
                 return True
 
             # 先尝试获取房间信息，判断用户是否在直播
-            # 无论获取结果如何，都先初始化一个界面
+            logger.info(f"正在获取 @{self.unique_id} 的房间信息...")
+            print(f"正在获取 @{self.unique_id} 的房间信息...")
             result = await self.fetch_room_info()
             
             # 发送初始数据以显示界面
@@ -622,43 +628,57 @@ class TikTokLiveMonitor:
             # 检查是否获取成功并且在直播中
             if result and self.stats['stream_status'] == 2:  # 直播中
                 logger.info(f"检查 @{self.unique_id} 是否在直播...")
+                print(f"@{self.unique_id} 当前正在直播")
                 
                 logger.info(f"开始监控 @{self.unique_id} 的直播...")
+                print(f"开始监控 @{self.unique_id} 的直播...")
                 
                 # 使用已获取的房间ID直接连接
                 room_id = self.stats['room_id']
                 
                 try:
                     # 开始连接
+                    logger.info(f"正在连接到直播间 {room_id}...")
+                    print(f"正在连接到直播间 {room_id}...")
                     await self.client.start(
                         fetch_room_info=True,  # 额外获取房间信息
                         fetch_gift_info=True,   # 额外获取礼物信息
                         process_connect_events=True,
                         room_id=room_id  # 直接使用房间ID，避免再次获取
                     )
+                    logger.info(f"成功连接到直播间 {room_id}")
+                    print(f"成功连接到直播间 {room_id}")
+                    self.is_live = True
                     return True
                 except Exception as e:
                     # 如果是签名API错误，记录日志但不重试太频繁
-                    if "SIGN_NOT_200" in str(e) or "500" in str(e):
-                        logger.error(f"签名API错误，等待较长时间后重试: {str(e)}")
+                    error_msg = str(e)
+                    if "SIGN_NOT_200" in error_msg or "500" in error_msg:
+                        logger.error(f"签名API错误，等待较长时间后重试: {error_msg}")
+                        print(f"签名API错误，等待较长时间后重试: {error_msg}")
                         # 为避免频繁重试，将在start_monitoring中等待较长时间
                         return False
                     else:
                         # 其他错误记录并继续
-                        logger.error(f"连接直播间失败: {str(e)}")
+                        logger.error(f"连接直播间失败: {error_msg}")
+                        print(f"连接直播间失败: {error_msg}")
                         return False
             else:
                 if result:
                     logger.info(f"@{self.unique_id} 当前不在直播中 (状态: {self.stats['stream_status']})")
+                    print(f"@{self.unique_id} 当前不在直播中 (状态: {self.stats['stream_status']})")
                 else:
                     logger.info(f"@{self.unique_id} 无法获取房间信息")
+                    print(f"@{self.unique_id} 无法获取房间信息")
                 
                 # 不在直播或无法获取信息时也发送更新，让前端显示"离线"状态
                 self._send_data_updates()
                 
             return False
         except Exception as e:
-            logger.error(f"连接直播间失败: {str(e)}")
+            error_msg = str(e)
+            logger.error(f"连接直播间失败: {error_msg}")
+            print(f"连接直播间失败: {error_msg}")
             # 发生错误时也发送更新
             self._send_default_data()
             return False
@@ -711,25 +731,39 @@ class TikTokLiveMonitor:
         # 用于跟踪连续失败次数
         consecutive_failures = 0
         
-        # 尝试连接，如果失败则每30秒重试一次
+        # 保持持续监控，直到is_running被设置为False
         while self.is_running:
-            connection_result = await self.check_and_connect()
-            
-            if connection_result:
-                # 连接成功，重置失败计数
-                consecutive_failures = 0
-                # 连接成功，每60秒检查一次直播状态
-                while self.is_running and self.client.connected:
-                    await asyncio.sleep(60)
-                    await self.fetch_room_info()  # 定期更新房间信息
-            else:
-                # 连接失败，增加失败计数并使用指数退避策略
-                consecutive_failures += 1
+            try:
+                print(f"尝试连接到 @{self.unique_id} 的直播...")
+                connection_result = await self.check_and_connect()
                 
-                # 基础等待时间是30秒，最多等待5分钟
-                wait_time = min(30 * (2 ** (consecutive_failures - 1)), 300)
-                logger.info(f"连接失败，{wait_time}秒后重试 (连续失败: {consecutive_failures}次)")
-                await asyncio.sleep(wait_time)
+                if connection_result:
+                    # 连接成功，重置失败计数
+                    consecutive_failures = 0
+                    print(f"成功连接到 @{self.unique_id} 的直播")
+                    # 连接成功，每60秒检查一次直播状态
+                    while self.is_running and self.client.connected:
+                        await asyncio.sleep(60)
+                        # 定期更新房间信息
+                        print(f"更新 @{self.unique_id} 的房间信息...")
+                        await self.fetch_room_info()
+                else:
+                    # 连接失败，增加失败计数并使用指数退避策略
+                    consecutive_failures += 1
+                    
+                    # 基础等待时间是30秒，最多等待5分钟
+                    wait_time = min(30 * (2 ** (consecutive_failures - 1)), 300)
+                    print(f"连接失败，{wait_time}秒后重试 (连续失败: {consecutive_failures}次)")
+                    logger.info(f"连接失败，{wait_time}秒后重试 (连续失败: {consecutive_failures}次)")
+                    await asyncio.sleep(wait_time)
+            except Exception as e:
+                # 出现异常，记录并继续
+                logger.error(f"监控过程中发生错误: {str(e)}", exc_info=True)
+                print(f"监控过程中发生错误: {str(e)}")
+                await asyncio.sleep(30)  # 出错后等待30秒再次尝试
+        
+        print(f"监控 @{self.unique_id} 已停止")
+        logger.info(f"监控 @{self.unique_id} 已停止")
     
     async def stop_monitoring(self):
         """停止监控"""
@@ -783,74 +817,126 @@ def monitor_thread_func(unique_id):
     """监控线程函数"""
     try:
         logger.info(f"监控线程已启动: {unique_id}")
+        print(f"监控线程已启动: {unique_id}")
         monitor = active_monitors[unique_id]
+        logger.info(f"开始监控 @{unique_id} 的直播...")
+        print(f"开始监控 @{unique_id} 的直播...")
         asyncio.run(monitor.start_monitoring())
     except Exception as e:
         logger.error(f"监控线程异常: {str(e)}", exc_info=True)
+        print(f"监控线程异常: {str(e)}")
 
 
 # Flask 路由
+@app.route('/test')
+def test_page():
+    """测试页面"""
+    logger.debug("访问测试页面")
+    return render_template('test.html')
+
+@app.route('/api/test', methods=['POST'])
+def api_test():
+    """测试API接口"""
+    data = request.get_json()
+    logger.debug(f"收到测试API请求: {data}")
+    return jsonify({
+        'status': 'success',
+        'message': '测试成功',
+        'received_data': data
+    })
+
 @app.route('/')
 def index():
+    logger.debug("访问首页")
     return render_template('index.html')
 
 @app.route('/start_monitor', methods=['POST'])
 def start_monitor():
+    print("收到开始监控请求")
+    logger.debug("收到开始监控请求")
     try:
         data = request.get_json()
-        if not data:
-            logger.error("请求数据为空或格式错误")
-            return jsonify({'error': '请求数据格式错误', 'status': 'error'}), 400
-        
+        print(f"请求数据: {data}")
+        logger.debug(f"请求数据: {data}")
         unique_id = data.get('unique_id', '').strip()
-        logger.info(f"收到开始监控请求: {unique_id}")
-    
-        if not unique_id:
-            logger.warning("没有提供用户名")
-            return jsonify({'error': '请提供用户名', 'status': 'error'}), 400
         
+        if not unique_id:
+            print("请求中未提供用户名")
+            logger.error("请求中未提供用户名")
+            return jsonify({'error': '请提供用户名', 'status': 'error'}), 400
+            
         # 移除可能的@符号
         if unique_id.startswith('@'):
             unique_id = unique_id[1:]
-            logger.info(f"移除@符号，处理后的ID: {unique_id}")
-        
-        # 检查是否已经在监控中
+            
+        print(f"处理监控请求: {unique_id}")
+        logger.debug(f"处理监控请求: {unique_id}")
+            
         if unique_id in active_monitors:
+            print(f"用户 {unique_id} 已在监控中")
             logger.warning(f"用户 {unique_id} 已在监控中")
-            return jsonify({
-                'message': f'用户 @{unique_id} 已在监控中',
-                'unique_id': unique_id,
-                'status': 'success'  # 返回成功状态，避免前端认为出错
-            })
+            return jsonify({'error': '该用户已在监控中', 'status': 'error'}), 400
         
         try:
+            print(f"创建监控实例: {unique_id}")
+            logger.debug(f"创建监控实例: {unique_id}")
             # 创建新的监控实例
-            logger.info(f"创建监控实例: {unique_id}")
             monitor = TikTokLiveMonitor(unique_id)
             active_monitors[unique_id] = monitor
-        
+            
+            print(f"启动监控线程: {unique_id}")
+            logger.debug(f"启动监控线程: {unique_id}")
             # 在新线程中启动监控
-            logger.info(f"启动监控线程: {unique_id}")
             thread = threading.Thread(target=monitor_thread_func, args=(unique_id,), daemon=True)
             thread.start()
             monitor_threads[unique_id] = thread
-        
+            
+            # 等待一小段时间确保线程启动
+            time.sleep(0.5)
+            
             # 立即返回成功状态，并发送初始数据
-            logger.info(f"发送初始数据: {unique_id}")
             monitor._send_default_data()
-        
-            logger.info(f"成功启动监控: {unique_id}")
+            
+            print(f"成功启动监控: {unique_id}")
+            logger.debug(f"成功启动监控: {unique_id}")
+            
             return jsonify({
                 'message': f'开始监控 @{unique_id}',
                 'unique_id': unique_id,
                 'status': 'success'
             })
+        except ValueError as e:
+            # 处理参数错误
+            print(f"启动监控参数错误: {str(e)}")
+            logger.error(f"启动监控参数错误: {str(e)}", exc_info=True)
+            # 如果监控已创建，需要清理
+            if unique_id in active_monitors:
+                del active_monitors[unique_id]
+            if unique_id in monitor_threads:
+                del monitor_threads[unique_id]
+            return jsonify({'error': f"参数错误: {str(e)}", 'status': 'error'}), 400
         except Exception as e:
-            logger.error(f"创建或启动监控实例失败: {str(e)}", exc_info=True)
-            return jsonify({'error': str(e), 'status': 'error'}), 500
+            # 处理其他错误
+            print(f"启动监控失败: {str(e)}")
+            logger.error(f"启动监控失败: {str(e)}", exc_info=True)
+            # 如果监控已创建，需要清理
+            if unique_id in active_monitors:
+                del active_monitors[unique_id]
+            if unique_id in monitor_threads:
+                del monitor_threads[unique_id]
+            # 返回更友好的错误信息
+            error_msg = str(e)
+            if "HTTP Error" in error_msg:
+                error_msg = "无法连接到TikTok API，请稍后重试"
+            elif "offline" in error_msg:
+                error_msg = f"用户 @{unique_id} 当前不在直播中"
+            elif "not found" in error_msg.lower() or "404" in error_msg:
+                error_msg = f"找不到用户 @{unique_id}"
+            return jsonify({'error': error_msg, 'status': 'error'}), 500
     except Exception as e:
-        logger.error(f"处理开始监控请求时发生未预期错误: {str(e)}", exc_info=True)
-        return jsonify({'error': '服务器处理请求时出错', 'status': 'error'}), 500
+        print(f"处理start_monitor请求时发生错误: {str(e)}")
+        logger.error(f"处理start_monitor请求时发生错误: {str(e)}", exc_info=True)
+        return jsonify({'error': '服务器内部错误', 'status': 'error'}), 500
 
 @app.route('/stop_monitor', methods=['POST'])
 def stop_monitor():
@@ -914,6 +1000,7 @@ def stop_all_monitors():
 
 @app.route('/list_monitors', methods=['GET'])
 def get_active_monitors():
+    logger.debug(f"获取监控列表，当前活跃监控: {list(active_monitors.keys())}")
     return jsonify({
         'monitors': list(active_monitors.keys())
     })
@@ -961,41 +1048,120 @@ def get_stream_data():
         
     monitor = active_monitors[unique_id]
     
-    # 构建前端所需的数据结构
-    room_info = monitor.stats.get('room_info', {})
+    # 处理测试实例的情况
+    if isinstance(monitor, str):
+        print(f"返回测试实例数据: {unique_id}")
+        return jsonify({
+            'unique_id': unique_id,
+            'is_live': True,
+            'room_info': {'host_name': unique_id, 'room_id': '12345'},
+            'current_viewers': 100,
+            'total_viewers': 500,
+            'total_likes': 300,
+            'total_gifts': 50,
+            'total_comments': 200,
+            'start_time': datetime.now().isoformat(),
+            'chart_data': {
+                'timestamps': [datetime.now().strftime('%H:%M:%S')],
+                'viewer_counts': [100]
+            },
+            'comments': [],
+            'gifts': [],
+            'status': 'success'
+        })
     
-    return jsonify({
-        'unique_id': unique_id,
-        'is_live': monitor.is_live,
-        'room_info': room_info,
-        'current_viewers': monitor.stats['current_viewers'],
-        'total_viewers': monitor.stats['total_viewers'],
-        'total_likes': monitor.stats['like_count'],
-        'total_gifts': monitor.stats['gift_count'],
-        'total_comments': monitor.stats['comment_count'],
-        'start_time': monitor.stats['start_time'].isoformat() if monitor.stats.get('start_time') else None,
-        'chart_data': monitor.stats['chart_data'],
-        'comments': monitor.stats['comments'][-20:],  # 仅发送最新的20条
-        'gifts': monitor.stats['gifts'][-20:],        # 仅发送最新的20条
-        'status': 'success'
-    })
+    try:
+        # 构建前端所需的数据结构
+        room_info = monitor.stats.get('room_info', {})
+        
+        return jsonify({
+            'unique_id': unique_id,
+            'is_live': monitor.is_live,
+            'room_info': room_info,
+            'current_viewers': monitor.stats['current_viewers'],
+            'total_viewers': monitor.stats['total_viewers'],
+            'total_likes': monitor.stats['like_count'],
+            'total_gifts': monitor.stats['gift_count'],
+            'total_comments': monitor.stats['comment_count'],
+            'start_time': monitor.stats['start_time'].isoformat() if monitor.stats.get('start_time') else None,
+            'chart_data': monitor.stats['chart_data'],
+            'comments': monitor.stats['comments'][-20:],  # 仅发送最新的20条
+            'gifts': monitor.stats['gifts'][-20:],        # 仅发送最新的20条
+            'status': 'success'
+        })
+    except Exception as e:
+        logger.error(f"获取流数据失败: {str(e)}", exc_info=True)
+        # 出错时返回默认数据
+        return jsonify({
+            'unique_id': unique_id,
+            'is_live': False,
+            'current_viewers': 0,
+            'total_viewers': 0,
+            'total_likes': 0,
+            'total_gifts': 0,
+            'total_comments': 0,
+            'room_info': {},
+            'chart_data': {'timestamps': [], 'viewer_counts': []},
+            'comments': [],
+            'gifts': [],
+            'status': 'error',
+            'error': str(e)
+        })
 
 @app.route('/update_chart_data', methods=['GET'])
 def update_chart_data():
     data = {}
     for unique_id, monitor in active_monitors.items():
-        data[unique_id] = {
-            'current_viewers': monitor.stats['current_viewers'],
-            'like_count': monitor.stats['like_count'],
-            'comment_count': monitor.stats['comment_count'],
-            'gift_count': monitor.stats['gift_count'],
-            'gift_value': monitor.stats['gift_value'],
-            'follow_count': monitor.stats['follow_count'],
-            'share_count': monitor.stats['share_count'],
-            'subscribe_count': monitor.stats['subscribe_count'],
-            'is_live': monitor.is_live,
-            'chart_data': monitor.stats['chart_data']
-        }
+        try:
+            # 处理测试实例的情况
+            if isinstance(monitor, str):
+                data[unique_id] = {
+                    'current_viewers': 100,
+                    'like_count': 300,
+                    'comment_count': 200,
+                    'gift_count': 50,
+                    'gift_value': 1000,
+                    'follow_count': 30,
+                    'share_count': 20,
+                    'subscribe_count': 5,
+                    'is_live': True,
+                    'chart_data': {
+                        'timestamps': [datetime.now().strftime('%H:%M:%S')],
+                        'viewer_counts': [100]
+                    }
+                }
+            else:
+                data[unique_id] = {
+                    'current_viewers': monitor.stats['current_viewers'],
+                    'like_count': monitor.stats['like_count'],
+                    'comment_count': monitor.stats['comment_count'],
+                    'gift_count': monitor.stats['gift_count'],
+                    'gift_value': monitor.stats['gift_value'],
+                    'follow_count': monitor.stats['follow_count'],
+                    'share_count': monitor.stats['share_count'],
+                    'subscribe_count': monitor.stats['subscribe_count'],
+                    'is_live': monitor.is_live,
+                    'chart_data': monitor.stats['chart_data']
+                }
+        except Exception as e:
+            logger.error(f"更新图表数据失败 ({unique_id}): {str(e)}", exc_info=True)
+            # 出错时返回默认数据
+            data[unique_id] = {
+                'current_viewers': 0,
+                'like_count': 0,
+                'comment_count': 0,
+                'gift_count': 0,
+                'gift_value': 0,
+                'follow_count': 0,
+                'share_count': 0,
+                'subscribe_count': 0,
+                'is_live': False,
+                'chart_data': {
+                    'timestamps': [],
+                    'viewer_counts': []
+                },
+                'error': str(e)
+            }
     return jsonify(data)
 
 @app.route('/monitor_info/<unique_id>')

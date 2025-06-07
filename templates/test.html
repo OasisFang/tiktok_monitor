@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TikTok监控测试页面</title>
+    <script>
+        function testAddMonitor() {
+            const userId = document.getElementById('userId').value;
+            console.log("发送请求，用户ID:", userId);
+            
+            fetch('/start_monitor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ unique_id: userId })
+            })
+            .then(response => {
+                console.log("收到响应:", response);
+                return response.json();
+            })
+            .then(data => {
+                console.log("响应数据:", data);
+                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error("错误:", error);
+                document.getElementById('result').innerText = "错误: " + error;
+            });
+            
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <h1>TikTok监控测试</h1>
+    <form onsubmit="return testAddMonitor()">
+        <input type="text" id="userId" placeholder="输入TikTok用户名" />
+        <button type="submit">测试添加监控</button>
+    </form>
+    <div>
+        <h2>结果:</h2>
+        <pre id="result"></pre>
+    </div>
+</body>
+</html> 
