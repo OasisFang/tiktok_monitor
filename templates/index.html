@@ -132,50 +132,50 @@
             <!-- 总览统计卡片 -->
             <div class="row mb-4">
                 <div class="col-md-3">
-                    <div class="card border-0 shadow-sm bg-gradient">
-                        <div class="card-body text-center p-4" style="background: linear-gradient(45deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body text-center p-4">
                             <div class="mb-2">
                                 <i class="fas fa-video fa-2x"></i>
                             </div>
                             <h6 class="card-title text-uppercase mb-2">活跃直播间</h6>
                             <h2 class="display-6 fw-bold mb-2" id="total-streams">0</h2>
-                            <small class="opacity-75">正在监控的直播间数量</small>
+                            <small>正在监控的直播间数量</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card border-0 shadow-sm bg-gradient">
-                        <div class="card-body text-center p-4" style="background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%); color: white;">
+                    <div class="card bg-success text-white">
+                        <div class="card-body text-center p-4">
                             <div class="mb-2">
                                 <i class="fas fa-users fa-2x"></i>
                             </div>
                             <h6 class="card-title text-uppercase mb-2">累计观众总数</h6>
                             <h2 class="display-6 fw-bold mb-2" id="total-viewers">0</h2>
-                            <small class="opacity-75">所有直播间累计观众总和</small>
+                            <small>所有直播间累计观众总和</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card border-0 shadow-sm bg-gradient">
-                        <div class="card-body text-center p-4" style="background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%); color: white;">
+                    <div class="card bg-info text-white">
+                        <div class="card-body text-center p-4">
                             <div class="mb-2">
                                 <i class="fas fa-chart-line fa-2x"></i>
                             </div>
                             <h6 class="card-title text-uppercase mb-2">当前平均观众</h6>
                             <h2 class="display-6 fw-bold mb-2" id="avg-viewers">0</h2>
-                            <small class="opacity-75">每个直播间平均当前观众</small>
+                            <small>每个直播间平均当前观众</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card border-0 shadow-sm bg-gradient">
-                        <div class="card-body text-center p-4" style="background: linear-gradient(45deg, #43e97b 0%, #38f9d7 100%); color: white;">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body text-center p-4">
                             <div class="mb-2">
                                 <i class="fas fa-trophy fa-2x"></i>
                             </div>
                             <h6 class="card-title text-uppercase mb-2">峰值观众数</h6>
                             <h2 class="display-6 fw-bold mb-2" id="peak-viewers">0</h2>
-                            <small class="opacity-75">历史最高同时在线</small>
+                            <small>历史最高同时在线</small>
                         </div>
                     </div>
                 </div>
@@ -359,6 +359,20 @@
                                         </ol>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="antiDetection">
+                                <label class="form-check-label" for="antiDetection">
+                                    <i class="fas fa-shield-alt text-warning me-1"></i>
+                                    启用伪装模式 (防检测)
+                                </label>
+                            </div>
+                            <div class="form-text">
+                                <small class="text-muted">
+                                    启用后将随机化请求头、添加随机延迟，降低被TikTok检测为爬虫的风险
+                                </small>
                             </div>
                         </div>
                     </form>
@@ -1037,8 +1051,10 @@
         function startMonitor() {
             const roomIdInput = document.getElementById('roomId');
             const sessionIdInput = document.getElementById('sessionId');
+            const antiDetectionInput = document.getElementById('antiDetection');
             const roomId = roomIdInput.value.trim();
             const sessionId = sessionIdInput.value.trim();
+            const antiDetection = antiDetectionInput.checked;
             
             if (!roomId) {
                 alert('请输入TikTok主播ID');
@@ -1050,12 +1066,15 @@
             startBtn.disabled = true;
             startBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 启动中...';
             
-            console.log(`正在发送请求启动监控: ${roomId}`);
+            console.log(`正在发送请求启动监控: ${roomId}，伪装模式: ${antiDetection}`);
             
             // 发送请求启动监控
             const requestData = { unique_id: roomId };
             if (sessionId) {
                 requestData.sessionid = sessionId;
+            }
+            if (antiDetection) {
+                requestData.anti_detection = true;
             }
             
             fetch('/start_monitor', {
@@ -1083,6 +1102,7 @@
                     // 重置表单
                     roomIdInput.value = '';
                     sessionIdInput.value = '';
+                    antiDetectionInput.checked = false;
                     
                     // 5秒后获取数据
                     setTimeout(() => {

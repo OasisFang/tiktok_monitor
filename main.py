@@ -44,16 +44,18 @@ monitor_threads = {}
 class TikTokLiveMonitor:
     """TikTok 直播监控类"""
     
-    def __init__(self, unique_id: str, sessionid: Optional[str] = None):
+    def __init__(self, unique_id: str, sessionid: Optional[str] = None, anti_detection: bool = False):
         """
         初始化监控器
         
         Args:
             unique_id: TikTok 用户名 (不含@符号)
             sessionid: TikTok 会话ID (用于绕过年龄限制)
+            anti_detection: 是否启用防检测模式
         """
         self.unique_id = unique_id
         self.sessionid = sessionid
+        self.anti_detection = anti_detection
         self.client: Optional[TikTokLiveClient] = TikTokLiveClient(
             unique_id=unique_id
         )
@@ -62,6 +64,11 @@ class TikTokLiveMonitor:
         if sessionid:
             self.client.web.set_session_id(sessionid)
             logger.info(f"为 @{unique_id} 设置了 sessionid")
+        
+        # 如果启用防检测模式，配置伪装参数
+        if anti_detection:
+            self._setup_anti_detection()
+            logger.info(f"为 @{unique_id} 启用了防检测模式")
         
         self.client.logger.setLevel(LogLevel.INFO.value)
         self.is_running = False
@@ -100,6 +107,51 @@ class TikTokLiveMonitor:
         
         # 设置事件监听器
         self._setup_event_listeners()
+        
+    def _setup_anti_detection(self):
+        """设置防检测参数"""
+        import random
+        
+        # 使用更保守的User-Agent列表，模拟真实浏览器
+        user_agents = [
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        ]
+        
+        # 保守的语言设置
+        accept_languages = [
+            'en-US,en;q=0.9',
+            'zh-CN,zh;q=0.9,en;q=0.8'
+        ]
+        
+        # 更温和的请求头设置 - 只设置关键的几个
+        selected_ua = random.choice(user_agents)
+        selected_lang = random.choice(accept_languages)
+        
+        # 仅设置最关键的请求头，避免过度伪装
+        minimal_headers = {
+            'User-Agent': selected_ua,
+            'Accept-Language': selected_lang
+        }
+        
+        # 应用请求头到客户端
+        try:
+            if hasattr(self.client.web, 'session') and hasattr(self.client.web.session, 'headers'):
+                # 只更新关键请求头，保留其他默认设置
+                for key, value in minimal_headers.items():
+                    self.client.web.session.headers[key] = value
+                logger.info(f"已设置防检测请求头: UA={selected_ua[:50]}..., Lang={selected_lang}")
+        except Exception as e:
+            logger.warning(f"设置请求头失败: {str(e)}")
+        
+        # 更保守的防检测配置
+        self.anti_detection_config = {
+            'random_delay_min': 1,    # 降低最小延迟
+            'random_delay_max': 5,    # 降低最大延迟
+            'request_interval_min': 45,   # 适当的检查间隔
+            'request_interval_max': 90    # 更合理的最大间隔
+        }
             
     def _setup_event_listeners(self):
         """设置所有事件监听器"""
@@ -540,11 +592,20 @@ class TikTokLiveMonitor:
         手动拉取房间信息
         """
         try:
+            # 防检测：仅在必要时添加轻微延迟
+            if self.anti_detection:
+                import random
+                await asyncio.sleep(random.uniform(0.5, 2))
+            
             # 尝试先获取房间ID
             try:
                 room_id = await self.client.web.fetch_room_id_from_html(self.client.unique_id)
             except FailedParseRoomIdError:
                 logger.info(f"HTML 解析房间ID失败，使用 API 获取")
+                # 防检测：在API调用前轻微延迟
+                if self.anti_detection:
+                    import random
+                    await asyncio.sleep(random.uniform(0.5, 1.5))
                 room_id = await self.client.web.fetch_room_id_from_api(self.client.unique_id)
                 
             self.client.web.params['room_id'] = str(room_id)
@@ -637,6 +698,10 @@ class TikTokLiveMonitor:
                 room_id = self.stats['room_id']
                 
                 try:
+                    # 防检测模式下，连接前先延迟
+                    if self.anti_detection:
+                        await self._random_delay()
+                    
                     # 开始连接
                     await self.client.start(
                         fetch_room_info=True,  # 额外获取房间信息
@@ -646,10 +711,35 @@ class TikTokLiveMonitor:
                     )
                     return True
                 except Exception as e:
+                    # 如果防检测模式下连接失败，尝试禁用防检测重试一次
+                    if self.anti_detection and ("UserNotFoundError" in str(e) or "404" in str(e)):
+                        logger.warning(f"防检测模式连接失败，尝试使用标准模式重连: {str(e)}")
+                        try:
+                            # 临时禁用防检测
+                            self.anti_detection = False
+                            # 重新设置客户端（恢复默认请求头）
+                            self.client = TikTokLiveClient(unique_id=self.unique_id)
+                            if self.sessionid:
+                                self.client.web.set_session_id(self.sessionid)
+                            self._setup_event_listeners()
+                            
+                            # 重新获取房间信息
+                            result = await self.fetch_room_info()
+                            if result and self.stats['stream_status'] == 2:
+                                await self.client.start(
+                                    fetch_room_info=True,
+                                    fetch_gift_info=True,
+                                    process_connect_events=True,
+                                    room_id=self.stats['room_id']
+                                )
+                                logger.info(f"标准模式重连成功: @{self.unique_id}")
+                                return True
+                        except Exception as retry_e:
+                            logger.error(f"标准模式重连也失败: {str(retry_e)}")
+                    
                     # 如果是签名API错误，记录日志但不重试太频繁
                     if "SIGN_NOT_200" in str(e) or "500" in str(e):
                         logger.error(f"签名API错误，等待较长时间后重试: {str(e)}")
-                        # 为避免频繁重试，将在start_monitoring中等待较长时间
                         return False
                     else:
                         # 其他错误记录并继续
@@ -713,11 +803,26 @@ class TikTokLiveMonitor:
             'status': 'live' if self.is_live else 'offline'
         })
     
+    async def _random_delay(self):
+        """添加随机延迟（仅在启用防检测时）"""
+        if self.anti_detection:
+            import random
+            delay = random.uniform(
+                self.anti_detection_config['random_delay_min'],
+                self.anti_detection_config['random_delay_max']
+            )
+            logger.debug(f"防检测随机延迟: {delay:.2f}秒")
+            await asyncio.sleep(delay)
+    
     async def start_monitoring(self):
         """启动监控"""
         self.is_running = True
         # 用于跟踪连续失败次数
         consecutive_failures = 0
+        
+        # 如果启用防检测，先进行随机延迟
+        if self.anti_detection:
+            await self._random_delay()
         
         # 尝试连接，如果失败则每30秒重试一次
         while self.is_running:
@@ -726,16 +831,38 @@ class TikTokLiveMonitor:
             if connection_result:
                 # 连接成功，重置失败计数
                 consecutive_failures = 0
-                # 连接成功，每60秒检查一次直播状态
+                # 连接成功，定期检查直播状态
                 while self.is_running and self.client.connected:
-                    await asyncio.sleep(60)
+                    # 使用防检测配置的间隔时间
+                    if self.anti_detection:
+                        import random
+                        interval = random.randint(
+                            self.anti_detection_config['request_interval_min'],
+                            self.anti_detection_config['request_interval_max']
+                        )
+                        logger.debug(f"防检测模式，下次检查间隔: {interval}秒")
+                    else:
+                        interval = 60
+                    
+                    await asyncio.sleep(interval)
+                    
+                    # 防检测模式下添加轻微随机延迟
+                    if self.anti_detection:
+                        import random
+                        await asyncio.sleep(random.uniform(0.5, 2))
+                    
                     await self.fetch_room_info()  # 定期更新房间信息
             else:
                 # 连接失败，增加失败计数并使用指数退避策略
                 consecutive_failures += 1
                 
                 # 基础等待时间是30秒，最多等待5分钟
-                wait_time = min(30 * (2 ** (consecutive_failures - 1)), 300)
+                base_wait = 30
+                if self.anti_detection:
+                    # 防检测模式下使用稍长的等待时间
+                    base_wait = 45
+                
+                wait_time = min(base_wait * (2 ** (consecutive_failures - 1)), 300)
                 logger.info(f"连接失败，{wait_time}秒后重试 (连续失败: {consecutive_failures}次)")
                 await asyncio.sleep(wait_time)
     
@@ -812,7 +939,8 @@ def start_monitor():
         
         unique_id = data.get('unique_id', '').strip()
         sessionid = data.get('sessionid', '').strip() or None
-        logger.info(f"收到开始监控请求: {unique_id}, sessionid: {'已提供' if sessionid else '未提供'}")
+        anti_detection = data.get('anti_detection', False)
+        logger.info(f"收到开始监控请求: {unique_id}, sessionid: {'已提供' if sessionid else '未提供'}, 防检测: {anti_detection}")
     
         if not unique_id:
             logger.warning("没有提供用户名")
@@ -835,7 +963,7 @@ def start_monitor():
         try:
             # 创建新的监控实例
             logger.info(f"创建监控实例: {unique_id}")
-            monitor = TikTokLiveMonitor(unique_id, sessionid)
+            monitor = TikTokLiveMonitor(unique_id, sessionid, anti_detection)
             active_monitors[unique_id] = monitor
         
             # 在新线程中启动监控
