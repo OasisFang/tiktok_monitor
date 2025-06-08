@@ -130,51 +130,69 @@
         <!-- 监控流量大盘 -->
         <div id="dashboard-container" class="mb-4">
             <!-- 总览统计卡片 -->
-            <div class="row mb-3">
+            <div class="row mb-4">
                 <div class="col-md-3">
-                    <div class="card bg-primary text-white">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">活跃直播间</h5>
-                            <h2 id="total-streams">0</h2>
-                            <small>正在监控的直播间数量</small>
+                    <div class="card border-0 shadow-sm bg-gradient">
+                        <div class="card-body text-center p-4" style="background: linear-gradient(45deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <div class="mb-2">
+                                <i class="fas fa-video fa-2x"></i>
+                            </div>
+                            <h6 class="card-title text-uppercase mb-2">活跃直播间</h6>
+                            <h2 class="display-6 fw-bold mb-2" id="total-streams">0</h2>
+                            <small class="opacity-75">正在监控的直播间数量</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-success text-white">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">总观众数</h5>
-                            <h2 id="total-viewers">0</h2>
-                            <small>所有直播间观众总和</small>
+                    <div class="card border-0 shadow-sm bg-gradient">
+                        <div class="card-body text-center p-4" style="background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%); color: white;">
+                            <div class="mb-2">
+                                <i class="fas fa-users fa-2x"></i>
+                            </div>
+                            <h6 class="card-title text-uppercase mb-2">累计观众总数</h6>
+                            <h2 class="display-6 fw-bold mb-2" id="total-viewers">0</h2>
+                            <small class="opacity-75">所有直播间累计观众总和</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-warning text-white">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">平均观众数</h5>
-                            <h2 id="avg-viewers">0</h2>
-                            <small>每个直播间平均观众</small>
+                    <div class="card border-0 shadow-sm bg-gradient">
+                        <div class="card-body text-center p-4" style="background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%); color: white;">
+                            <div class="mb-2">
+                                <i class="fas fa-chart-line fa-2x"></i>
+                            </div>
+                            <h6 class="card-title text-uppercase mb-2">当前平均观众</h6>
+                            <h2 class="display-6 fw-bold mb-2" id="avg-viewers">0</h2>
+                            <small class="opacity-75">每个直播间平均当前观众</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-info text-white">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">峰值观众数</h5>
-                            <h2 id="peak-viewers">0</h2>
-                            <small>历史最高同时在线</small>
+                    <div class="card border-0 shadow-sm bg-gradient">
+                        <div class="card-body text-center p-4" style="background: linear-gradient(45deg, #43e97b 0%, #38f9d7 100%); color: white;">
+                            <div class="mb-2">
+                                <i class="fas fa-trophy fa-2x"></i>
+                            </div>
+                            <h6 class="card-title text-uppercase mb-2">峰值观众数</h6>
+                            <h2 class="display-6 fw-bold mb-2" id="peak-viewers">0</h2>
+                            <small class="opacity-75">历史最高同时在线</small>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- 趋势图表 -->
-            <div class="row mb-3">
+            <div class="row mb-4">
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">当前观众数趋势图</h5>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white border-0 py-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0 text-dark fw-bold">
+                                    <i class="fas fa-chart-area text-primary me-2"></i>
+                                    当前观众数趋势图 (分钟级)
+                                </h5>
+                                <small class="text-muted">实时更新</small>
+                            </div>
                         </div>
                         <div class="card-body">
                             <canvas id="dashboard-chart" height="300"></canvas>
@@ -182,9 +200,12 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">权重分析</h5>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white border-0 py-3">
+                            <h5 class="card-title mb-0 text-dark fw-bold">
+                                <i class="fas fa-chart-pie text-success me-2"></i>
+                                累计观众权重分析
+                            </h5>
                         </div>
                         <div class="card-body">
                             <canvas id="weight-chart" height="300"></canvas>
@@ -193,7 +214,46 @@
                 </div>
             </div>
 
-            <!-- 时间段分析 -->
+            <!-- 详细数据表格 -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">直播间详细数据</h5>
+                            <button class="btn btn-sm btn-outline-primary" onclick="refreshTable()">
+                                <i class="fas fa-sync-alt"></i> 刷新
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="streams-table">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>直播间</th>
+                                            <th>状态</th>
+                                            <th>当前观众</th>
+                                            <th>累计观众</th>
+                                            <th>点赞数</th>
+                                            <th>评论数</th>
+                                            <th>礼物数</th>
+                                            <th>权重占比</th>
+                                            <th>开播时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="streams-table-body">
+                                        <tr>
+                                            <td colspan="10" class="text-center text-muted">暂无数据</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 时间段分析和排行 -->
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="card">
@@ -204,20 +264,28 @@
                             <div id="time-analysis">
                                 <div class="row text-center">
                                     <div class="col-3">
-                                        <h6>凌晨 (0-6)</h6>
-                                        <span class="badge bg-secondary" id="time-0-6">0</span>
+                                        <div class="p-3 bg-light rounded">
+                                            <h6 class="text-muted mb-1">凌晨 (0-6)</h6>
+                                            <h4 class="text-secondary mb-0" id="time-0-6">0</h4>
+                                        </div>
                                     </div>
                                     <div class="col-3">
-                                        <h6>上午 (6-12)</h6>
-                                        <span class="badge bg-info" id="time-6-12">0</span>
+                                        <div class="p-3 bg-light rounded">
+                                            <h6 class="text-muted mb-1">上午 (6-12)</h6>
+                                            <h4 class="text-info mb-0" id="time-6-12">0</h4>
+                                        </div>
                                     </div>
                                     <div class="col-3">
-                                        <h6>下午 (12-18)</h6>
-                                        <span class="badge bg-warning" id="time-12-18">0</span>
+                                        <div class="p-3 bg-light rounded">
+                                            <h6 class="text-muted mb-1">下午 (12-18)</h6>
+                                            <h4 class="text-warning mb-0" id="time-12-18">0</h4>
+                                        </div>
                                     </div>
                                     <div class="col-3">
-                                        <h6>晚上 (18-24)</h6>
-                                        <span class="badge bg-danger" id="time-18-24">0</span>
+                                        <div class="p-3 bg-light rounded">
+                                            <h6 class="text-muted mb-1">晚上 (18-24)</h6>
+                                            <h4 class="text-danger mb-0" id="time-18-24">0</h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -484,7 +552,7 @@
             initDashboardCharts();
             
             // 设置定时更新
-            updateInterval = setInterval(updateAllData, 60000); // 1分钟更新一次
+            updateInterval = setInterval(updateAllData, 10000); // 10秒更新一次
         });
         
         // 设置 Socket.IO 事件监听
@@ -1165,7 +1233,7 @@
                 data: {
                     labels: [],
                     datasets: [{
-                        label: '当前在线观众数',
+                        label: '当前观众数',
                         data: [],
                         borderColor: 'rgba(75, 192, 192, 1)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -1219,25 +1287,25 @@
         // 更新大盘数据
         function updateDashboard() {
             const streamCount = Object.keys(activeStreams).length;
-            let totalViewers = 0;
-            let currentViewers = 0;
+            let totalViewers = 0; // 累计观众总和
+            let currentViewers = 0; // 当前观众总和
             let streamWeights = {};
             
-            // 计算累计观众总数和权重
+            // 计算累计观众数总和和当前观众数，以及权重
             Object.entries(activeStreams).forEach(([uid, data]) => {
-                const viewers = data.current_viewers || 0;
-                const totalV = data.total_viewers || 0;
-                currentViewers += viewers;
-                totalViewers += totalV;  // 累计观众数的总和
-                streamWeights[uid] = viewers;  // 权重仍然使用当前观众数
+                const total = data.total_viewers || 0; // 累计观众数
+                const current = data.current_viewers || 0; // 当前观众数
+                totalViewers += total; // 累计观众数的总和
+                currentViewers += current; // 当前观众数的总和
+                streamWeights[uid] = total; // 权重基于累计观众数
             });
             
-            // 更新峰值（使用当前观众数）
+            // 更新峰值（基于当前观众数）
             if (currentViewers > dashboardStats.peakViewers) {
                 dashboardStats.peakViewers = currentViewers;
             }
             
-            // 计算平均值（使用当前观众数）
+            // 计算平均值（基于当前观众数）
             const avgViewers = streamCount > 0 ? Math.round(currentViewers / streamCount) : 0;
             
             // 更新统计卡片
@@ -1257,6 +1325,9 @@
             
             // 更新权重分析图表
             updateWeightChart(streamWeights);
+            
+            // 更新详细数据表格
+            updateStreamsTable(streamWeights, totalViewers);
         }
 
         // 更新时间段分析
@@ -1264,7 +1335,7 @@
             const currentHour = new Date().getHours();
             const currentViewers = Object.values(activeStreams).reduce((sum, data) => sum + (data.current_viewers || 0), 0);
             
-            // 根据当前时间段累计观众数
+            // 根据当前时间段累计当前观众数
             if (currentHour >= 0 && currentHour < 6) {
                 dashboardStats.timeSlots['0-6'] += currentViewers;
                 document.getElementById('time-0-6').textContent = dashboardStats.timeSlots['0-6'].toLocaleString();
@@ -1309,19 +1380,32 @@
         // 更新大盘趋势图表
         function updateDashboardChart(currentViewers) {
             const now = new Date();
-            const timeLabel = now.toLocaleTimeString();
+            const timeLabel = now.toLocaleTimeString('zh-CN', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            }); // 只显示小时:分钟
             
-            // 添加新数据点
-            dashboardChart.data.labels.push(timeLabel);
-            dashboardChart.data.datasets[0].data.push(currentViewers);
-            
-            // 保持最多显示60个数据点（10分钟的数据）
-            if (dashboardChart.data.labels.length > 60) {
-                dashboardChart.data.labels.shift();
-                dashboardChart.data.datasets[0].data.shift();
+            // 检查是否是新的分钟，避免同一分钟重复添加数据点
+            const lastLabel = dashboardChart.data.labels[dashboardChart.data.labels.length - 1];
+            if (lastLabel !== timeLabel) {
+                // 添加新数据点
+                dashboardChart.data.labels.push(timeLabel);
+                dashboardChart.data.datasets[0].data.push(currentViewers);
+                
+                // 保持最多显示60个数据点（60分钟的数据）
+                if (dashboardChart.data.labels.length > 60) {
+                    dashboardChart.data.labels.shift();
+                    dashboardChart.data.datasets[0].data.shift();
+                }
+                
+                dashboardChart.update('none'); // 使用 'none' 模式避免动画延迟
+            } else {
+                // 同一分钟内，更新最后一个数据点的值
+                if (dashboardChart.data.datasets[0].data.length > 0) {
+                    dashboardChart.data.datasets[0].data[dashboardChart.data.datasets[0].data.length - 1] = currentViewers;
+                    dashboardChart.update('none');
+                }
             }
-            
-            dashboardChart.update('none'); // 使用 'none' 模式避免动画延迟
         }
 
         // 更新权重分析图表
@@ -1332,6 +1416,78 @@
             weightChart.data.labels = labels;
             weightChart.data.datasets[0].data = data;
             weightChart.update('none');
+        }
+
+        // 更新详细数据表格
+        function updateStreamsTable(streamWeights, totalViewers) {
+            const tableBody = document.getElementById('streams-table-body');
+            
+            if (Object.keys(activeStreams).length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="10" class="text-center text-muted">暂无数据</td></tr>';
+                return;
+            }
+            
+            const sortedStreams = Object.entries(activeStreams)
+                .sort(([,a], [,b]) => (b.total_viewers || 0) - (a.total_viewers || 0));
+            
+            tableBody.innerHTML = sortedStreams.map(([uid, data], index) => {
+                const weightPercent = totalViewers > 0 ? ((streamWeights[uid] || 0) / totalViewers * 100).toFixed(1) : '0.0';
+                const startTime = data.start_time ? moment(data.start_time).format('MM-DD HH:mm') : '-';
+                const duration = data.start_time && data.is_live ? 
+                    moment.duration(moment().diff(moment(data.start_time))).humanize() : '-';
+                
+                return `
+                    <tr class="${data.is_live ? 'table-success' : ''}">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-${index === 0 ? 'warning' : index === 1 ? 'secondary' : 'dark'} me-2">
+                                    ${index + 1}
+                                </span>
+                                <strong>@${uid}</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge ${data.is_live ? 'bg-success' : 'bg-secondary'}">
+                                ${data.is_live ? '在线' : '离线'}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="text-primary fw-bold">${(data.current_viewers || 0).toLocaleString()}</span>
+                        </td>
+                        <td>
+                            <span class="text-info fw-bold">${(data.total_viewers || 0).toLocaleString()}</span>
+                        </td>
+                        <td>${(data.total_likes || 0).toLocaleString()}</td>
+                        <td>${(data.total_comments || 0).toLocaleString()}</td>
+                        <td>${(data.total_gifts || 0).toLocaleString()}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="progress me-2" style="width: 50px; height: 8px;">
+                                    <div class="progress-bar bg-info" style="width: ${weightPercent}%"></div>
+                                </div>
+                                <small>${weightPercent}%</small>
+                            </div>
+                        </td>
+                        <td>
+                            <small>${startTime}</small>
+                            ${duration !== '-' ? `<br><small class="text-muted">${duration}</small>` : ''}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1" onclick="displayStreamData('${uid}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="stopMonitor('${uid}')">
+                                <i class="fas fa-stop"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 刷新表格
+        function refreshTable() {
+            updateAllData();
         }
     </script>
 </body>

@@ -4831,3 +4831,965 @@ TikTokLive.client.errors.AgeRestrictedError: TikTokLive v6.5.3 -> Age restricted
 2025-06-08 18:57:42,498 - __main__ - INFO - 收到点赞: 用户=usernrv5ivopd7, 数量=15
 2025-06-08 18:57:43,297 - werkzeug - INFO -  * Detected change in 'C:\\Users\\zilai\\Desktop\\tiktok\\tiktok_monitor\\main.py', reloading
 2025-06-08 18:57:43,729 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:01:51,288 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:01:52,888 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 19:01:52,895 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 19:01:53,147 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 19:01:53,148 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 19:01:55,845 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:01:55] "GET / HTTP/1.1" 200 -
+2025-06-08 19:01:56,083 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PTEncle HTTP/1.1" 200 -
+2025-06-08 19:01:56,085 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:01:56] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-08 19:01:56,218 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:01:56] "POST /socket.io/?EIO=4&transport=polling&t=PTEncno&sid=yuPJm2HCzo1-blkMAAAA HTTP/1.1" 200 -
+2025-06-08 19:01:56,235 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PTEncnq&sid=yuPJm2HCzo1-blkMAAAA HTTP/1.1" 200 -
+2025-06-08 19:01:56,334 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PTEncpf&sid=yuPJm2HCzo1-blkMAAAA HTTP/1.1" 200 -
+2025-06-08 19:01:56,344 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PTEncpo&sid=yuPJm2HCzo1-blkMAAAA HTTP/1.1" 200 -
+2025-06-08 19:02:04,140 - __main__ - INFO - 收到开始监控请求: diyjojo_sonieru, sessionid: 未提供
+2025-06-08 19:02:04,140 - __main__ - INFO - 创建监控实例: diyjojo_sonieru
+2025-06-08 19:02:04,140 - __main__ - ERROR - 创建或启动监控实例失败: TikTokLiveClient.__init__() got an unexpected keyword argument 'headers'
+Traceback (most recent call last):
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 859, in start_monitor
+    monitor = TikTokLiveMonitor(unique_id, sessionid)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 57, in __init__
+    self.client: Optional[TikTokLiveClient] = TikTokLiveClient(
+                                              ^^^^^^^^^^^^^^^^^
+TypeError: TikTokLiveClient.__init__() got an unexpected keyword argument 'headers'
+2025-06-08 19:02:04,148 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:02:04] "[35m[1mPOST /start_monitor HTTP/1.1[0m" 500 -
+2025-06-08 19:02:07,065 - __main__ - INFO - 收到开始监控请求: diyjojo_sonieru, sessionid: 未提供
+2025-06-08 19:02:07,065 - __main__ - INFO - 创建监控实例: diyjojo_sonieru
+2025-06-08 19:02:07,065 - __main__ - ERROR - 创建或启动监控实例失败: TikTokLiveClient.__init__() got an unexpected keyword argument 'headers'
+Traceback (most recent call last):
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 859, in start_monitor
+    monitor = TikTokLiveMonitor(unique_id, sessionid)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 57, in __init__
+    self.client: Optional[TikTokLiveClient] = TikTokLiveClient(
+                                              ^^^^^^^^^^^^^^^^^
+TypeError: TikTokLiveClient.__init__() got an unexpected keyword argument 'headers'
+2025-06-08 19:02:07,066 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:02:07] "[35m[1mPOST /start_monitor HTTP/1.1[0m" 500 -
+2025-06-08 19:05:48,817 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:05:51,114 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 19:05:51,124 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 19:05:51,456 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 19:05:51,457 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 19:05:51,926 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:51] "GET /socket.io/?EIO=4&transport=polling&t=PTEoWKn HTTP/1.1" 200 -
+2025-06-08 19:05:51,932 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:51] "POST /socket.io/?EIO=4&transport=polling&t=PTEoWKv&sid=9yPmVJTjFPgSmZrUAAAA HTTP/1.1" 200 -
+2025-06-08 19:05:51,936 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:51] "GET /socket.io/?EIO=4&transport=polling&t=PTEoWKx&sid=9yPmVJTjFPgSmZrUAAAA HTTP/1.1" 200 -
+2025-06-08 19:05:54,664 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:54] "GET / HTTP/1.1" 200 -
+2025-06-08 19:05:54,948 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:54] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-08 19:05:54,948 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:54] "GET /socket.io/?EIO=4&transport=polling&t=PTEoX34 HTTP/1.1" 200 -
+2025-06-08 19:05:55,020 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:55] "POST /socket.io/?EIO=4&transport=polling&t=PTEoX57&sid=dTRVYWo49oDFW5d5AAAC HTTP/1.1" 200 -
+2025-06-08 19:05:55,030 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:55] "GET /socket.io/?EIO=4&transport=polling&t=PTEoX58&sid=dTRVYWo49oDFW5d5AAAC HTTP/1.1" 200 -
+2025-06-08 19:05:55,125 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:55] "GET /socket.io/?EIO=4&transport=polling&t=PTEoX6l&sid=dTRVYWo49oDFW5d5AAAC HTTP/1.1" 200 -
+2025-06-08 19:05:56,194 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:56] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:05:56,875 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:05:56] "GET /socket.io/?EIO=4&transport=websocket&sid=9yPmVJTjFPgSmZrUAAAA HTTP/1.1" 200 -
+2025-06-08 19:06:00,990 - werkzeug - INFO -  * Detected change in 'C:\\Users\\zilai\\Desktop\\tiktok\\tiktok_monitor\\main.py', reloading
+2025-06-08 19:06:01,180 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:06:03,062 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 19:06:03,069 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 19:06:03,359 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 19:06:03,360 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 19:06:03,449 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:06:03] "GET /socket.io/?EIO=4&transport=polling&t=PTEoYn5 HTTP/1.1" 200 -
+2025-06-08 19:06:03,465 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:06:03] "POST /socket.io/?EIO=4&transport=polling&t=PTEoZ92&sid=a8svJQVaVZK67zORAAAA HTTP/1.1" 200 -
+2025-06-08 19:06:03,470 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:06:03] "GET /socket.io/?EIO=4&transport=polling&t=PTEoZ94&sid=a8svJQVaVZK67zORAAAA HTTP/1.1" 200 -
+2025-06-08 19:06:10,683 - __main__ - INFO - 收到开始监控请求: diyjojo_sonieru, sessionid: 未提供
+2025-06-08 19:06:10,684 - __main__ - INFO - 创建监控实例: diyjojo_sonieru
+2025-06-08 19:06:11,269 - __main__ - INFO - 启动监控线程: diyjojo_sonieru
+2025-06-08 19:06:11,269 - __main__ - INFO - 监控线程已启动: diyjojo_sonieru
+2025-06-08 19:06:11,269 - __main__ - INFO - 发送初始数据: diyjojo_sonieru
+2025-06-08 19:06:11,269 - __main__ - INFO - 成功启动监控: diyjojo_sonieru
+2025-06-08 19:06:11,269 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:06:11] "POST /start_monitor HTTP/1.1" 200 -
+2025-06-08 19:06:12,582 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 19:06:12,584 - __main__ - INFO - HTML 解析房间ID失败，使用 API 获取
+2025-06-08 19:06:13,100 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/api-live/user/room/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-BZ&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36%20Edg%2F128.0.2739.79&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=14&is_fullscreen=false&is_page_visible=true&screen_height=2560&screen_width=1440&tz_name=America/Belize&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=BZ&region=BZ&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=51921039060739993790&uniqueId=diyjojo_sonieru&sourceType=54 "HTTP/1.1 200 OK"
+2025-06-08 19:06:13,106 - __main__ - ERROR - 获取房间信息失败: 'utf-8' codec can't decode byte 0xa4 in position 1: invalid start byte
+Traceback (most recent call last):
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 562, in fetch_room_info
+    room_id = await self.client.web.fetch_room_id_from_html(self.client.unique_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\TikTokLive\client\web\routes\fetch_room_id_live_html.py", line 44, in __call__
+    return self.parse_room_id(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\TikTokLive\client\web\routes\fetch_room_id_live_html.py", line 61, in parse_room_id
+    raise FailedParseRoomIdError("Failed to extract the SIGI_STATE HTML tag, you might be blocked by TikTok.")
+TikTokLive.client.web.routes.fetch_room_id_live_html.FailedParseRoomIdError: TikTokLive v6.5.3 -> Failed to extract the SIGI_STATE HTML tag, you might be blocked by TikTok.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 565, in fetch_room_info
+    room_id = await self.client.web.fetch_room_id_from_api(self.client.unique_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\TikTokLive\client\web\routes\fetch_room_id_api.py", line 25, in __call__
+    room_data: dict = await self.fetch_user_room_data(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\TikTokLive\client\web\routes\fetch_room_id_api.py", line 54, in fetch_user_room_data
+    response_json: dict = response.json()
+                          ^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_models.py", line 832, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 341, in loads
+    s = s.decode(detect_encoding(s), 'surrogatepass')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa4 in position 1: invalid start byte
+2025-06-08 19:06:13,209 - __main__ - INFO - @diyjojo_sonieru 无法获取房间信息
+2025-06-08 19:06:13,209 - __main__ - INFO - 连接失败，60秒后重试 (连续失败: 1次)
+2025-06-08 19:06:16,931 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:06:16] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:06:55,936 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:06:55] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:06:55,937 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:06:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:07:15,132 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 19:07:15,132 - __main__ - INFO - HTML 解析房间ID失败，使用 API 获取
+2025-06-08 19:07:15,640 - werkzeug - INFO -  * Detected change in 'C:\\Users\\zilai\\Desktop\\tiktok\\tiktok_monitor\\main.py', reloading
+2025-06-08 19:07:15,847 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:07:17,479 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 19:07:17,495 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 19:07:17,733 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 19:07:17,733 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 19:07:17,924 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:17] "GET /socket.io/?EIO=4&transport=polling&t=PTEorKb HTTP/1.1" 200 -
+2025-06-08 19:07:17,936 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:17] "POST /socket.io/?EIO=4&transport=polling&t=PTEorKl&sid=oas8z8tLFhBU8szcAAAA HTTP/1.1" 200 -
+2025-06-08 19:07:17,939 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:17] "GET /socket.io/?EIO=4&transport=polling&t=PTEorKn&sid=oas8z8tLFhBU8szcAAAA HTTP/1.1" 200 -
+2025-06-08 19:07:24,563 - werkzeug - INFO -  * Detected change in 'C:\\Users\\zilai\\Desktop\\tiktok\\tiktok_monitor\\main.py', reloading
+2025-06-08 19:07:24,774 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:07:26,416 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 19:07:26,432 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 19:07:26,695 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 19:07:26,695 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 19:07:26,942 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:26] "GET /socket.io/?EIO=4&transport=polling&t=PTEotHa HTTP/1.1" 200 -
+2025-06-08 19:07:26,942 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:26] "POST /socket.io/?EIO=4&transport=polling&t=PTEotXa&sid=gymUnpiNAtqhwl7PAAAA HTTP/1.1" 200 -
+2025-06-08 19:07:26,942 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:26] "GET /socket.io/?EIO=4&transport=polling&t=PTEotXb&sid=gymUnpiNAtqhwl7PAAAA HTTP/1.1" 200 -
+2025-06-08 19:07:33,215 - werkzeug - INFO -  * Detected change in 'C:\\Users\\zilai\\Desktop\\tiktok\\tiktok_monitor\\main.py', reloading
+2025-06-08 19:07:33,423 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:07:35,028 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 19:07:35,043 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 19:07:35,305 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 19:07:35,305 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 19:07:35,425 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:35] "GET /socket.io/?EIO=4&transport=polling&t=PTEovU6 HTTP/1.1" 200 -
+2025-06-08 19:07:35,432 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:35] "POST /socket.io/?EIO=4&transport=polling&t=PTEovc7&sid=dnWioARUu6sNzBtKAAAA HTTP/1.1" 200 -
+2025-06-08 19:07:35,438 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:35] "GET /socket.io/?EIO=4&transport=polling&t=PTEovc8&sid=dnWioARUu6sNzBtKAAAA HTTP/1.1" 200 -
+2025-06-08 19:07:55,919 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:55] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:07:55,919 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:07:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:08:55,931 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:08:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:09:55,926 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:09:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:10:55,924 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:10:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:11:55,926 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:11:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:24:54,730 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:24:56,434 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 19:24:56,444 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 19:24:56,812 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 19:24:56,813 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 19:24:59,882 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:24:59] "GET / HTTP/1.1" 200 -
+2025-06-08 19:24:59,969 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:24:59] "GET /socket.io/?EIO=4&transport=polling&t=PTEsucG HTTP/1.1" 200 -
+2025-06-08 19:24:59,986 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:24:59] "POST /socket.io/?EIO=4&transport=polling&t=PTEsud9&sid=wf2KawyLNrP43RrSAAAA HTTP/1.1" 200 -
+2025-06-08 19:24:59,992 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:24:59] "GET /socket.io/?EIO=4&transport=polling&t=PTEsudC&sid=wf2KawyLNrP43RrSAAAA HTTP/1.1" 200 -
+2025-06-08 19:25:00,038 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:00] "GET /socket.io/?EIO=4&transport=polling&t=PTEsue1&sid=wf2KawyLNrP43RrSAAAA HTTP/1.1" 200 -
+2025-06-08 19:25:00,147 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:00] "GET /socket.io/?EIO=4&transport=polling&t=PTEsuf5 HTTP/1.1" 200 -
+2025-06-08 19:25:00,149 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:00] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-08 19:25:00,270 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:00] "POST /socket.io/?EIO=4&transport=polling&t=PTEsuhU&sid=3R0zWE6mWNMTZQIuAAAC HTTP/1.1" 200 -
+2025-06-08 19:25:00,297 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:00] "GET /socket.io/?EIO=4&transport=polling&t=PTEsuhW&sid=3R0zWE6mWNMTZQIuAAAC HTTP/1.1" 200 -
+2025-06-08 19:25:00,399 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:00] "GET /socket.io/?EIO=4&transport=polling&t=PTEsujY&sid=3R0zWE6mWNMTZQIuAAAC HTTP/1.1" 200 -
+2025-06-08 19:25:09,166 - __main__ - INFO - 收到开始监控请求: diyjojo_sonieru, sessionid: 未提供
+2025-06-08 19:25:09,167 - __main__ - INFO - 创建监控实例: diyjojo_sonieru
+2025-06-08 19:25:09,662 - __main__ - INFO - 已设置随机User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0...
+2025-06-08 19:25:09,662 - __main__ - INFO - 启动监控线程: diyjojo_sonieru
+2025-06-08 19:25:09,662 - __main__ - INFO - 监控线程已启动: diyjojo_sonieru
+2025-06-08 19:25:09,662 - __main__ - INFO - 发送初始数据: diyjojo_sonieru
+2025-06-08 19:25:09,662 - __main__ - INFO - 成功启动监控: diyjojo_sonieru
+2025-06-08 19:25:09,662 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:09] "POST /start_monitor HTTP/1.1" 200 -
+2025-06-08 19:25:10,024 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 19:25:10,025 - __main__ - WARNING - HTML 解析房间ID失败: TikTokLive v6.5.3 -> Failed to extract the SIGI_STATE HTML tag, you might be blocked by TikTok.
+2025-06-08 19:25:14,924 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:14] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:25:23,934 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:25:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:26:00,927 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:26:00] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:26:00,928 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:26:00] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:26:23,932 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:26:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:27:00,928 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:27:00] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:27:00,929 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:27:00] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:27:10,226 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/api-live/user/room/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-ZA&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=8&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Africa/Johannesburg&channel=tiktok_web&data_collection_enabled=true&os=windows&priority_region=ZA&region=ZA&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=27502858587147603407&uniqueId=diyjojo_sonieru&sourceType=54 "HTTP/1.1 200 OK"
+2025-06-08 19:27:10,231 - __main__ - ERROR - API获取房间ID也失败: 'utf-8' codec can't decode byte 0xac in position 1: invalid start byte
+2025-06-08 19:27:10,232 - __main__ - WARNING - 可能被TikTok检测到，已启动反检测保护
+2025-06-08 19:27:10,233 - __main__ - ERROR - 获取房间信息失败: 获取房间信息被阻止，已启动反检测保护机制
+Traceback (most recent call last):
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 583, in fetch_room_info
+    room_id = await self.client.web.fetch_room_id_from_html(self.client.unique_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\TikTokLive\client\web\routes\fetch_room_id_live_html.py", line 44, in __call__
+    return self.parse_room_id(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\TikTokLive\client\web\routes\fetch_room_id_live_html.py", line 61, in parse_room_id
+    raise FailedParseRoomIdError("Failed to extract the SIGI_STATE HTML tag, you might be blocked by TikTok.")
+TikTokLive.client.web.routes.fetch_room_id_live_html.FailedParseRoomIdError: TikTokLive v6.5.3 -> Failed to extract the SIGI_STATE HTML tag, you might be blocked by TikTok.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 593, in fetch_room_info
+    room_id = await self.client.web.fetch_room_id_from_api(self.client.unique_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\TikTokLive\client\web\routes\fetch_room_id_api.py", line 25, in __call__
+    room_data: dict = await self.fetch_user_room_data(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\TikTokLive\client\web\routes\fetch_room_id_api.py", line 54, in fetch_user_room_data
+    response_json: dict = response.json()
+                          ^^^^^^^^^^^^^^^
+  File "C:\Users\zilai\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_models.py", line 832, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 341, in loads
+    s = s.decode(detect_encoding(s), 'surrogatepass')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xac in position 1: invalid start byte
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\zilai\Desktop\tiktok\tiktok_monitor\main.py", line 601, in fetch_room_info
+    raise Exception("获取房间信息被阻止，已启动反检测保护机制")
+Exception: 获取房间信息被阻止，已启动反检测保护机制
+2025-06-08 19:27:10,239 - __main__ - INFO - @diyjojo_sonieru 无法获取房间信息
+2025-06-08 19:27:10,240 - __main__ - INFO - 连接失败，120秒后重试 (连续失败: 1次)
+2025-06-08 19:27:23,923 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:27:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:28:00,926 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:28:00] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:28:00,927 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:28:00] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:28:23,932 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:28:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:29:00,924 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:29:00] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:29:00,925 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:29:00] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:29:23,926 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:29:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:30:00,931 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:30:00] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:30:00,933 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:30:00] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:30:23,927 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:30:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:31:00,927 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:31:00] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:31:00,929 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:31:00] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:31:23,923 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:31:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:32:23,933 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:32:23] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:32:23,934 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:32:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:32:23,939 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:32:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:33:13,739 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:33:13] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 19:33:13,742 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:33:13] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:33:14,592 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:33:14] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 19:33:19,695 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:33:19] "GET /socket.io/?EIO=4&transport=websocket&sid=wf2KawyLNrP43RrSAAAA HTTP/1.1" 200 -
+2025-06-08 19:33:20,009 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 19:33:20] "GET /socket.io/?EIO=4&transport=websocket&sid=3R0zWE6mWNMTZQIuAAAC HTTP/1.1" 200 -
+2025-06-08 19:58:49,322 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 19:58:51,115 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 19:58:51,123 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 19:58:51,559 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 19:58:51,560 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 20:09:53,278 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:09:53] "GET / HTTP/1.1" 200 -
+2025-06-08 20:09:53,576 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:09:53] "GET /socket.io/?EIO=4&transport=polling&t=PTF1AEZ HTTP/1.1" 200 -
+2025-06-08 20:09:53,576 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:09:53] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-08 20:09:53,735 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:09:53] "POST /socket.io/?EIO=4&transport=polling&t=PTF1AH4&sid=pJi8QYPJ5u-9ORNiAAAA HTTP/1.1" 200 -
+2025-06-08 20:09:53,763 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:09:53] "GET /socket.io/?EIO=4&transport=polling&t=PTF1AHC&sid=pJi8QYPJ5u-9ORNiAAAA HTTP/1.1" 200 -
+2025-06-08 20:09:53,855 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:09:53] "GET /socket.io/?EIO=4&transport=polling&t=PTF1AIx&sid=pJi8QYPJ5u-9ORNiAAAA HTTP/1.1" 200 -
+2025-06-08 20:09:53,861 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:09:53] "GET /socket.io/?EIO=4&transport=polling&t=PTF1AJC&sid=pJi8QYPJ5u-9ORNiAAAA HTTP/1.1" 200 -
+2025-06-08 20:10:02,018 - __main__ - INFO - 收到开始监控请求: diyjojo_sonieru, sessionid: 未提供
+2025-06-08 20:10:02,018 - __main__ - INFO - 创建监控实例: diyjojo_sonieru
+2025-06-08 20:10:02,896 - __main__ - INFO - 启动监控线程: diyjojo_sonieru
+2025-06-08 20:10:02,896 - __main__ - INFO - 监控线程已启动: diyjojo_sonieru
+2025-06-08 20:10:02,896 - __main__ - INFO - 发送初始数据: diyjojo_sonieru
+2025-06-08 20:10:02,912 - __main__ - INFO - 成功启动监控: diyjojo_sonieru
+2025-06-08 20:10:02,913 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:02] "POST /start_monitor HTTP/1.1" 200 -
+2025-06-08 20:10:03,322 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 20:10:03,323 - __main__ - INFO - HTML 解析房间ID失败，使用 API 获取
+2025-06-08 20:10:03,703 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:03] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:10:03,796 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/api-live/user/room/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=33925490668889533963&uniqueId=diyjojo_sonieru&sourceType=54 "HTTP/1.1 200 OK"
+2025-06-08 20:10:04,231 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=18121526920146063532&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:10:04,917 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=61134158942541504171&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:10:05,256 - __main__ - INFO - 已将房间信息写入文件: diyjojo_sonieru_tiktoklive_info.json
+2025-06-08 20:10:05,260 - __main__ - INFO - 检查 @diyjojo_sonieru 是否在直播...
+2025-06-08 20:10:05,261 - __main__ - INFO - 开始监控 @diyjojo_sonieru 的直播...
+2025-06-08 20:10:05,541 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/check_alive/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=89118145556009413001&room_id=7513488458600106760&room_ids=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:10:05,922 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=97021097633352660687&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:10:06,592 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=77100730059913903750&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:10:08,207 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:08] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:10:08,267 - httpx - INFO - HTTP Request: GET https://tiktok.eulerstream.com/webcast/fetch/?client=ttlive-python&room_id=7513488458600106760&user_agent=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+14.7%3B+rv%3A130.0%29+Gecko%2F20100101+Firefox%2F130.0 "HTTP/1.1 200 OK"
+2025-06-08 20:10:08,686 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 20:10:08,686 - __main__ - INFO - HTML 解析房间ID失败，使用 API 获取
+2025-06-08 20:10:09,223 - __main__ - INFO - 已连接到直播间 @diyjojo_sonieru (房间ID: 7513488458600106760)
+2025-06-08 20:10:09,223 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:09,223 - __main__ - INFO - 获取到观众数量: 589，使用属性: m_total
+2025-06-08 20:10:09,235 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/api-live/user/room/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=35017939840914675088&room_id=7513488458600106760&uniqueId=diyjojo_sonieru&sourceType=54 "HTTP/1.1 200 OK"
+2025-06-08 20:10:09,300 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:09,302 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:09,680 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=11900936898604189919&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:10:09,880 - __main__ - INFO - 获取到观众数量: 589，使用属性: m_total
+2025-06-08 20:10:10,335 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=59421012378288507377&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:10:10,500 - __main__ - INFO - 已将房间信息写入文件: diyjojo_sonieru_tiktoklive_info.json
+2025-06-08 20:10:10,500 - __main__ - INFO - 检查 @diyjojo_sonieru 是否在直播...
+2025-06-08 20:10:10,500 - __main__ - INFO - 开始监控 @diyjojo_sonieru 的直播...
+2025-06-08 20:10:10,500 - __main__ - ERROR - 连接直播间失败: TikTokLive v6.5.3 -> You can only make one connection per client!
+2025-06-08 20:10:10,500 - __main__ - INFO - 连接失败，30秒后重试 (连续失败: 1次)
+2025-06-08 20:10:10,684 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:10:11,506 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:10:12,306 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:13,100 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:10:13,100 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:10:13,703 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:13] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:10:13,703 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:13] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:10:14,678 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:15,457 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:16,284 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:10:17,228 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:17,229 - __main__ - INFO - 获取到观众数量: 597，使用属性: m_total
+2025-06-08 20:10:18,698 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:10:19,506 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:19,506 - __main__ - INFO - 获取到观众数量: 596，使用属性: m_total
+2025-06-08 20:10:20,361 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:20,363 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:10:21,197 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:10:22,879 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:23,625 - __main__ - INFO - 获取到观众数量: 598，使用属性: m_total
+2025-06-08 20:10:23,935 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:23] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:10:23,937 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:10:26,103 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:26,104 - __main__ - INFO - 获取到观众数量: 599，使用属性: m_total
+2025-06-08 20:10:26,935 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:28,549 - __main__ - INFO - 获取到观众数量: 599，使用属性: m_total
+2025-06-08 20:10:28,549 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:29,393 - __main__ - INFO - 获取到观众数量: 600，使用属性: m_total
+2025-06-08 20:10:30,163 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:30,965 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:31,828 - __main__ - INFO - 获取到观众数量: 600，使用属性: m_total
+2025-06-08 20:10:33,421 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:10:33,421 - __main__ - INFO - 获取到观众数量: 597，使用属性: m_total
+2025-06-08 20:10:33,721 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:33] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:10:33,723 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:33] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:10:34,221 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:35,924 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:10:35,924 - __main__ - INFO - 获取到观众数量: 597，使用属性: m_total
+2025-06-08 20:10:37,541 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:37,541 - __main__ - INFO - 获取到观众数量: 602，使用属性: m_total
+2025-06-08 20:10:39,956 - __main__ - INFO - 获取到观众数量: 598，使用属性: m_total
+2025-06-08 20:10:39,958 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:10:40,508 - __main__ - INFO - @diyjojo_sonieru 已经连接，不再重新连接
+2025-06-08 20:10:41,644 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:41,644 - __main__ - INFO - 获取到观众数量: 599，使用属性: m_total
+2025-06-08 20:10:42,350 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:43,210 - __main__ - INFO - 获取到观众数量: 600，使用属性: m_total
+2025-06-08 20:10:43,716 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:43] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:10:43,716 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:43] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:10:44,031 - __main__ - INFO - 收到点赞: 用户=ma512i, 数量=1
+2025-06-08 20:10:44,796 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:45,567 - __main__ - INFO - 获取到观众数量: 600，使用属性: m_total
+2025-06-08 20:10:45,583 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=11
+2025-06-08 20:10:47,230 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:47,230 - __main__ - INFO - 获取到观众数量: 599，使用属性: m_total
+2025-06-08 20:10:48,901 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:10:48,901 - __main__ - INFO - 获取到观众数量: 599，使用属性: m_total
+2025-06-08 20:10:51,398 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:10:51,398 - __main__ - INFO - 获取到观众数量: 598，使用属性: m_total
+2025-06-08 20:10:51,405 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:10:53,705 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:53] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:10:53,705 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:10:53] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:10:53,867 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:10:55,481 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=11
+2025-06-08 20:10:55,481 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:10:57,126 - __main__ - INFO - 获取到观众数量: 592，使用属性: m_total
+2025-06-08 20:10:57,128 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=4
+2025-06-08 20:10:59,594 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:11:00,377 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:11:01,975 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:11:02,854 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=15
+2025-06-08 20:11:03,578 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:11:03,578 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:11:03,706 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:03] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:11:03,708 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:03] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:11:05,281 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=15
+2025-06-08 20:11:05,281 - __main__ - INFO - 获取到观众数量: 586，使用属性: m_total
+2025-06-08 20:11:05,287 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:06,850 - __main__ - INFO - 获取到观众数量: 586，使用属性: m_total
+2025-06-08 20:11:07,746 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:11:07,746 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:11:08,534 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=5
+2025-06-08 20:11:09,352 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=5
+2025-06-08 20:11:09,352 - __main__ - INFO - 获取到观众数量: 594，使用属性: m_total
+2025-06-08 20:11:11,002 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=15
+2025-06-08 20:11:11,002 - __main__ - INFO - 获取到观众数量: 599，使用属性: m_total
+2025-06-08 20:11:12,632 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:12,633 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:13,421 - __main__ - INFO - 获取到观众数量: 600，使用属性: m_total
+2025-06-08 20:11:13,421 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=15
+2025-06-08 20:11:13,701 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:13] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:11:13,701 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:13] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:11:14,884 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:11:15,707 - __main__ - INFO - 获取到观众数量: 596，使用属性: m_total
+2025-06-08 20:11:15,723 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:16,562 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=14
+2025-06-08 20:11:17,317 - __main__ - INFO - 获取到观众数量: 596，使用属性: m_total
+2025-06-08 20:11:18,969 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:19,816 - __main__ - INFO - 获取到观众数量: 592，使用属性: m_total
+2025-06-08 20:11:19,816 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=6
+2025-06-08 20:11:19,950 - __main__ - INFO - 收到开始监控请求: minaonail, sessionid: 未提供
+2025-06-08 20:11:19,950 - __main__ - INFO - 创建监控实例: minaonail
+2025-06-08 20:11:20,350 - __main__ - INFO - 启动监控线程: minaonail
+2025-06-08 20:11:20,350 - __main__ - INFO - 监控线程已启动: minaonail
+2025-06-08 20:11:20,350 - __main__ - INFO - 发送初始数据: minaonail
+2025-06-08 20:11:20,350 - __main__ - INFO - 成功启动监控: minaonail
+2025-06-08 20:11:20,350 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:20] "POST /start_monitor HTTP/1.1" 200 -
+2025-06-08 20:11:20,691 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@minaonail/live? "HTTP/1.1 200 OK"
+2025-06-08 20:11:20,693 - __main__ - INFO - HTML 解析房间ID失败，使用 API 获取
+2025-06-08 20:11:21,178 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/api-live/user/room/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=86791207130103706454&uniqueId=minaonail&sourceType=54 "HTTP/1.1 200 OK"
+2025-06-08 20:11:21,449 - __main__ - INFO - 获取到观众数量: 592，使用属性: m_total
+2025-06-08 20:11:21,464 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:11:21,595 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=75980385686641689365&room_id=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:11:22,259 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=33122316707175020204&room_id=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:11:22,602 - __main__ - INFO - 已将房间信息写入文件: minaonail_tiktoklive_info.json
+2025-06-08 20:11:22,605 - __main__ - INFO - 检查 @minaonail 是否在直播...
+2025-06-08 20:11:22,605 - __main__ - INFO - 开始监控 @minaonail 的直播...
+2025-06-08 20:11:22,863 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/check_alive/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=59231114960126357610&room_id=7513494210566195989&room_ids=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:11:23,087 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:23,087 - __main__ - INFO - 获取到观众数量: 583，使用属性: m_total
+2025-06-08 20:11:23,215 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=36754697678027849903&room_id=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:11:23,705 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:23] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:11:23,705 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:11:23,835 - __main__ - INFO - 收到点赞: 用户=ssmm7011.23, 数量=12
+2025-06-08 20:11:23,852 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=54478503378784699113&room_id=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:11:25,357 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:25] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:11:25,520 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:11:25,520 - __main__ - INFO - 获取到观众数量: 592，使用属性: m_total
+2025-06-08 20:11:25,557 - httpx - INFO - HTTP Request: GET https://tiktok.eulerstream.com/webcast/fetch/?client=ttlive-python&room_id=7513494210566195989&user_agent=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+14.7%3B+rv%3A130.0%29+Gecko%2F20100101+Firefox%2F130.0 "HTTP/1.1 200 OK"
+2025-06-08 20:11:25,819 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@minaonail/live? "HTTP/1.1 200 OK"
+2025-06-08 20:11:25,819 - __main__ - INFO - HTML 解析房间ID失败，使用 API 获取
+2025-06-08 20:11:26,199 - __main__ - INFO - 已连接到直播间 @minaonail (房间ID: 7513494210566195989)
+2025-06-08 20:11:26,203 - __main__ - INFO - 收到点赞: 用户=dym3cc2pl7j3, 数量=15
+2025-06-08 20:11:26,203 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/api-live/user/room/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=63857450617941316557&room_id=7513494210566195989&uniqueId=minaonail&sourceType=54 "HTTP/1.1 200 OK"
+2025-06-08 20:11:26,549 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=19803312662085190809&room_id=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:11:27,012 - __main__ - INFO - 收到点赞: 用户=dym3cc2pl7j3, 数量=6
+2025-06-08 20:11:27,012 - __main__ - INFO - 获取到观众数量: 127，使用属性: m_total
+2025-06-08 20:11:27,180 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:27,207 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=36008771924871711035&room_id=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:11:27,332 - __main__ - INFO - 已将房间信息写入文件: minaonail_tiktoklive_info.json
+2025-06-08 20:11:27,332 - __main__ - INFO - 检查 @minaonail 是否在直播...
+2025-06-08 20:11:27,332 - __main__ - INFO - 开始监控 @minaonail 的直播...
+2025-06-08 20:11:27,332 - __main__ - ERROR - 连接直播间失败: TikTokLive v6.5.3 -> You can only make one connection per client!
+2025-06-08 20:11:27,332 - __main__ - INFO - 连接失败，30秒后重试 (连续失败: 1次)
+2025-06-08 20:11:27,828 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:11:27,986 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:11:27,986 - __main__ - INFO - 获取到观众数量: 594，使用属性: m_total
+2025-06-08 20:11:29,426 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:11:29,603 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:11:30,192 - __main__ - INFO - 获取到观众数量: 129，使用属性: m_total
+2025-06-08 20:11:30,487 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:30,487 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:11:31,018 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:11:31,018 - __main__ - INFO - 获取到观众数量: 129，使用属性: m_total
+2025-06-08 20:11:31,273 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:11:31,767 - __main__ - INFO - 收到点赞: 用户=user7593063138794, 数量=15
+2025-06-08 20:11:32,087 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=15
+2025-06-08 20:11:32,605 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:11:32,873 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:11:33,440 - __main__ - INFO - 获取到观众数量: 127，使用属性: m_total
+2025-06-08 20:11:33,440 - __main__ - INFO - 收到点赞: 用户=user7593063138794, 数量=15
+2025-06-08 20:11:33,720 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:33] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:11:33,725 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:33] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:11:33,726 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:33] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:11:33,804 - __main__ - INFO - 获取到观众数量: 582，使用属性: m_total
+2025-06-08 20:11:33,805 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:35,036 - __main__ - INFO - 收到点赞: 用户=user7593063138794, 数量=15
+2025-06-08 20:11:36,230 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:36,240 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:11:37,034 - __main__ - INFO - 获取到观众数量: 594，使用属性: m_total
+2025-06-08 20:11:37,496 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:11:37,496 - __main__ - INFO - 获取到观众数量: 127，使用属性: m_total
+2025-06-08 20:11:37,856 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=10
+2025-06-08 20:11:38,264 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:11:38,712 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:39,073 - __main__ - INFO - 获取到观众数量: 129，使用属性: m_total
+2025-06-08 20:11:39,459 - __main__ - INFO - 获取到观众数量: 594，使用属性: m_total
+2025-06-08 20:11:39,461 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=5
+2025-06-08 20:11:39,927 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:11:41,101 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:41,102 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:11:41,193 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 20:11:41,578 - __main__ - INFO - 收到点赞: 用户=cocchan04, 数量=15
+2025-06-08 20:11:41,578 - __main__ - INFO - 获取到观众数量: 129，使用属性: m_total
+2025-06-08 20:11:41,581 - __main__ - INFO - 收到点赞: 用户=user7593063138794, 数量=15
+2025-06-08 20:11:41,864 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=50671947086479603666&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:11:41,900 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:42,510 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=13985556651509084238&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:11:42,871 - __main__ - INFO - 已将房间信息写入文件: diyjojo_sonieru_tiktoklive_info.json
+2025-06-08 20:11:43,144 - __main__ - INFO - 收到点赞: 用户=user7593063138794, 数量=15
+2025-06-08 20:11:43,548 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:11:43,704 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:43] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:11:43,704 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:43] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:11:43,713 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:43] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:11:43,946 - __main__ - INFO - 获取到观众数量: 129，使用属性: m_total
+2025-06-08 20:11:44,330 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:45,117 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:11:45,117 - __main__ - INFO - 获取到观众数量: 586，使用属性: m_total
+2025-06-08 20:11:45,600 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:11:45,601 - __main__ - INFO - 获取到观众数量: 129，使用属性: m_total
+2025-06-08 20:11:45,921 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:46,415 - __main__ - INFO - 收到点赞: 用户=cocchan04, 数量=15
+2025-06-08 20:11:46,750 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=6
+2025-06-08 20:11:47,253 - __main__ - INFO - 获取到观众数量: 129，使用属性: m_total
+2025-06-08 20:11:47,569 - __main__ - INFO - 获取到观众数量: 586，使用属性: m_total
+2025-06-08 20:11:48,019 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=12
+2025-06-08 20:11:48,418 - __main__ - INFO - 收到点赞: 用户=tom05961, 数量=1
+2025-06-08 20:11:48,862 - __main__ - INFO - 获取到观众数量: 132，使用属性: m_total
+2025-06-08 20:11:49,146 - __main__ - INFO - 获取到观众数量: 586，使用属性: m_total
+2025-06-08 20:11:49,684 - __main__ - INFO - 收到点赞: 用户=user7593063138794, 数量=14
+2025-06-08 20:11:49,978 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:50,465 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:11:50,466 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:11:51,625 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=7
+2025-06-08 20:11:52,467 - __main__ - INFO - 获取到观众数量: 576，使用属性: m_total
+2025-06-08 20:11:52,972 - __main__ - INFO - 收到点赞: 用户=cocchan04, 数量=15
+2025-06-08 20:11:52,972 - __main__ - INFO - 获取到观众数量: 133，使用属性: m_total
+2025-06-08 20:11:53,304 - __main__ - INFO - 获取到观众数量: 585，使用属性: m_total
+2025-06-08 20:11:53,307 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:11:53,721 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:53] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:11:53,721 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:53] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:11:53,721 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:11:53] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:11:54,938 - __main__ - INFO - 获取到观众数量: 587，使用属性: m_total
+2025-06-08 20:11:55,301 - __main__ - INFO - 收到点赞: 用户=cocchan04, 数量=13
+2025-06-08 20:11:55,740 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:11:56,124 - __main__ - INFO - 获取到观众数量: 132，使用属性: m_total
+2025-06-08 20:11:56,951 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:11:57,334 - __main__ - INFO - @minaonail 已经连接，不再重新连接
+2025-06-08 20:11:57,420 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:11:57,420 - __main__ - INFO - 获取到观众数量: 586，使用属性: m_total
+2025-06-08 20:11:58,218 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:11:58,518 - __main__ - INFO - 获取到观众数量: 132，使用属性: m_total
+2025-06-08 20:11:58,518 - __main__ - INFO - 收到点赞: 用户=yuminika2, 数量=15
+2025-06-08 20:11:58,977 - __main__ - INFO - 获取到观众数量: 588，使用属性: m_total
+2025-06-08 20:11:59,791 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:00,191 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=1
+2025-06-08 20:12:00,191 - __main__ - INFO - 获取到观众数量: 134，使用属性: m_total
+2025-06-08 20:12:00,659 - __main__ - INFO - 获取到观众数量: 588，使用属性: m_total
+2025-06-08 20:12:00,966 - __main__ - INFO - 获取到观众数量: 134，使用属性: m_total
+2025-06-08 20:12:01,484 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:02,369 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:12:02,591 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:12:03,182 - __main__ - INFO - 获取到观众数量: 588，使用属性: m_total
+2025-06-08 20:12:03,184 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:03,341 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=6
+2025-06-08 20:12:03,703 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:03] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:12:03,706 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:03] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:12:03,708 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:03] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:12:04,183 - __main__ - INFO - 获取到观众数量: 131，使用属性: m_total
+2025-06-08 20:12:05,010 - __main__ - INFO - 获取到观众数量: 131，使用属性: m_total
+2025-06-08 20:12:05,010 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:05,617 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:05,617 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:06,441 - __main__ - INFO - 获取到观众数量: 587，使用属性: m_total
+2025-06-08 20:12:07,234 - __main__ - INFO - 获取到观众数量: 587，使用属性: m_total
+2025-06-08 20:12:08,042 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:08,241 - __main__ - INFO - 获取到观众数量: 133，使用属性: m_total
+2025-06-08 20:12:08,241 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:12:08,241 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:08,908 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:09,728 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:12:09,834 - __main__ - INFO - 获取到观众数量: 134，使用属性: m_total
+2025-06-08 20:12:11,331 - __main__ - INFO - 收到点赞: 用户=ria04210904, 数量=12
+2025-06-08 20:12:11,333 - __main__ - INFO - 获取到观众数量: 587，使用属性: m_total
+2025-06-08 20:12:11,333 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:11,466 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:11,466 - __main__ - INFO - 获取到观众数量: 134，使用属性: m_total
+2025-06-08 20:12:11,481 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:12:12,984 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:12,984 - __main__ - INFO - 获取到观众数量: 587，使用属性: m_total
+2025-06-08 20:12:13,717 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:13] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:12:13,724 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:13] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:12:13,726 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:13] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:12:13,798 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:13,914 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:14,649 - __main__ - INFO - 收到点赞: 用户=smile.77sn, 数量=6
+2025-06-08 20:12:15,493 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=2
+2025-06-08 20:12:16,214 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:16,266 - __main__ - INFO - 获取到观众数量: 134，使用属性: m_total
+2025-06-08 20:12:17,125 - __main__ - INFO - 获取到观众数量: 134，使用属性: m_total
+2025-06-08 20:12:17,835 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:12:17,837 - __main__ - INFO - 获取到观众数量: 578，使用属性: m_total
+2025-06-08 20:12:18,743 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:19,507 - __main__ - INFO - 获取到观众数量: 576，使用属性: m_total
+2025-06-08 20:12:20,303 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=12
+2025-06-08 20:12:21,122 - __main__ - INFO - 获取到观众数量: 135，使用属性: m_total
+2025-06-08 20:12:21,218 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:21,219 - __main__ - INFO - 获取到观众数量: 576，使用属性: m_total
+2025-06-08 20:12:21,936 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:22,816 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:22,831 - __main__ - INFO - 获取到观众数量: 592，使用属性: m_total
+2025-06-08 20:12:23,521 - __main__ - INFO - 获取到观众数量: 136，使用属性: m_total
+2025-06-08 20:12:23,706 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:23] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:12:23,709 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:23] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:12:23,711 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:12:24,413 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:24,413 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:12:25,134 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:25,135 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:25,213 - __main__ - INFO - 获取到观众数量: 592，使用属性: m_total
+2025-06-08 20:12:26,027 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:26,794 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:12:27,556 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:27,556 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=9
+2025-06-08 20:12:27,607 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:28,381 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:28,438 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:29,230 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:12:29,232 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:12:30,833 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:30,894 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:30,910 - __main__ - INFO - 获取到观众数量: 597，使用属性: m_total
+2025-06-08 20:12:31,713 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:32,402 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:32,402 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:33,184 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:33,343 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:33,343 - __main__ - INFO - 获取到观众数量: 598，使用属性: m_total
+2025-06-08 20:12:33,708 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:33] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:12:33,715 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:33] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:12:33,717 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:33] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:12:34,005 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:34,971 - __main__ - INFO - 获取到观众数量: 598，使用属性: m_total
+2025-06-08 20:12:35,622 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:35,797 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:12:36,472 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:37,243 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:37,461 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:12:37,465 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=8
+2025-06-08 20:12:38,063 - __main__ - INFO - 获取到观众数量: 138，使用属性: m_total
+2025-06-08 20:12:39,145 - __main__ - INFO - 获取到观众数量: 596，使用属性: m_total
+2025-06-08 20:12:39,145 - __main__ - INFO - 收到点赞: 用户=user40615003042600, 数量=15
+2025-06-08 20:12:39,698 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:39,698 - __main__ - INFO - 获取到观众数量: 138，使用属性: m_total
+2025-06-08 20:12:40,731 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:41,288 - __main__ - INFO - 获取到观众数量: 138，使用属性: m_total
+2025-06-08 20:12:41,533 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:12:42,400 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=3
+2025-06-08 20:12:43,184 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:43,184 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:12:43,667 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:43,667 - __main__ - INFO - 获取到观众数量: 138，使用属性: m_total
+2025-06-08 20:12:43,707 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:43] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:12:43,707 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:43] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:12:43,719 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:43] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:12:43,729 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 20:12:44,000 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:44,302 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=41647958543066737475&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:12:44,489 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=14
+2025-06-08 20:12:44,803 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:45,300 - __main__ - INFO - 收到点赞: 用户=haru64165, 数量=1
+2025-06-08 20:12:45,300 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=8
+2025-06-08 20:12:45,649 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:12:45,652 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:45,734 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=60806216000195802725&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:12:46,035 - __main__ - INFO - 已将房间信息写入文件: diyjojo_sonieru_tiktoklive_info.json
+2025-06-08 20:12:46,438 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:46,916 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:46,918 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:48,132 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:12:48,135 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=8
+2025-06-08 20:12:48,493 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:48,906 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:12:50,113 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:50,559 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:12:51,400 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:51,780 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:51,782 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:52,165 - __main__ - INFO - 获取到观众数量: 594，使用属性: m_total
+2025-06-08 20:12:53,059 - __main__ - INFO - 获取到观众数量: 594，使用属性: m_total
+2025-06-08 20:12:53,395 - __main__ - INFO - 获取到观众数量: 140，使用属性: m_total
+2025-06-08 20:12:53,395 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:12:53,935 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:53,935 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:53] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:12:53,950 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:53] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:12:53,952 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:12:53] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:12:54,155 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:54,974 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:55,512 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:12:55,512 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:12:55,798 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:12:56,623 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:12:57,107 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:12:57,107 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:12:57,419 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:12:57,419 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:12:57,919 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=4
+2025-06-08 20:12:58,007 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@minaonail/live? "HTTP/1.1 200 OK"
+2025-06-08 20:12:58,219 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:12:58,523 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=78802185782603848521&room_id=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:12:58,761 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=6
+2025-06-08 20:12:59,019 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:12:59,204 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-AU&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2014.7%3B%20rv%3A130.0%29%20Gecko%2F20100101%20Firefox%2F130.0&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=9&is_fullscreen=false&is_page_visible=true&screen_height=2160&screen_width=4096&tz_name=Australia/Sydney&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=AU&region=AU&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@minaonail/live&root_referer=https://www.tiktok.com/@minaonail/live&device_id=67500562058840611937&room_id=7513494210566195989 "HTTP/1.1 200 OK"
+2025-06-08 20:12:59,553 - __main__ - INFO - 获取到观众数量: 585，使用属性: m_total
+2025-06-08 20:12:59,771 - __main__ - INFO - 已将房间信息写入文件: minaonail_tiktoklive_info.json
+2025-06-08 20:12:59,854 - __main__ - INFO - 获取到观众数量: 137，使用属性: m_total
+2025-06-08 20:12:59,857 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:00,653 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:01,229 - __main__ - INFO - 获取到观众数量: 594，使用属性: m_total
+2025-06-08 20:13:01,231 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:01,427 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=15
+2025-06-08 20:13:02,050 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:13:02,275 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=5
+2025-06-08 20:13:02,915 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=15
+2025-06-08 20:13:03,049 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:13:03,727 - __main__ - INFO - 获取到观众数量: 592，使用属性: m_total
+2025-06-08 20:13:03,729 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:03,945 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:03] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:13:03,947 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:03] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:13:03,947 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:03] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:13:05,373 - __main__ - INFO - 获取到观众数量: 592，使用属性: m_total
+2025-06-08 20:13:05,373 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:13:05,516 - __main__ - INFO - 收到点赞: 用户=kokoro4413, 数量=12
+2025-06-08 20:13:05,518 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:05,518 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:13:06,227 - __main__ - INFO - 收到点赞: 用户=user9607714952198, 数量=2
+2025-06-08 20:13:06,243 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:07,002 - __main__ - INFO - 获取到观众数量: 596，使用属性: m_total
+2025-06-08 20:13:07,028 - __main__ - INFO - 收到点赞: 用户=posumama, 数量=15
+2025-06-08 20:13:07,873 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:07,886 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:13:08,620 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:13:09,440 - __main__ - INFO - 获取到观众数量: 597，使用属性: m_total
+2025-06-08 20:13:09,474 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:10,213 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=4
+2025-06-08 20:13:10,266 - __main__ - INFO - 收到点赞: 用户=posumama, 数量=15
+2025-06-08 20:13:11,106 - __main__ - INFO - 获取到观众数量: 142，使用属性: m_total
+2025-06-08 20:13:11,106 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:11,895 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:13:11,897 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:11,942 - __main__ - INFO - 获取到观众数量: 597，使用属性: m_total
+2025-06-08 20:13:11,950 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:12,723 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:13:12,739 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:13:13,507 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:13,949 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:13] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:13:13,951 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:13] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:13:13,951 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:13] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:13:14,291 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:13:15,108 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:15,124 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:13:15,225 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:13:15,225 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:13:15,933 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:16,844 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:17,520 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:13:17,700 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:13:17,703 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:13:18,330 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:19,150 - __main__ - INFO - 获取到观众数量: 141，使用属性: m_total
+2025-06-08 20:13:19,150 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:19,282 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:20,021 - __main__ - INFO - 获取到观众数量: 597，使用属性: m_total
+2025-06-08 20:13:20,834 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:13:20,834 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:13:20,834 - __main__ - INFO - 获取到观众数量: 595，使用属性: m_total
+2025-06-08 20:13:21,548 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:21,630 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=5
+2025-06-08 20:13:22,370 - __main__ - INFO - 获取到观众数量: 143，使用属性: m_total
+2025-06-08 20:13:22,386 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:23,137 - __main__ - INFO - 获取到观众数量: 144，使用属性: m_total
+2025-06-08 20:13:23,333 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:13:23,334 - __main__ - INFO - 获取到观众数量: 594，使用属性: m_total
+2025-06-08 20:13:23,944 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:23] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:13:23,954 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:23] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:13:23,956 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:13:23,989 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:24,901 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:24,901 - __main__ - INFO - 获取到观众数量: 593，使用属性: m_total
+2025-06-08 20:13:25,551 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:25,551 - __main__ - INFO - 获取到观众数量: 144，使用属性: m_total
+2025-06-08 20:13:25,713 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=15
+2025-06-08 20:13:27,158 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:27,158 - __main__ - INFO - 获取到观众数量: 144，使用属性: m_total
+2025-06-08 20:13:27,332 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:27,333 - __main__ - INFO - 获取到观众数量: 590，使用属性: m_total
+2025-06-08 20:13:27,335 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=7
+2025-06-08 20:13:28,007 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:29,608 - __main__ - INFO - 获取到观众数量: 144，使用属性: m_total
+2025-06-08 20:13:29,788 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:30,433 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:30,604 - __main__ - INFO - 获取到观众数量: 588，使用属性: m_total
+2025-06-08 20:13:31,234 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:31,450 - __main__ - INFO - 收到点赞: 用户=ma512i, 数量=15
+2025-06-08 20:13:31,452 - __main__ - INFO - 获取到观众数量: 588，使用属性: m_total
+2025-06-08 20:13:32,036 - __main__ - INFO - 获取到观众数量: 142，使用属性: m_total
+2025-06-08 20:13:32,231 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:13:32,816 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:33,012 - __main__ - INFO - 获取到观众数量: 588，使用属性: m_total
+2025-06-08 20:13:33,641 - __main__ - INFO - 获取到观众数量: 142，使用属性: m_total
+2025-06-08 20:13:33,808 - __main__ - INFO - 收到点赞: 用户=ma512i, 数量=15
+2025-06-08 20:13:33,940 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:33] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:13:33,944 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:33] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:13:33,944 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:13:33] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:13:34,421 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:13:34,558 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=10
+2025-06-08 20:13:35,250 - __main__ - INFO - 获取到观众数量: 144，使用属性: m_total
+2025-06-08 20:13:35,431 - __main__ - INFO - 获取到观众数量: 587，使用属性: m_total
+2025-06-08 20:13:36,039 - __main__ - INFO - 收到点赞: 用户=busho_medaka23, 数量=15
+2025-06-08 20:13:37,045 - __main__ - INFO - 收到点赞: 用户=kouki_disney, 数量=12
+2025-06-08 20:13:37,046 - __main__ - INFO - 获取到观众数量: 587，使用属性: m_total
+2025-06-08 20:13:37,856 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:13:37,930 - __main__ - INFO - 收到点赞: 用户=ranka259, 数量=15
+2025-06-08 20:17:51,956 - werkzeug - INFO -  * Restarting with stat
+2025-06-08 20:17:54,130 - werkzeug - WARNING -  * Debugger is active!
+2025-06-08 20:17:54,142 - werkzeug - INFO -  * Debugger PIN: 415-190-945
+2025-06-08 20:17:54,469 - werkzeug - WARNING -  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2025-06-08 20:17:54,470 - werkzeug - INFO -  * Running on http://192.168.0.122:5000/ (Press CTRL+C to quit)
+2025-06-08 20:17:59,928 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:17:59] "GET /socket.io/?EIO=4&transport=polling&t=PTF30zo HTTP/1.1" 200 -
+2025-06-08 20:17:59,940 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:17:59] "POST /socket.io/?EIO=4&transport=polling&t=PTF30z_&sid=rMmvH_W6bI-VzAIYAAAA HTTP/1.1" 200 -
+2025-06-08 20:17:59,944 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:17:59] "GET /socket.io/?EIO=4&transport=polling&t=PTF30-2&sid=rMmvH_W6bI-VzAIYAAAA HTTP/1.1" 200 -
+2025-06-08 20:18:05,008 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:05] "GET / HTTP/1.1" 200 -
+2025-06-08 20:18:05,304 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:05] "GET /socket.io/?EIO=4&transport=polling&t=PTF32HK HTTP/1.1" 200 -
+2025-06-08 20:18:05,306 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:05] "GET /list_monitors HTTP/1.1" 200 -
+2025-06-08 20:18:05,418 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:05] "POST /socket.io/?EIO=4&transport=polling&t=PTF32JX&sid=ikkK-P-gCOo1DfMqAAAC HTTP/1.1" 200 -
+2025-06-08 20:18:05,423 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:05] "GET /socket.io/?EIO=4&transport=polling&t=PTF32JZ&sid=ikkK-P-gCOo1DfMqAAAC HTTP/1.1" 200 -
+2025-06-08 20:18:05,516 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:05] "GET /socket.io/?EIO=4&transport=polling&t=PTF32L5&sid=ikkK-P-gCOo1DfMqAAAC HTTP/1.1" 200 -
+2025-06-08 20:18:06,047 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:06] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:18:06,047 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:06] "GET /get_stream_data?unique_id=minaonail HTTP/1.1" 200 -
+2025-06-08 20:18:06,047 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:06] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:13,930 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:13] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:15,392 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:15] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:23,924 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:25,399 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:25] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:26,406 - __main__ - INFO - 收到开始监控请求: diyjojo_sonieru, sessionid: 未提供
+2025-06-08 20:18:26,406 - __main__ - INFO - 创建监控实例: diyjojo_sonieru
+2025-06-08 20:18:26,870 - __main__ - INFO - 启动监控线程: diyjojo_sonieru
+2025-06-08 20:18:26,870 - __main__ - INFO - 监控线程已启动: diyjojo_sonieru
+2025-06-08 20:18:26,870 - __main__ - INFO - 发送初始数据: diyjojo_sonieru
+2025-06-08 20:18:26,870 - __main__ - INFO - 成功启动监控: diyjojo_sonieru
+2025-06-08 20:18:26,870 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:26] "POST /start_monitor HTTP/1.1" 200 -
+2025-06-08 20:18:27,523 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 20:18:28,484 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-TT&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36%20Edg%2F128.0.2739.79&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=13&is_fullscreen=false&is_page_visible=true&screen_height=2880&screen_width=5120&tz_name=America/Port_of_Spain&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=TT&region=TT&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=90989795353682170219&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:18:29,488 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-TT&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36%20Edg%2F128.0.2739.79&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=13&is_fullscreen=false&is_page_visible=true&screen_height=2880&screen_width=5120&tz_name=America/Port_of_Spain&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=TT&region=TT&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=27417966897610140399&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:18:29,905 - __main__ - INFO - 已将房间信息写入文件: diyjojo_sonieru_tiktoklive_info.json
+2025-06-08 20:18:29,924 - __main__ - INFO - 检查 @diyjojo_sonieru 是否在直播...
+2025-06-08 20:18:29,924 - __main__ - INFO - 开始监控 @diyjojo_sonieru 的直播...
+2025-06-08 20:18:30,190 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/check_alive/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-TT&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36%20Edg%2F128.0.2739.79&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=13&is_fullscreen=false&is_page_visible=true&screen_height=2880&screen_width=5120&tz_name=America/Port_of_Spain&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=TT&region=TT&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=19696057387487533609&room_id=7513488458600106760&room_ids=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:18:30,541 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-TT&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36%20Edg%2F128.0.2739.79&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=13&is_fullscreen=false&is_page_visible=true&screen_height=2880&screen_width=5120&tz_name=America/Port_of_Spain&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=TT&region=TT&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=66920488590130793842&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:18:31,376 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-TT&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36%20Edg%2F128.0.2739.79&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=13&is_fullscreen=false&is_page_visible=true&screen_height=2880&screen_width=5120&tz_name=America/Port_of_Spain&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=TT&region=TT&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=29478562812740461826&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:18:31,920 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:31] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:18:32,995 - httpx - INFO - HTTP Request: GET https://tiktok.eulerstream.com/webcast/fetch/?client=ttlive-python&room_id=7513488458600106760&user_agent=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+10_15_7%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F129.0.0.0+Safari%2F537.36+Edg%2F128.0.2739.79 "HTTP/1.1 200 OK"
+2025-06-08 20:18:33,988 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:33] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:34,098 - __main__ - INFO - 已连接到直播间 @diyjojo_sonieru (房间ID: 7513488458600106760)
+2025-06-08 20:18:34,102 - __main__ - INFO - 获取到观众数量: 576，使用属性: m_total
+2025-06-08 20:18:34,105 - __main__ - INFO - 收到点赞: 用户=useretzo7xht1w, 数量=15
+2025-06-08 20:18:34,106 - __main__ - INFO - 收到点赞: 用户=user3011769814783, 数量=15
+2025-06-08 20:18:34,109 - httpx - INFO - HTTP Request: GET https://www.tiktok.com/@diyjojo_sonieru/live? "HTTP/1.1 200 OK"
+2025-06-08 20:18:34,172 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=15
+2025-06-08 20:18:34,585 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/room/info/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-TT&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36%20Edg%2F128.0.2739.79&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=13&is_fullscreen=false&is_page_visible=true&screen_height=2880&screen_width=5120&tz_name=America/Port_of_Spain&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=TT&region=TT&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=89398170078538374672&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:18:35,278 - httpx - INFO - HTTP Request: GET https://webcast.tiktok.com/webcast/gift/list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-TT&browser_name=Mozilla&browser_online=true&browser_platform=MacIntel&browser_version=5.0%20%28Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F129.0.0.0%20Safari%2F537.36%20Edg%2F128.0.2739.79&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=&history_len=13&is_fullscreen=false&is_page_visible=true&screen_height=2880&screen_width=5120&tz_name=America/Port_of_Spain&channel=tiktok_web&data_collection_enabled=true&os=mac&priority_region=TT&region=TT&user_is_login=false&webcast_language=en&msToken=&referer=https://www.tiktok.com/@diyjojo_sonieru/live&root_referer=https://www.tiktok.com/@diyjojo_sonieru/live&device_id=62139740639995311758&room_id=7513488458600106760 "HTTP/1.1 200 OK"
+2025-06-08 20:18:35,403 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:35] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:18:35,409 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:35] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:35,499 - __main__ - INFO - 已将房间信息写入文件: diyjojo_sonieru_tiktoklive_info.json
+2025-06-08 20:18:35,502 - __main__ - INFO - 检查 @diyjojo_sonieru 是否在直播...
+2025-06-08 20:18:35,503 - __main__ - INFO - 开始监控 @diyjojo_sonieru 的直播...
+2025-06-08 20:18:35,503 - __main__ - ERROR - 连接直播间失败: TikTokLive v6.5.3 -> You can only make one connection per client!
+2025-06-08 20:18:35,503 - __main__ - INFO - 连接失败，30秒后重试 (连续失败: 1次)
+2025-06-08 20:18:35,579 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:18:35,581 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:18:36,330 - __main__ - INFO - 获取到观众数量: 577，使用属性: m_total
+2025-06-08 20:18:37,150 - __main__ - INFO - 收到点赞: 用户=useretzo7xht1w, 数量=15
+2025-06-08 20:18:37,979 - __main__ - INFO - 获取到观众数量: 576，使用属性: m_total
+2025-06-08 20:18:37,979 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:18:38,809 - __main__ - INFO - 获取到观众数量: 577，使用属性: m_total
+2025-06-08 20:18:39,558 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=15
+2025-06-08 20:18:40,396 - __main__ - INFO - 收到点赞: 用户=user9536904778276, 数量=15
+2025-06-08 20:18:41,954 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:18:41,954 - __main__ - INFO - 获取到观众数量: 575，使用属性: m_total
+2025-06-08 20:18:42,821 - __main__ - INFO - 收到点赞: 用户=useretzo7xht1w, 数量=15
+2025-06-08 20:18:43,659 - __main__ - INFO - 收到点赞: 用户=user9536904778276, 数量=15
+2025-06-08 20:18:43,659 - __main__ - INFO - 获取到观众数量: 575，使用属性: m_total
+2025-06-08 20:18:43,939 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:43] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:45,277 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:18:45,277 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:18:45,403 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:45] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:18:45,405 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:45] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:46,070 - __main__ - INFO - 获取到观众数量: 576，使用属性: m_total
+2025-06-08 20:18:46,870 - __main__ - INFO - 收到点赞: 用户=user9536904778276, 数量=15
+2025-06-08 20:18:46,872 - __main__ - INFO - 获取到观众数量: 576，使用属性: m_total
+2025-06-08 20:18:47,720 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:18:48,487 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:18:50,017 - __main__ - INFO - 获取到观众数量: 576，使用属性: m_total
+2025-06-08 20:18:50,846 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:18:51,685 - __main__ - INFO - 获取到观众数量: 573，使用属性: m_total
+2025-06-08 20:18:52,521 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:18:53,335 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=14
+2025-06-08 20:18:53,335 - __main__ - INFO - 获取到观众数量: 573，使用属性: m_total
+2025-06-08 20:18:53,938 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:53] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:54,204 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:18:54,957 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:18:54,957 - __main__ - INFO - 获取到观众数量: 572，使用属性: m_total
+2025-06-08 20:18:55,397 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:55] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:18:55,399 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:18:55] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:18:55,857 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:18:56,620 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=15
+2025-06-08 20:18:57,391 - __main__ - INFO - 获取到观众数量: 569，使用属性: m_total
+2025-06-08 20:18:57,396 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:18:59,020 - __main__ - INFO - 获取到观众数量: 569，使用属性: m_total
+2025-06-08 20:18:59,020 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=11
+2025-06-08 20:18:59,818 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:19:00,582 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:19:01,399 - __main__ - INFO - 获取到观众数量: 571，使用属性: m_total
+2025-06-08 20:19:02,247 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:19:03,075 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=15
+2025-06-08 20:19:03,076 - __main__ - INFO - 获取到观众数量: 571，使用属性: m_total
+2025-06-08 20:19:03,891 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:19:03,925 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:03] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:19:04,684 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:19:05,412 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:05] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:19:05,413 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:05] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:19:05,525 - __main__ - INFO - 获取到观众数量: 566，使用属性: m_total
+2025-06-08 20:19:05,527 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=1
+2025-06-08 20:19:05,528 - __main__ - INFO - @diyjojo_sonieru 已经连接，不再重新连接
+2025-06-08 20:19:07,970 - __main__ - INFO - 获取到观众数量: 565，使用属性: m_total
+2025-06-08 20:19:07,970 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:19:08,832 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:19:09,639 - __main__ - INFO - 获取到观众数量: 564，使用属性: m_total
+2025-06-08 20:19:10,479 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:19:10,479 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:19:12,073 - __main__ - INFO - 获取到观众数量: 563，使用属性: m_total
+2025-06-08 20:19:12,915 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:19:13,761 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:19:13,762 - __main__ - INFO - 获取到观众数量: 562，使用属性: m_total
+2025-06-08 20:19:15,437 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:19:15,441 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:15] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:19:15,442 - __main__ - INFO - 收到点赞: 用户=mi.mi8304, 数量=15
+2025-06-08 20:19:15,444 - __main__ - INFO - 获取到观众数量: 562，使用属性: m_total
+2025-06-08 20:19:15,446 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:15] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:19:16,298 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:19:17,847 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:19:19,472 - __main__ - INFO - 收到点赞: 用户=miitanlove9, 数量=6
+2025-06-08 20:19:19,472 - __main__ - INFO - 获取到观众数量: 558，使用属性: m_total
+2025-06-08 20:19:20,285 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:19:21,101 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=15
+2025-06-08 20:19:21,103 - __main__ - INFO - 获取到观众数量: 559，使用属性: m_total
+2025-06-08 20:19:22,675 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:19:23,482 - __main__ - INFO - 获取到观众数量: 559，使用属性: m_total
+2025-06-08 20:19:23,926 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:23] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:19:25,115 - __main__ - INFO - 收到点赞: 用户=sachi...02, 数量=14
+2025-06-08 20:19:25,395 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:25] "GET /get_stream_data?unique_id=diyjojo_sonieru HTTP/1.1" 200 -
+2025-06-08 20:19:25,395 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:25] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:19:25,944 - __main__ - INFO - 获取到观众数量: 559，使用属性: m_total
+2025-06-08 20:19:26,789 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=15
+2025-06-08 20:19:26,790 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:19:27,605 - __main__ - INFO - 获取到观众数量: 559，使用属性: m_total
+2025-06-08 20:19:28,400 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:19:29,203 - __main__ - INFO - 获取到观众数量: 558，使用属性: m_total
+2025-06-08 20:19:29,996 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=1
+2025-06-08 20:19:31,599 - __main__ - INFO - 获取到观众数量: 556，使用属性: m_total
+2025-06-08 20:19:32,348 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=15
+2025-06-08 20:19:33,204 - __main__ - INFO - 获取到观众数量: 556，使用属性: m_total
+2025-06-08 20:19:34,022 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=6
+2025-06-08 20:19:34,073 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:34] "GET /socket.io/?EIO=4&transport=websocket&sid=ikkK-P-gCOo1DfMqAAAC HTTP/1.1" 200 -
+2025-06-08 20:19:34,144 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:34] "GET /update_chart_data HTTP/1.1" 200 -
+2025-06-08 20:19:35,685 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=3
+2025-06-08 20:19:36,506 - __main__ - INFO - 获取到观众数量: 554，使用属性: m_total
+2025-06-08 20:19:37,880 - werkzeug - INFO - 192.168.0.122 - - [08/Jun/2025 20:19:37] "GET /socket.io/?EIO=4&transport=websocket&sid=rMmvH_W6bI-VzAIYAAAA HTTP/1.1" 200 -
+2025-06-08 20:19:38,218 - __main__ - INFO - 收到点赞: 用户=user29458331639125, 数量=5
+2025-06-08 20:19:38,219 - __main__ - INFO - 获取到观众数量: 553，使用属性: m_total
+2025-06-08 20:19:39,038 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
+2025-06-08 20:19:39,857 - __main__ - INFO - 获取到观众数量: 553，使用属性: m_total
+2025-06-08 20:19:39,857 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=15
+2025-06-08 20:19:40,687 - __main__ - INFO - 收到点赞: 用户=terioskidgino, 数量=4
+2025-06-08 20:19:40,687 - __main__ - INFO - 获取到观众数量: 550，使用属性: m_total
+2025-06-08 20:19:42,235 - __main__ - INFO - 收到点赞: 用户=mm811312, 数量=15
