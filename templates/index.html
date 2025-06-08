@@ -127,6 +127,118 @@
     </nav>
 
     <div class="container mt-4">
+        <!-- 监控流量大盘 -->
+        <div id="dashboard-container" class="mb-4">
+            <!-- 总览统计卡片 -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">活跃直播间</h5>
+                            <h2 id="total-streams">0</h2>
+                            <small>正在监控的直播间数量</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">总观众数</h5>
+                            <h2 id="total-viewers">0</h2>
+                            <small>所有直播间观众总和</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">平均观众数</h5>
+                            <h2 id="avg-viewers">0</h2>
+                            <small>每个直播间平均观众</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">峰值观众数</h5>
+                            <h2 id="peak-viewers">0</h2>
+                            <small>历史最高同时在线</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 趋势图表 -->
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">当前观众数趋势图</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="dashboard-chart" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">权重分析</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="weight-chart" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 时间段分析 -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">时间段分析</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="time-analysis">
+                                <div class="row text-center">
+                                    <div class="col-3">
+                                        <h6>凌晨 (0-6)</h6>
+                                        <span class="badge bg-secondary" id="time-0-6">0</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <h6>上午 (6-12)</h6>
+                                        <span class="badge bg-info" id="time-6-12">0</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <h6>下午 (12-18)</h6>
+                                        <span class="badge bg-warning" id="time-12-18">0</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <h6>晚上 (18-24)</h6>
+                                        <span class="badge bg-danger" id="time-18-24">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">热门直播间排行</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="top-streams-list">
+                                <p class="text-muted text-center">暂无数据</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 活跃直播卡片 -->
         <div id="active-streams-container" class="mb-4"></div>
 
@@ -157,6 +269,29 @@
                                 <input type="text" class="form-control" id="roomId" placeholder="输入主播ID（不需要@）">
                             </div>
                             <div class="form-text">例如: lisa 或 tiktoker123</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sessionId" class="form-label">SessionID (可选)</label>
+                            <input type="text" class="form-control" id="sessionId" placeholder="用于绕过年龄限制的直播间">
+                            <div class="form-text">
+                                <small class="text-muted">
+                                    仅在监控年龄限制的直播间时需要提供。
+                                    <a href="#" data-bs-toggle="collapse" data-bs-target="#sessionHelp" aria-expanded="false">
+                                        如何获取？
+                                    </a>
+                                </small>
+                                <div class="collapse mt-2" id="sessionHelp">
+                                    <div class="card card-body">
+                                        <ol class="small">
+                                            <li>在浏览器中打开 TikTok 并登录</li>
+                                            <li>按 F12 打开开发者工具</li>
+                                            <li>切换到 "Application" 或 "存储" 标签</li>
+                                            <li>在左侧展开 "Cookies" → "https://www.tiktok.com"</li>
+                                            <li>找到名为 "sessionid" 的 cookie，复制其值</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -197,13 +332,7 @@
                             <div>开播时间: <span class="start-time">-</span></div>
                             <div class="mt-2">直播时长: <span class="duration">-</span></div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                    style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -319,6 +448,20 @@
         let currentUid = null;
         let updateInterval;
         let socket = null;
+        let dashboardChart = null;
+        let weightChart = null;
+        let dashboardStats = {
+            totalViewers: 0,
+            peakViewers: 0,
+            timeSlots: {
+                '0-6': 0,
+                '6-12': 0,
+                '12-18': 0,
+                '18-24': 0
+            },
+            hourlyData: {},
+            streamWeights: {}
+        };
 
         // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
@@ -337,8 +480,11 @@
             // 初始化页面，加载现有监控
             fetchActiveMonitors();
             
+            // 初始化大盘图表
+            initDashboardCharts();
+            
             // 设置定时更新
-            updateInterval = setInterval(updateAllData, 10000); // 10秒更新一次
+            updateInterval = setInterval(updateAllData, 60000); // 1分钟更新一次
         });
         
         // 设置 Socket.IO 事件监听
@@ -822,7 +968,9 @@
         // 启动监控
         function startMonitor() {
             const roomIdInput = document.getElementById('roomId');
+            const sessionIdInput = document.getElementById('sessionId');
             const roomId = roomIdInput.value.trim();
+            const sessionId = sessionIdInput.value.trim();
             
             if (!roomId) {
                 alert('请输入TikTok主播ID');
@@ -837,12 +985,17 @@
             console.log(`正在发送请求启动监控: ${roomId}`);
             
             // 发送请求启动监控
+            const requestData = { unique_id: roomId };
+            if (sessionId) {
+                requestData.sessionid = sessionId;
+            }
+            
             fetch('/start_monitor', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ unique_id: roomId })
+                body: JSON.stringify(requestData)
             })
             .then(response => {
                 console.log(`收到服务器响应，状态码: ${response.status}`);
@@ -861,6 +1014,7 @@
                     
                     // 重置表单
                     roomIdInput.value = '';
+                    sessionIdInput.value = '';
                     
                     // 5秒后获取数据
                     setTimeout(() => {
@@ -997,6 +1151,187 @@
             fetch('/update_chart_data')
                 .then(response => response.json())
                 .catch(error => console.error('更新图表数据时出错:', error));
+            
+            // 更新大盘数据
+            updateDashboard();
+        }
+
+        // 初始化大盘图表
+        function initDashboardCharts() {
+            // 初始化趋势图表
+            const dashboardCtx = document.getElementById('dashboard-chart').getContext('2d');
+            dashboardChart = new Chart(dashboardCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '当前在线观众数',
+                        data: [],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // 初始化权重分析饼图
+            const weightCtx = document.getElementById('weight-chart').getContext('2d');
+            weightChart = new Chart(weightCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [
+                            '#FF6384',
+                            '#36A2EB',
+                            '#FFCE56',
+                            '#4BC0C0',
+                            '#9966FF',
+                            '#FF9F40',
+                            '#FF6384',
+                            '#C9CBCF'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+        }
+
+        // 更新大盘数据
+        function updateDashboard() {
+            const streamCount = Object.keys(activeStreams).length;
+            let totalViewers = 0;
+            let currentViewers = 0;
+            let streamWeights = {};
+            
+            // 计算累计观众总数和权重
+            Object.entries(activeStreams).forEach(([uid, data]) => {
+                const viewers = data.current_viewers || 0;
+                const totalV = data.total_viewers || 0;
+                currentViewers += viewers;
+                totalViewers += totalV;  // 累计观众数的总和
+                streamWeights[uid] = viewers;  // 权重仍然使用当前观众数
+            });
+            
+            // 更新峰值（使用当前观众数）
+            if (currentViewers > dashboardStats.peakViewers) {
+                dashboardStats.peakViewers = currentViewers;
+            }
+            
+            // 计算平均值（使用当前观众数）
+            const avgViewers = streamCount > 0 ? Math.round(currentViewers / streamCount) : 0;
+            
+            // 更新统计卡片
+            document.getElementById('total-streams').textContent = streamCount;
+            document.getElementById('total-viewers').textContent = totalViewers.toLocaleString();
+            document.getElementById('avg-viewers').textContent = avgViewers.toLocaleString();
+            document.getElementById('peak-viewers').textContent = dashboardStats.peakViewers.toLocaleString();
+            
+            // 更新时间段分析
+            updateTimeSlotAnalysis();
+            
+            // 更新热门排行
+            updateTopStreamsList(streamWeights);
+            
+            // 更新趋势图表（使用当前观众数）
+            updateDashboardChart(currentViewers);
+            
+            // 更新权重分析图表
+            updateWeightChart(streamWeights);
+        }
+
+        // 更新时间段分析
+        function updateTimeSlotAnalysis() {
+            const currentHour = new Date().getHours();
+            const currentViewers = Object.values(activeStreams).reduce((sum, data) => sum + (data.current_viewers || 0), 0);
+            
+            // 根据当前时间段累计观众数
+            if (currentHour >= 0 && currentHour < 6) {
+                dashboardStats.timeSlots['0-6'] += currentViewers;
+                document.getElementById('time-0-6').textContent = dashboardStats.timeSlots['0-6'].toLocaleString();
+            } else if (currentHour >= 6 && currentHour < 12) {
+                dashboardStats.timeSlots['6-12'] += currentViewers;
+                document.getElementById('time-6-12').textContent = dashboardStats.timeSlots['6-12'].toLocaleString();
+            } else if (currentHour >= 12 && currentHour < 18) {
+                dashboardStats.timeSlots['12-18'] += currentViewers;
+                document.getElementById('time-12-18').textContent = dashboardStats.timeSlots['12-18'].toLocaleString();
+            } else {
+                dashboardStats.timeSlots['18-24'] += currentViewers;
+                document.getElementById('time-18-24').textContent = dashboardStats.timeSlots['18-24'].toLocaleString();
+            }
+        }
+
+        // 更新热门直播间排行
+        function updateTopStreamsList(streamWeights) {
+            const sortedStreams = Object.entries(streamWeights)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 5);
+            
+            const listContainer = document.getElementById('top-streams-list');
+            
+            if (sortedStreams.length === 0) {
+                listContainer.innerHTML = '<p class="text-muted text-center">暂无数据</p>';
+                return;
+            }
+            
+            listContainer.innerHTML = sortedStreams.map(([uid, viewers], index) => `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <span class="badge bg-${index === 0 ? 'warning' : index === 1 ? 'secondary' : 'dark'} me-2">
+                            ${index + 1}
+                        </span>
+                        <strong>@${uid}</strong>
+                    </div>
+                    <span class="text-primary">${viewers.toLocaleString()} 观众</span>
+                </div>
+            `).join('');
+        }
+
+        // 更新大盘趋势图表
+        function updateDashboardChart(currentViewers) {
+            const now = new Date();
+            const timeLabel = now.toLocaleTimeString();
+            
+            // 添加新数据点
+            dashboardChart.data.labels.push(timeLabel);
+            dashboardChart.data.datasets[0].data.push(currentViewers);
+            
+            // 保持最多显示60个数据点（10分钟的数据）
+            if (dashboardChart.data.labels.length > 60) {
+                dashboardChart.data.labels.shift();
+                dashboardChart.data.datasets[0].data.shift();
+            }
+            
+            dashboardChart.update('none'); // 使用 'none' 模式避免动画延迟
+        }
+
+        // 更新权重分析图表
+        function updateWeightChart(streamWeights) {
+            const labels = Object.keys(streamWeights).map(uid => `@${uid}`);
+            const data = Object.values(streamWeights);
+            
+            weightChart.data.labels = labels;
+            weightChart.data.datasets[0].data = data;
+            weightChart.update('none');
         }
     </script>
 </body>

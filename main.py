@@ -44,17 +44,25 @@ monitor_threads = {}
 class TikTokLiveMonitor:
     """TikTok 直播监控类"""
     
-    def __init__(self, unique_id: str):
+    def __init__(self, unique_id: str, sessionid: Optional[str] = None):
         """
         初始化监控器
         
         Args:
             unique_id: TikTok 用户名 (不含@符号)
+            sessionid: TikTok 会话ID (用于绕过年龄限制)
         """
         self.unique_id = unique_id
+        self.sessionid = sessionid
         self.client: Optional[TikTokLiveClient] = TikTokLiveClient(
             unique_id=unique_id
         )
+        
+        # 如果提供了 sessionid，设置到客户端
+        if sessionid:
+            self.client.web.set_session_id(sessionid)
+            logger.info(f"为 @{unique_id} 设置了 sessionid")
+        
         self.client.logger.setLevel(LogLevel.INFO.value)
         self.is_running = False
         self.is_live = False
@@ -803,7 +811,8 @@ def start_monitor():
             return jsonify({'error': '请求数据格式错误', 'status': 'error'}), 400
         
         unique_id = data.get('unique_id', '').strip()
-        logger.info(f"收到开始监控请求: {unique_id}")
+        sessionid = data.get('sessionid', '').strip() or None
+        logger.info(f"收到开始监控请求: {unique_id}, sessionid: {'已提供' if sessionid else '未提供'}")
     
         if not unique_id:
             logger.warning("没有提供用户名")
@@ -826,7 +835,7 @@ def start_monitor():
         try:
             # 创建新的监控实例
             logger.info(f"创建监控实例: {unique_id}")
-            monitor = TikTokLiveMonitor(unique_id)
+            monitor = TikTokLiveMonitor(unique_id, sessionid)
             active_monitors[unique_id] = monitor
         
             # 在新线程中启动监控
