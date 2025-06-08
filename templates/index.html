@@ -121,6 +121,25 @@
                             <i class="fas fa-stop"></i> 停止所有监控
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="load-config-link">
+                            <i class="fas fa-download"></i> 加载保存的配置
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/history">
+                            <i class="fas fa-chart-line"></i> 历史数据分析
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-cog"></i> 设置
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" id="clear-history-link"><i class="fas fa-trash"></i> 清除历史数据</a></li>
+                            <li><a class="dropdown-item" id="data-stats-link"><i class="fas fa-info-circle"></i> 数据使用统计</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -1509,7 +1528,217 @@
         function refreshTable() {
             updateAllData();
         }
+
+        // 加载保存的监控配置
+        document.getElementById('load-config-link').addEventListener('click', async function() {
+            try {
+                const response = await fetch('/api/config/load_monitors', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    alert(`${result.message}\n成功: ${result.loaded_count}, 失败: ${result.failed_count}`);
+                    if (result.loaded_count > 0) {
+                        loadActiveMonitors(); // 重新加载监控列表
+                    }
+                } else {
+                    alert('加载配置失败: ' + result.message);
+                }
+            } catch (error) {
+                alert('加载配置时发生错误: ' + error.message);
+            }
+        });
+
+        // 清除历史数据
+        document.getElementById('clear-history-link').addEventListener('click', async function() {
+            // 加载用户列表
+            try {
+                const response = await fetch('/api/history/users');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const clearUserSelect = document.getElementById('clearUserSelect');
+                    clearUserSelect.innerHTML = '<option value="">所有用户</option>';
+                    data.users.forEach(user => {
+                        const option = new Option(`@${user}`, user);
+                        clearUserSelect.add(option);
+                    });
+                }
+            } catch (error) {
+                console.error('加载用户列表失败:', error);
+            }
+            
+            new bootstrap.Modal(document.getElementById('clearHistoryModal')).show();
+        });
+
+        // 确认清除历史数据
+        document.getElementById('confirmClearHistory').addEventListener('click', async function() {
+            const unique_id = document.getElementById('clearUserSelect').value;
+            const confirmText = document.getElementById('confirmText').value;
+            
+            if (confirmText !== 'CONFIRM_DELETE') {
+                alert('请正确输入确认文本: CONFIRM_DELETE');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/history/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        unique_id: unique_id || null,
+                        confirm_token: 'CONFIRM_DELETE'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    alert(`${result.message}\n删除了 ${result.deleted_files} 个文件`);
+                    bootstrap.Modal.getInstance(document.getElementById('clearHistoryModal')).hide();
+                    document.getElementById('confirmText').value = '';
+                } else {
+                    alert('删除失败: ' + result.message);
+                }
+            } catch (error) {
+                alert('删除时发生错误: ' + error.message);
+            }
+        });
+
+        // 数据使用统计
+        document.getElementById('data-stats-link').addEventListener('click', async function() {
+            const modal = new bootstrap.Modal(document.getElementById('dataStatsModal'));
+            modal.show();
+            
+            try {
+                const response = await fetch('/api/history/stats');
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    const stats = result.stats;
+                    const statsHtml = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body text-center">
+                                        <h3>${stats.daily_files}</h3>
+                                        <p>每日数据文件</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body text-center">
+                                        <h3>${stats.session_files}</h3>
+                                        <p>会话数据文件</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="card bg-info text-white">
+                                    <div class="card-body text-center">
+                                        <h3>${stats.export_files}</h3>
+                                        <p>导出文件</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-warning text-white">
+                                    <div class="card-body text-center">
+                                        <h3>${stats.total_size_mb} MB</h3>
+                                        <p>总存储大小</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">用户统计</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>监控用户数:</strong> ${stats.users.length}</p>
+                                        <p><strong>用户列表:</strong> ${stats.users.map(u => '@' + u).join(', ')}</p>
+                                        <p><strong>数据时间范围:</strong> ${stats.date_range.earliest || '无'} 至 ${stats.date_range.latest || '无'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('statsContent').innerHTML = statsHtml;
+                } else {
+                    document.getElementById('statsContent').innerHTML = '<div class="alert alert-danger">获取统计数据失败</div>';
+                }
+            } catch (error) {
+                document.getElementById('statsContent').innerHTML = '<div class="alert alert-danger">获取统计数据时发生错误</div>';
+            }
+        });
     </script>
+
+    <!-- 清除历史数据模态框 -->
+    <div class="modal fade" id="clearHistoryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">清除历史数据</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>警告：</strong>此操作将永久删除历史数据，无法恢复！
+                    </div>
+                    <div class="mb-3">
+                        <label for="clearUserSelect" class="form-label">选择要清除的用户（留空清除所有）</label>
+                        <select id="clearUserSelect" class="form-select">
+                            <option value="">所有用户</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmText" class="form-label">请输入 "CONFIRM_DELETE" 确认删除</label>
+                        <input type="text" id="confirmText" class="form-control" placeholder="CONFIRM_DELETE">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmClearHistory">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据统计模态框 -->
+    <div class="modal fade" id="dataStatsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">数据使用统计</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="statsContent">
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">加载中...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

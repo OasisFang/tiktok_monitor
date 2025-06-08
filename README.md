@@ -1,88 +1,326 @@
-# TikTokLiveInfo 提取工具
+# TikTok 直播监控系统
 
-本项目包含一个脚本 `dump_tiktoklive_info.py`，用于测试并输出 TikTokLiveClient 中的关键数据结构：
+## 📖 项目概述
 
-- **Room Info**：直播房间的详细信息
-- **Gift Info**：当前直播可使用的礼物列表
+TikTok直播监控系统是一个功能完整的实时直播数据监控工具，支持多账号监控、数据分析、历史记录和配置管理。
 
-## 准备工作
+### 主要特点
+- 🔄 **实时监控**：观众数、点赞、评论、礼物等实时数据
+- 📊 **数据分析**：历史趋势分析、用户行为统计
+- 💾 **数据存储**：优化的数据结构，分钟级数据记录
+- 🔧 **配置管理**：自动保存加载监控配置
+- 🛡️ **防检测**：支持年龄限制直播间监控
+- 📤 **数据导出**：CSV格式数据导出功能
 
-1. 安装依赖：
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 🚀 快速开始
 
-2. 如果需要通过登录获取完整的房间信息（如 18+ 限制），请设置环境变量：
-   ```bash
-   export SIGN_API_KEY=你的Euler签名服务API_KEY
-   export SIGN_API_URL=https://你的签名服务地址
-   ```
-
-## 使用方式
-
-在命令行中运行：
-
+### 1. 安装依赖
 ```bash
-python dump_tiktoklive_info.py <unique_id>
+pip install -r requirements.txt
 ```
 
-例如：
-
+### 2. 启动应用
 ```bash
-python dump_tiktoklive_info.py diynana_yuri
+python main.py
 ```
 
-脚本会依次输出：
+### 3. 访问Web界面
+打开浏览器访问：http://localhost:5000
 
-1. **Room Info** （JSON 格式）
-2. **Gift Info** （JSON 格式）
+### 4. 添加监控
+- 点击"添加监控"按钮
+- 输入TikTok用户名（不含@符号）
+- 选择是否启用防检测模式
+- 对于年龄限制直播间，输入sessionid
 
-## 输出示例
+## 📊 数据优化说明
 
-下面是示例输出（请根据实际运行结果进行替换）：
+### 优化概述
+针对数据文件过大问题，系统进行了全面的数据结构优化：
 
-### === Room Info ===
-```json
+#### 之前的问题
+- 生成的JSON文件（如 `huru1034_tiktoklive_info.json`）大小达到1.7MB
+- 包含大量不必要的详细数据
+- 内存占用过高
+
+#### 优化后的改进
+- **文件大小减少99%+**：从1.7MB减少到几KB
+- **评论优化**：只保留最近10条评论用于界面显示
+- **礼物优化**：只保留最近10条礼物记录
+- **分钟级数据记录**：每分钟记录一次重要指标
+- **房间摘要**：保存精简的房间信息到 `*_room_summary.json`
+
+#### 每分钟记录的数据
+- 当前在线人数
+- 总在线人数
+- 点赞数
+- 评论数
+- 礼物数量和价值
+- 关注数、分享数
+
+## 🔧 配置管理功能
+
+### 自动保存配置
+- 添加监控账号时自动保存到 `config/monitor_config.json`
+- 停止监控时自动从配置中移除
+- 包含用户名、sessionid、防检测设置等
+
+### 自动加载配置
+- 应用启动时自动加载上次保存的监控配置
+- 重启后无需手动重新添加账号
+- 保持之前的监控设置和参数
+
+### 手动管理
+- 导航栏"加载保存的配置"按钮
+- 可以在运行时重新加载配置
+- 支持配置的增删改查
+
+## 📈 历史数据系统
+
+### 数据存储结构
+```
+history/
+├── daily/          # 每日汇总数据（包含room_summary）
+│   ├── user1_2025-06-08.json
+│   └── ...
+├── sessions/       # 单次直播会话数据
+│   ├── user1_20250608_01.json
+│   └── ...
+├── analytics/      # 预处理的分析数据
+└── exports/        # 导出的CSV文件
+```
+
+### 每日汇总数据内容
+- 直播场次数量和总时长
+- 峰值观众数和累计观众数
+- 点赞数、评论数、礼物数统计
+- 小时级别的数据分布
+- **房间摘要信息**（新增）
+- 所有会话的摘要信息
+
+### 会话数据内容
+- 开始/结束时间和持续时长
+- **分钟级数据记录**（新增）
+- 优化后的评论和礼物记录
+- 简化的房间信息
+- 防检测模式标记
+
+## 📝 日志管理系统
+
+### 自动日志轮转
+- **最大文件大小**: 1MB（超出自动轮转）
+- **备份文件数量**: 5个历史版本
+- **文件命名**: `tiktok_monitor.log`, `tiktok_monitor.log.1` 到 `.5`
+- **自动管理**: 无需手动清理，系统自动维护
+
+### 可配置日志级别
+通过环境变量控制日志详细程度：
+
+```powershell
+# 生产环境（推荐）- 只记录警告和错误
+$env:LOG_LEVEL = "WARNING"
+python main.py
+
+# 调试环境 - 显示详细信息
+$env:LOG_LEVEL = "DEBUG"
+python main.py
+
+# 正常监控 - 默认信息级别
+python main.py
+```
+
+### 第三方库日志优化
+已自动减少以下组件的日志输出：
+- Flask框架 (werkzeug)
+- SocketIO通信
+- HTTP请求 (urllib3)
+- 其他依赖库
+
+### 日志文件监控
+查看当前日志状态：
+```powershell
+# 查看所有日志文件大小
+Get-ChildItem tiktok_monitor.log* | Select-Object Name, Length, LastWriteTime
+```
+
+## 🌐 Web界面功能
+
+### 主监控面板
+- 实时数据显示（观众数、点赞、评论等）
+- 实时图表（观众数变化趋势）
+- 最近10条评论和礼物显示
+- 监控状态和连接信息
+
+### 历史数据分析
+- 用户历史数据查询（7/30/90天）
+- 趋势分析和统计概览
+- 最佳直播时间分析
+- 数据可视化图表
+
+### 配置管理
+- 监控配置的保存和加载
+- 数据使用统计查看
+- 历史数据清理功能
+
+## 🔌 API接口
+
+### 监控管理
+```bash
+# 开始监控
+POST /start_monitor
 {
-  "room_id": "7512984430680525576",
-  "status": 2,
-  "stream_url": "https://example.com/live/stream.mp4",
-  "title": "直播间标题",
-  "cover_url": "https://example.com/cover.jpg",
-  "author_unique_id": "diynana_yuri",
-  "author_nickname": "diy_nana",
-  "user_count": 1234,
-  "share_url": "https://www.tiktok.com/@diynana_yuri/live",
-  ...
+  "unique_id": "username",
+  "sessionid": "optional",
+  "anti_detection": true
+}
+
+# 停止监控
+POST /stop_monitor
+{
+  "unique_id": "username"
+}
+
+# 获取实时数据
+GET /get_stream_data?unique_id=username
+```
+
+### 历史数据
+```bash
+# 获取用户历史
+GET /api/history/user/{unique_id}?days=30
+
+# 获取分析数据
+GET /api/history/analytics/{unique_id}
+
+# 导出数据
+GET /api/history/export?unique_id=user1&start_date=2025-05-01
+```
+
+### 配置管理
+```bash
+# 加载配置
+POST /api/config/load_monitors
+
+# 获取配置
+GET /api/config/get_saved_monitors
+
+# 清除历史数据
+POST /api/history/clear
+{
+  "unique_id": "optional",
+  "confirm_token": "CONFIRM_DELETE"
 }
 ```
 
-### === Gift Info ===
-```json
-{
-  "gifts": [
-    {
-      "id": 1,
-      "name": "喜欢",
-      "coin": 10,
-      "diamond": 0,
-      "gift_type": 1,
-      "repeatable": false,
-      ...
-    },
-    {
-      "id": 2,
-      "name": "鲜花",
-      "coin": 50,
-      "diamond": 0,
-      "gift_type": 1,
-      "repeatable": false,
-      ...
-    }
-  ],
-  "can_express": true,
-  "show_rewarded_gifts": false
-}
+## 📁 文件结构
+
+```
+tiktok_monitor/
+├── main.py                     # 主程序
+├── monitor.py                  # 独立监控脚本
+├── requirements.txt            # 依赖包列表
+├── README.md                   # 本文档
+├── config/
+│   └── monitor_config.json     # 监控配置
+├── history/
+│   ├── daily/                  # 每日汇总（包含room_summary）
+│   ├── sessions/               # 会话数据
+│   ├── analytics/              # 分析数据
+│   └── exports/                # 导出文件
+├── stats/                      # 传统统计文件
+├── templates/                  # Web界面模板
+├── static/                     # 静态资源
+└── *_room_summary.json         # 实时房间摘要文件
 ```
 
-请运行脚本获取你所在直播的真实数据，并将上面示例替换为实际输出。 
+## ⚠️ 注意事项
+
+### SessionID获取（用于年龄限制直播间）
+1. 打开浏览器开发者工具（F12）
+2. 访问TikTok网站并登录
+3. 在Application/存储 > Cookies中找到sessionid
+4. 复制sessionid值到监控配置中
+
+### 防检测模式
+- 启用防检测模式可以减少被检测的风险
+- 会增加随机延迟和请求间隔
+- 对于频繁监控建议启用
+
+### 数据管理
+- 定期查看数据使用统计
+- 及时清理过期的历史数据
+- 重要数据建议定期备份
+
+### 性能优化
+- 大量历史数据可能影响查询性能
+- 建议每月清理超过90天的数据
+- 长期运行需要注意磁盘空间
+
+## 🔧 故障排除
+
+### 连接问题
+- 检查网络连接状态
+- 确认TikTok账号是否在直播
+- 查看日志文件中的错误信息
+
+### 数据问题
+- 检查history目录权限
+- 确认磁盘空间充足
+- 验证JSON文件格式正确性
+
+### 配置问题
+- 检查config目录和文件权限
+- 确认JSON配置格式正确
+- 查看应用启动日志
+
+### 日志问题
+- **日志过多**：设置环境变量 `$env:LOG_LEVEL = "WARNING"`
+- **缺少调试信息**：设置 `$env:LOG_LEVEL = "DEBUG"`
+- **日志轮转失败**：检查磁盘空间和文件权限
+- **查看日志大小**：运行 `Get-ChildItem tiktok_monitor.log*`
+
+## 📋 使用建议
+
+### 日常使用流程
+1. **初始设置**：添加需要监控的账号
+2. **自动运行**：应用会自动监控和记录数据
+3. **定期检查**：查看历史数据和分析报告
+4. **数据维护**：定期清理和备份数据
+5. **配置备份**：保存重要的监控配置
+
+### 最佳实践
+- 合理设置监控账号数量，避免过多占用资源
+- 启用防检测模式以提高稳定性
+- 定期导出重要数据进行备份
+- 监控磁盘空间使用情况
+- 关注日志文件中的异常信息
+- **生产环境使用WARNING日志级别**，减少不必要的日志输出
+- **调试时临时使用DEBUG级别**，问题解决后恢复默认级别
+
+## 🆕 版本更新说明
+
+### 最新优化（v2.0）
+- ✅ 数据文件大小减少99%+
+- ✅ 评论和礼物记录优化（只保留10条）
+- ✅ 新增分钟级数据记录功能
+- ✅ 房间摘要信息整合到历史数据
+- ✅ 内存和网络性能显著提升
+- ✅ 保持所有现有功能的向后兼容
+
+### 向后兼容性
+- 所有现有API接口继续工作
+- Web界面功能保持不变
+- 历史数据查询正常
+- 配置管理功能完整保留
+
+## 📞 技术支持
+
+如有问题或建议，请查看：
+- 应用日志文件 `tiktok_monitor.log`
+- 检查API接口返回的错误信息
+- 确认所有依赖包正确安装
+- 验证网络连接和TikTok账号状态
+
+---
+
+**注意**：本工具仅供学习和研究使用，请遵守相关法律法规和平台服务条款。 

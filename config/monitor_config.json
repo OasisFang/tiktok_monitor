@@ -1,0 +1,20 @@
+{
+  "monitors": [
+    {
+      "unique_id": "diyjojo_sonieru",
+      "sessionid": null,
+      "anti_detection": true,
+      "added_at": "2025-06-08T21:57:05.610617",
+      "updated_at": "2025-06-08T21:57:05.610617"
+    },
+    {
+      "unique_id": "minaonail",
+      "sessionid": null,
+      "anti_detection": true,
+      "added_at": "2025-06-08T21:58:45.746595",
+      "updated_at": "2025-06-08T21:58:45.746595"
+    }
+  ],
+  "saved_at": "2025-06-08T21:58:45.746595",
+  "version": "1.0"
+}
