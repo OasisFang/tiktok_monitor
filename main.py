@@ -187,23 +187,316 @@ class ConfigManager:
 config_manager = ConfigManager()
 
 class HistoryDataManager:
-    """历史数据管理类"""
+    """历史数据管理类 - 重构版本"""
     
     def __init__(self):
         self.base_path = 'history'
+        self.index_file = os.path.join(self.base_path, 'index.json')
         self.ensure_directories()
     
     def ensure_directories(self):
         """确保所有必要的目录存在"""
-        directories = [
-            'history',
-            'history/daily',
-            'history/sessions', 
-            'history/analytics',
-            'history/exports'
-        ]
-        for directory in directories:
-            os.makedirs(directory, exist_ok=True)
+        os.makedirs(self.base_path, exist_ok=True)
+        
+        # 创建索引文件（如果不存在）
+        if not os.path.exists(self.index_file):
+            self._create_index_file()
+    
+    def _create_index_file(self):
+        """创建索引文件"""
+        index_data = {
+            'created_at': datetime.now().isoformat(),
+            'last_updated': datetime.now().isoformat(),
+            'total_sessions': 0,
+            'total_users': 0,
+            'users': {}  # user_id: {total_sessions, last_session, first_session}
+        }
+        with open(self.index_file, 'w', encoding='utf-8') as f:
+            json.dump(index_data, f, ensure_ascii=False, indent=2)
+    
+    def _update_index(self, unique_id: str, session_id: str):
+        """更新索引文件"""
+        try:
+            with open(self.index_file, 'r', encoding='utf-8') as f:
+                index_data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            self._create_index_file()
+            with open(self.index_file, 'r', encoding='utf-8') as f:
+                index_data = json.load(f)
+        
+        # 更新用户信息
+        if unique_id not in index_data['users']:
+            index_data['users'][unique_id] = {
+                'total_sessions': 0,
+                'first_session': session_id,
+                'last_session': session_id,
+                'created_at': datetime.now().isoformat()
+            }
+            index_data['total_users'] += 1
+        
+        index_data['users'][unique_id]['total_sessions'] += 1
+        index_data['users'][unique_id]['last_session'] = session_id
+        index_data['users'][unique_id]['updated_at'] = datetime.now().isoformat()
+        index_data['total_sessions'] += 1
+        index_data['last_updated'] = datetime.now().isoformat()
+        
+        with open(self.index_file, 'w', encoding='utf-8') as f:
+            json.dump(index_data, f, ensure_ascii=False, indent=2)
+    
+    def get_user_directory(self, unique_id: str) -> str:
+        """获取用户数据目录"""
+        user_dir = os.path.join(self.base_path, unique_id)
+        os.makedirs(user_dir, exist_ok=True)
+        return user_dir
+    
+    def generate_session_id(self) -> str:
+        """生成会话ID"""
+        return f"session_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    
+    def save_session_data(self, unique_id: str, live_data: dict):
+        """保存单次直播会话数据（新结构）"""
+        try:
+            session_id = self.generate_session_id()
+            user_dir = self.get_user_directory(unique_id)
+            session_file = os.path.join(user_dir, f"{session_id}.json")
+            
+            # 构建优化的数据结构
+            session_data = {
+                # 基本信息
+                'session_id': session_id,
+                'unique_id': unique_id,
+                'start_time': live_data.get('start_time'),
+                'end_time': datetime.now().isoformat(),
+                'duration_seconds': live_data.get('duration', 0),
+                'room_id': live_data.get('room_id'),
+                'title': live_data.get('title', ''),
+                'stream_status': live_data.get('stream_status', 0),
+                
+                # 总体统计（只记录数量）
+                'summary': {
+                    'peak_viewers': live_data.get('current_viewers', 0),
+                    'total_viewers': live_data.get('total_viewers', 0),
+                    'total_likes': live_data.get('like_count', 0),
+                    'total_comments': live_data.get('comment_count', 0),
+                    'total_gifts': live_data.get('gift_count', 0),
+                    'total_gift_value': live_data.get('gift_value', 0),
+                    'total_follows': live_data.get('follow_count', 0),
+                    'total_shares': live_data.get('share_count', 0),
+                    'total_subscribes': live_data.get('subscribe_count', 0),
+                    'unique_gift_types': len(live_data.get('gifts_detail', {}))
+                },
+                
+                # 每分钟数据（压缩存储）
+                'minute_data': self._compress_minute_data(live_data.get('minute_data', [])),
+                
+                # 图表数据（压缩存储）
+                'chart_data': {
+                    'timestamps': live_data.get('chart_data', {}).get('timestamps', [])[-60:],  # 只保留最后60个点
+                    'viewer_counts': live_data.get('chart_data', {}).get('viewer_counts', [])[-60:],
+                    'like_counts': live_data.get('chart_data', {}).get('like_counts', [])[-60:],
+                    'comment_counts': live_data.get('chart_data', {}).get('comment_counts', [])[-60:]
+                },
+                
+                # 配置信息
+                'settings': {
+                    'anti_detection_used': live_data.get('anti_detection_used', False),
+                    'custom_interval': getattr(active_monitors.get(unique_id), 'custom_interval', None)
+                },
+                
+                # 元数据
+                'metadata': {
+                    'created_at': datetime.now().isoformat(),
+                    'file_version': '2.0',
+                    'data_optimized': True
+                }
+            }
+            
+            # 保存会话数据
+            with open(session_file, 'w', encoding='utf-8') as f:
+                json.dump(session_data, f, ensure_ascii=False, indent=2)
+            
+            # 更新索引
+            self._update_index(unique_id, session_id)
+            
+            logger.info(f"会话数据已保存: {session_file}")
+            return session_file
+            
+        except Exception as e:
+            logger.error(f"保存会话数据失败: {str(e)}")
+            return None
+    
+    def _compress_minute_data(self, minute_data: list) -> list:
+        """压缩每分钟数据，只保留关键信息"""
+        compressed = []
+        for data in minute_data:
+            if isinstance(data, dict):
+                compressed.append({
+                    't': data.get('minute', ''),  # 时间（简化键名）
+                    'v': data.get('current_viewers', 0),  # 观众数
+                    'l': data.get('like_count', 0),  # 点赞数
+                    'c': data.get('comment_count', 0),  # 评论数
+                    'g': data.get('gift_count', 0),  # 礼物数
+                    'f': data.get('follow_count', 0),  # 关注数
+                    's': data.get('share_count', 0)  # 分享数
+                })
+        return compressed
+    
+    def get_user_sessions(self, unique_id: str, limit: int = None) -> list:
+        """获取用户的直播会话列表"""
+        try:
+            user_dir = self.get_user_directory(unique_id)
+            if not os.path.exists(user_dir):
+                return []
+            
+            sessions = []
+            for filename in os.listdir(user_dir):
+                if filename.endswith('.json') and filename.startswith('session_'):
+                    session_file = os.path.join(user_dir, filename)
+                    try:
+                        with open(session_file, 'r', encoding='utf-8') as f:
+                            session_data = json.load(f)
+                            sessions.append({
+                                'session_id': session_data.get('session_id'),
+                                'start_time': session_data.get('start_time'),
+                                'end_time': session_data.get('end_time'),
+                                'duration_seconds': session_data.get('duration_seconds', 0),
+                                'peak_viewers': session_data.get('summary', {}).get('peak_viewers', 0),
+                                'total_likes': session_data.get('summary', {}).get('total_likes', 0),
+                                'filename': filename
+                            })
+                    except (json.JSONDecodeError, FileNotFoundError):
+                        logger.warning(f"无法读取会话文件: {session_file}")
+                        continue
+            
+            # 按开始时间排序
+            sessions.sort(key=lambda x: x.get('start_time', ''), reverse=True)
+            
+            if limit:
+                sessions = sessions[:limit]
+            
+            return sessions
+        except Exception as e:
+            logger.error(f"获取用户会话失败: {str(e)}")
+            return []
+    
+    def get_session_detail(self, unique_id: str, session_id: str) -> dict:
+        """获取指定会话的详细数据"""
+        try:
+            user_dir = self.get_user_directory(unique_id)
+            session_file = os.path.join(user_dir, f"{session_id}.json")
+            
+            if not os.path.exists(session_file):
+                return None
+            
+            with open(session_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            logger.error(f"获取会话详情失败: {str(e)}")
+            return None
+    
+    def get_user_analytics(self, unique_id: str, days: int = 30) -> dict:
+        """获取用户数据分析"""
+        try:
+            sessions = self.get_user_sessions(unique_id)
+            if not sessions:
+                return {
+                    'total_sessions': 0,
+                    'total_duration': 0,
+                    'avg_duration': 0,
+                    'peak_viewers': 0,
+                    'avg_viewers': 0,
+                    'total_interactions': 0,
+                    'sessions_by_hour': {},
+                    'trend': 'stable'
+                }
+            
+            # 过滤指定天数内的数据
+            cutoff_date = datetime.now() - timedelta(days=days)
+            recent_sessions = []
+            
+            for session in sessions:
+                try:
+                    session_start = datetime.fromisoformat(session['start_time'])
+                    if session_start >= cutoff_date:
+                        # 获取详细数据
+                        detail = self.get_session_detail(unique_id, session['session_id'])
+                        if detail:
+                            recent_sessions.append(detail)
+                except Exception:
+                    continue
+            
+            if not recent_sessions:
+                return {'total_sessions': 0}
+            
+            # 计算分析数据
+            total_sessions = len(recent_sessions)
+            total_duration = sum(s.get('duration_seconds', 0) for s in recent_sessions)
+            avg_duration = total_duration / total_sessions if total_sessions > 0 else 0
+            
+            peak_viewers = max(s.get('summary', {}).get('peak_viewers', 0) for s in recent_sessions)
+            avg_viewers = sum(s.get('summary', {}).get('peak_viewers', 0) for s in recent_sessions) / total_sessions
+            
+            total_interactions = sum(
+                s.get('summary', {}).get('total_likes', 0) +
+                s.get('summary', {}).get('total_comments', 0) +
+                s.get('summary', {}).get('total_gifts', 0)
+                for s in recent_sessions
+            )
+            
+            # 按小时统计
+            sessions_by_hour = {}
+            for session in recent_sessions:
+                try:
+                    start_time = datetime.fromisoformat(session['start_time'])
+                    hour = start_time.hour
+                    sessions_by_hour[hour] = sessions_by_hour.get(hour, 0) + 1
+                except Exception:
+                    continue
+            
+            # 计算趋势
+            if len(recent_sessions) >= 2:
+                recent_avg = sum(s.get('summary', {}).get('peak_viewers', 0) for s in recent_sessions[:5]) / min(5, len(recent_sessions))
+                older_avg = sum(s.get('summary', {}).get('peak_viewers', 0) for s in recent_sessions[-5:]) / min(5, len(recent_sessions))
+                
+                if recent_avg > older_avg * 1.1:
+                    trend = 'rising'
+                elif recent_avg < older_avg * 0.9:
+                    trend = 'falling'
+                else:
+                    trend = 'stable'
+            else:
+                trend = 'stable'
+            
+            return {
+                'total_sessions': total_sessions,
+                'total_duration': total_duration,
+                'avg_duration': avg_duration / 60,  # 转换为分钟
+                'peak_viewers': peak_viewers,
+                'avg_viewers': round(avg_viewers, 1),
+                'total_interactions': total_interactions,
+                'sessions_by_hour': sessions_by_hour,
+                'trend': trend,
+                'days_analyzed': days
+            }
+            
+        except Exception as e:
+            logger.error(f"获取用户分析失败: {str(e)}")
+            return {'error': str(e)}
+    
+    def get_all_users(self) -> list:
+        """获取所有用户列表"""
+        try:
+            with open(self.index_file, 'r', encoding='utf-8') as f:
+                index_data = json.load(f)
+                return list(index_data.get('users', {}).keys())
+        except Exception:
+            # 如果索引文件损坏，扫描目录
+            users = []
+            for item in os.listdir(self.base_path):
+                item_path = os.path.join(self.base_path, item)
+                if os.path.isdir(item_path) and item not in ['exports', 'temp']:
+                    users.append(item)
+            return users
     
     def clear_history_data(self, unique_id: str = None, confirm_token: str = None):
         """清除历史数据"""
@@ -215,49 +508,43 @@ class HistoryDataManager:
             
             if unique_id:
                 # 删除指定用户的数据
-                logger.info(f"开始删除用户 {unique_id} 的历史数据...")
-                
-                # 删除每日数据
-                daily_pattern = f"{unique_id}_*.json"
-                daily_dir = os.path.join(self.base_path, 'daily')
-                for file_path in glob.glob(os.path.join(daily_dir, daily_pattern)):
-                    os.remove(file_path)
-                    deleted_files += 1
-                    logger.debug(f"删除每日数据: {file_path}")
-                
-                # 删除会话数据
-                session_pattern = f"{unique_id}_*.json"
-                session_dir = os.path.join(self.base_path, 'sessions')
-                for file_path in glob.glob(os.path.join(session_dir, session_pattern)):
-                    os.remove(file_path)
-                    deleted_files += 1
-                    logger.debug(f"删除会话数据: {file_path}")
-                
+                user_dir = self.get_user_directory(unique_id)
+                if os.path.exists(user_dir):
+                    for filename in os.listdir(user_dir):
+                        file_path = os.path.join(user_dir, filename)
+                        if os.path.isfile(file_path):
+                            os.remove(file_path)
+                            deleted_files += 1
+                    os.rmdir(user_dir)
+                    
+                    # 更新索引
+                    try:
+                        with open(self.index_file, 'r', encoding='utf-8') as f:
+                            index_data = json.load(f)
+                        if unique_id in index_data.get('users', {}):
+                            del index_data['users'][unique_id]
+                            index_data['total_users'] -= 1
+                            index_data['last_updated'] = datetime.now().isoformat()
+                            with open(self.index_file, 'w', encoding='utf-8') as f:
+                                json.dump(index_data, f, ensure_ascii=False, indent=2)
+                    except Exception:
+                        pass
+                    
                 logger.info(f"用户 {unique_id} 的历史数据删除完成，共删除 {deleted_files} 个文件")
             else:
                 # 删除所有历史数据
-                logger.info("开始删除所有历史数据...")
+                for user in self.get_all_users():
+                    user_dir = os.path.join(self.base_path, user)
+                    if os.path.exists(user_dir) and os.path.isdir(user_dir):
+                        for filename in os.listdir(user_dir):
+                            file_path = os.path.join(user_dir, filename)
+                            if os.path.isfile(file_path):
+                                os.remove(file_path)
+                                deleted_files += 1
+                        os.rmdir(user_dir)
                 
-                # 删除所有每日数据
-                daily_dir = os.path.join(self.base_path, 'daily')
-                if os.path.exists(daily_dir):
-                    for file_path in glob.glob(os.path.join(daily_dir, '*.json')):
-                        os.remove(file_path)
-                        deleted_files += 1
-                
-                # 删除所有会话数据
-                session_dir = os.path.join(self.base_path, 'sessions')
-                if os.path.exists(session_dir):
-                    for file_path in glob.glob(os.path.join(session_dir, '*.json')):
-                        os.remove(file_path)
-                        deleted_files += 1
-                
-                # 删除导出文件
-                export_dir = os.path.join(self.base_path, 'exports')
-                if os.path.exists(export_dir):
-                    for file_path in glob.glob(os.path.join(export_dir, '*.csv')):
-                        os.remove(file_path)
-                        deleted_files += 1
+                # 重新创建索引文件
+                self._create_index_file()
                 
                 logger.info(f"所有历史数据删除完成，共删除 {deleted_files} 个文件")
             
@@ -278,305 +565,111 @@ class HistoryDataManager:
         """获取数据使用统计"""
         try:
             stats = {
-                'daily_files': 0,
-                'session_files': 0,
-                'export_files': 0,
+                'total_users': 0,
+                'total_sessions': 0,
                 'total_size_mb': 0,
-                'users': set(),
+                'users': [],
                 'date_range': {'earliest': None, 'latest': None}
             }
             
-            # 统计每日数据
-            daily_dir = os.path.join(self.base_path, 'daily')
-            if os.path.exists(daily_dir):
-                for filename in os.listdir(daily_dir):
-                    if filename.endswith('.json'):
-                        stats['daily_files'] += 1
-                        file_path = os.path.join(daily_dir, filename)
-                        stats['total_size_mb'] += os.path.getsize(file_path)
-                        
-                        # 提取用户名和日期
-                        parts = filename.replace('.json', '').split('_')
-                        if len(parts) >= 4:  # user_YYYY-MM-DD.json
-                            user = '_'.join(parts[:-3])
-                            date_str = '-'.join(parts[-3:])
-                            stats['users'].add(user)
+            users = self.get_all_users()
+            stats['total_users'] = len(users)
+            
+            for user in users:
+                user_dir = os.path.join(self.base_path, user)
+                if os.path.exists(user_dir):
+                    user_sessions = 0
+                    for filename in os.listdir(user_dir):
+                        if filename.endswith('.json') and filename.startswith('session_'):
+                            user_sessions += 1
+                            file_path = os.path.join(user_dir, filename)
+                            stats['total_size_mb'] += os.path.getsize(file_path)
                             
-                            if stats['date_range']['earliest'] is None or date_str < stats['date_range']['earliest']:
-                                stats['date_range']['earliest'] = date_str
-                            if stats['date_range']['latest'] is None or date_str > stats['date_range']['latest']:
-                                stats['date_range']['latest'] = date_str
-            
-            # 统计会话数据
-            session_dir = os.path.join(self.base_path, 'sessions')
-            if os.path.exists(session_dir):
-                for filename in os.listdir(session_dir):
-                    if filename.endswith('.json'):
-                        stats['session_files'] += 1
-                        file_path = os.path.join(session_dir, filename)
-                        stats['total_size_mb'] += os.path.getsize(file_path)
-            
-            # 统计导出文件
-            export_dir = os.path.join(self.base_path, 'exports')
-            if os.path.exists(export_dir):
-                for filename in os.listdir(export_dir):
-                    if filename.endswith('.csv'):
-                        stats['export_files'] += 1
-                        file_path = os.path.join(export_dir, filename)
-                        stats['total_size_mb'] += os.path.getsize(file_path)
+                            # 提取日期信息
+                            try:
+                                session_id = filename.replace('.json', '')
+                                date_part = session_id.split('_')[1]  # session_20231210_143052
+                                date_str = f"{date_part[:4]}-{date_part[4:6]}-{date_part[6:8]}"
+                                
+                                if stats['date_range']['earliest'] is None or date_str < stats['date_range']['earliest']:
+                                    stats['date_range']['earliest'] = date_str
+                                if stats['date_range']['latest'] is None or date_str > stats['date_range']['latest']:
+                                    stats['date_range']['latest'] = date_str
+                            except Exception:
+                                pass
+                    
+                    stats['total_sessions'] += user_sessions
+                    stats['users'].append(user)
             
             # 转换为MB
             stats['total_size_mb'] = round(stats['total_size_mb'] / (1024 * 1024), 2)
-            stats['users'] = list(stats['users'])
+            
+            # 添加索引文件大小
+            if os.path.exists(self.index_file):
+                stats['total_size_mb'] += round(os.path.getsize(self.index_file) / (1024 * 1024), 4)
             
             return stats
         except Exception as e:
             logger.error(f"获取数据使用统计失败: {str(e)}")
             return None
     
-    def get_daily_file_path(self, unique_id: str, date: str = None) -> str:
-        """获取每日数据文件路径"""
-        if date is None:
-            date = datetime.now().strftime('%Y-%m-%d')
-        return os.path.join(self.base_path, 'daily', f"{unique_id}_{date}.json")
-    
-    def get_session_file_path(self, unique_id: str, session_id: str) -> str:
-        """获取单次直播会话文件路径"""
-        return os.path.join(self.base_path, 'sessions', f"{unique_id}_{session_id}.json")
-    
-    def save_session_data(self, unique_id: str, session_data: dict):
-        """保存单次直播会话数据"""
+    def export_user_data(self, unique_id: str, format: str = 'json') -> str:
+        """导出用户数据"""
         try:
-            # 生成会话ID
-            session_id = datetime.now().strftime('%Y%m%d_%H%M%S')
-            session_file = self.get_session_file_path(unique_id, session_id)
+            sessions = self.get_user_sessions(unique_id)
+            if not sessions:
+                return None
             
-            # 添加元数据
-            session_data['session_id'] = session_id
-            session_data['unique_id'] = unique_id
-            session_data['saved_at'] = datetime.now().isoformat()
-            
-            # 保存会话数据
-            with open(session_file, 'w', encoding='utf-8') as f:
-                json.dump(session_data, f, ensure_ascii=False, indent=2)
-            
-            logger.info(f"会话数据已保存: {session_file}")
-            
-            # 同时更新每日汇总
-            self.update_daily_summary(unique_id, session_data)
-            
-            return session_file
-        except Exception as e:
-            logger.error(f"保存会话数据失败: {str(e)}")
-            return None
-    
-    def update_daily_summary(self, unique_id: str, session_data: dict, room_summary: dict = None):
-        """更新每日汇总数据"""
-        try:
-            # 获取今天的日期
-            today = datetime.now().strftime('%Y-%m-%d')
-            
-            # 检查会话数据的日期，只处理今天的数据
-            session_start_time = session_data.get('start_time')
-            if session_start_time:
-                try:
-                    session_date = datetime.fromisoformat(session_start_time).strftime('%Y-%m-%d')
-                    if session_date != today:
-                        logger.info(f"跳过非今日的会话数据: {session_date} (今日: {today})")
-                        return  # 不处理非今日的数据
-                except Exception as e:
-                    logger.warning(f"解析会话开始时间失败: {str(e)}")
-            
-            date = today
-            daily_file = self.get_daily_file_path(unique_id, date)
-            
-            # 读取现有数据
-            daily_data = {}
-            if os.path.exists(daily_file):
-                with open(daily_file, 'r', encoding='utf-8') as f:
-                    daily_data = json.load(f)
-            
-            # 初始化每日数据结构
-            if 'unique_id' not in daily_data:
-                daily_data = {
-                    'unique_id': unique_id,
-                    'date': date,
-                    'total_sessions': 0,
-                    'total_duration': 0,
-                    'peak_viewers': 0,
-                    'total_viewers': 0,
-                    'total_likes': 0,
-                    'total_comments': 0,
-                    'total_gifts': 0,
-                    'total_gift_value': 0,
-                    'total_follows': 0,
-                    'total_shares': 0,
-                    'sessions': [],
-                    'hourly_stats': {str(i): {'sessions': 0, 'avg_viewers': 0, 'likes': 0} for i in range(24)},
-                    'room_summary': {},  # 添加房间摘要信息
-                    'created_at': datetime.now().isoformat(),
-                    'updated_at': datetime.now().isoformat()
-                }
-            
-            # 更新统计数据
-            if session_data.get('start_time'):
-                session_start = datetime.fromisoformat(session_data['start_time'])
-                hour = session_start.hour
-                
-                daily_data['total_sessions'] += 1
-                daily_data['total_duration'] += session_data.get('duration', 0)
-                daily_data['peak_viewers'] = max(daily_data['peak_viewers'], session_data.get('current_viewers', 0))
-                daily_data['total_viewers'] += session_data.get('total_viewers', 0)
-                daily_data['total_likes'] += session_data.get('like_count', 0)
-                daily_data['total_comments'] += session_data.get('comment_count', 0)
-                daily_data['total_gifts'] += session_data.get('gift_count', 0)
-                daily_data['total_gift_value'] += session_data.get('gift_value', 0)
-                daily_data['total_follows'] += session_data.get('follow_count', 0)
-                daily_data['total_shares'] += session_data.get('share_count', 0)
-                daily_data['updated_at'] = datetime.now().isoformat()
-                
-                # 更新小时统计
-                hourly_key = str(hour)
-                daily_data['hourly_stats'][hourly_key]['sessions'] += 1
-                daily_data['hourly_stats'][hourly_key]['likes'] += session_data.get('like_count', 0)
-                
-                # 计算小时平均观众数
-                current_avg = daily_data['hourly_stats'][hourly_key]['avg_viewers']
-                session_count = daily_data['hourly_stats'][hourly_key]['sessions']
-                new_avg = (current_avg * (session_count - 1) + session_data.get('current_viewers', 0)) / session_count
-                daily_data['hourly_stats'][hourly_key]['avg_viewers'] = round(new_avg, 1)
-                
-                # 添加会话摘要
-                session_summary = {
-                    'session_id': session_data.get('session_id'),
-                    'start_time': session_data.get('start_time'),
-                    'end_time': session_data.get('end_time'),
-                    'duration': session_data.get('duration', 0),
-                    'peak_viewers': session_data.get('current_viewers', 0),
-                    'total_likes': session_data.get('like_count', 0),
-                    'total_gifts': session_data.get('gift_count', 0)
-                }
-                daily_data['sessions'].append(session_summary)
-            
-            # 更新 room_summary 信息
-            if room_summary:
-                daily_data['room_summary'] = room_summary
-                daily_data['room_summary']['last_updated'] = datetime.now().isoformat()
-            
-            # 保存每日数据
-            with open(daily_file, 'w', encoding='utf-8') as f:
-                json.dump(daily_data, f, ensure_ascii=False, indent=2)
-            
-            logger.info(f"每日汇总已更新: {daily_file}")
-            
-        except Exception as e:
-            logger.error(f"更新每日汇总失败: {str(e)}")
-    
-    def get_user_history(self, unique_id: str, days: int = 7) -> list:
-        """获取用户历史数据"""
-        try:
-            history = []
-            for i in range(days):
-                date = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
-                daily_file = self.get_daily_file_path(unique_id, date)
-                
-                if os.path.exists(daily_file):
-                    with open(daily_file, 'r', encoding='utf-8') as f:
-                        daily_data = json.load(f)
-                        history.append(daily_data)
-            
-            return sorted(history, key=lambda x: x['date'], reverse=True)
-        except Exception as e:
-            logger.error(f"获取用户历史数据失败: {str(e)}")
-            return []
-    
-    def get_all_users_summary(self, date: str = None) -> list:
-        """获取所有用户的汇总数据"""
-        try:
-            if date is None:
-                date = datetime.now().strftime('%Y-%m-%d')
-            
-            daily_dir = os.path.join(self.base_path, 'daily')
-            pattern = f"*_{date}.json"
-            
-            summaries = []
-            for file_path in glob.glob(os.path.join(daily_dir, pattern)):
-                try:
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                        summaries.append(data)
-                except Exception as e:
-                    logger.error(f"读取文件 {file_path} 失败: {str(e)}")
-            
-            return sorted(summaries, key=lambda x: x.get('total_viewers', 0), reverse=True)
-        except Exception as e:
-            logger.error(f"获取所有用户汇总失败: {str(e)}")
-            return []
-    
-    def export_data(self, unique_id: str = None, start_date: str = None, end_date: str = None) -> str:
-        """导出数据为CSV格式"""
-        try:
-            import csv
-            
-            # 设置日期范围
-            if start_date is None:
-                start_date = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
-            if end_date is None:
-                end_date = datetime.now().strftime('%Y-%m-%d')
-            
-            # 生成导出文件名
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            if unique_id:
-                export_file = os.path.join(self.base_path, 'exports', f"{unique_id}_{start_date}_to_{end_date}_{timestamp}.csv")
-            else:
-                export_file = os.path.join(self.base_path, 'exports', f"all_users_{start_date}_to_{end_date}_{timestamp}.csv")
             
-            # 收集数据
-            data_rows = []
-            current = datetime.strptime(start_date, '%Y-%m-%d')
-            end = datetime.strptime(end_date, '%Y-%m-%d')
-            
-            while current <= end:
-                date_str = current.strftime('%Y-%m-%d')
+            if format == 'json':
+                export_file = os.path.join(self.base_path, f"{unique_id}_export_{timestamp}.json")
+                export_data = {
+                    'unique_id': unique_id,
+                    'export_time': datetime.now().isoformat(),
+                    'total_sessions': len(sessions),
+                    'sessions': []
+                }
                 
-                if unique_id:
-                    # 单个用户数据
-                    daily_file = self.get_daily_file_path(unique_id, date_str)
-                    if os.path.exists(daily_file):
-                        with open(daily_file, 'r', encoding='utf-8') as f:
-                            daily_data = json.load(f)
-                            data_rows.append(daily_data)
-                else:
-                    # 所有用户数据
-                    daily_summaries = self.get_all_users_summary(date_str)
-                    data_rows.extend(daily_summaries)
+                for session in sessions:
+                    detail = self.get_session_detail(unique_id, session['session_id'])
+                    if detail:
+                        export_data['sessions'].append(detail)
                 
-                current += timedelta(days=1)
+                with open(export_file, 'w', encoding='utf-8') as f:
+                    json.dump(export_data, f, ensure_ascii=False, indent=2)
             
-            # 写入CSV文件
-            if data_rows:
+            elif format == 'csv':
+                import csv
+                export_file = os.path.join(self.base_path, f"{unique_id}_export_{timestamp}.csv")
+                
                 with open(export_file, 'w', newline='', encoding='utf-8-sig') as csvfile:
                     fieldnames = [
-                        'unique_id', 'date', 'total_sessions', 'total_duration', 
-                        'peak_viewers', 'total_viewers', 'total_likes', 'total_comments',
-                        'total_gifts', 'total_gift_value', 'total_follows', 'total_shares'
+                        'session_id', 'start_time', 'duration_minutes', 'peak_viewers',
+                        'total_likes', 'total_comments', 'total_gifts', 'total_follows'
                     ]
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
                     
-                    for row in data_rows:
-                        # 只保留指定字段
-                        filtered_row = {field: row.get(field, 0) for field in fieldnames}
-                        writer.writerow(filtered_row)
-                
-                logger.info(f"数据导出完成: {export_file}")
-                return export_file
-            else:
-                logger.warning("没有找到要导出的数据")
-                return None
-                
+                    for session in sessions:
+                        detail = self.get_session_detail(unique_id, session['session_id'])
+                        if detail:
+                            writer.writerow({
+                                'session_id': detail.get('session_id'),
+                                'start_time': detail.get('start_time'),
+                                'duration_minutes': round(detail.get('duration_seconds', 0) / 60, 1),
+                                'peak_viewers': detail.get('summary', {}).get('peak_viewers', 0),
+                                'total_likes': detail.get('summary', {}).get('total_likes', 0),
+                                'total_comments': detail.get('summary', {}).get('total_comments', 0),
+                                'total_gifts': detail.get('summary', {}).get('total_gifts', 0),
+                                'total_follows': detail.get('summary', {}).get('total_follows', 0)
+                            })
+            
+            logger.info(f"用户数据导出完成: {export_file}")
+            return export_file
+            
         except Exception as e:
-            logger.error(f"导出数据失败: {str(e)}")
+            logger.error(f"导出用户数据失败: {str(e)}")
             return None
 
 # 创建历史数据管理器实例
@@ -1183,16 +1276,8 @@ class TikTokLiveMonitor:
                 'owner': room_info.get('owner', {}).get('nickname', '') if room_info.get('owner') else ''
             }
             
-            # 准备room_summary数据（不再保存到根目录）
-            summary_data = {
-                "room_summary": simplified_room_info, 
-                "gift_count": len(gift_info.get('gifts', [])) if gift_info else 0,
-                "updated_at": datetime.now().isoformat()
-            }
-            
-            # 直接将 room_summary 更新到今日的 daily 文件中
-            self._update_daily_with_room_summary(summary_data)
-            logger.debug(f"房间信息已更新到历史数据: {self.unique_id}")
+            # 保存房间信息到stats（新版本只在内存中保存，直播结束时一起保存）
+            logger.debug(f"房间信息已获取: {self.unique_id}")
             
             # 更新统计数据
             if room_info:
@@ -1357,52 +1442,7 @@ class TikTokLiveMonitor:
             'status': 'live' if self.is_live else 'offline'
         })
     
-    def _update_daily_with_room_summary(self, summary_data):
-        """将房间摘要更新到今日的daily文件中"""
-        try:
-            today = datetime.now().strftime('%Y-%m-%d')
-            daily_file = history_manager.get_daily_file_path(self.unique_id, today)
-            
-            # 读取现有数据
-            daily_data = {}
-            if os.path.exists(daily_file):
-                with open(daily_file, 'r', encoding='utf-8') as f:
-                    daily_data = json.load(f)
-            
-            # 如果没有daily数据，创建基本结构
-            if 'unique_id' not in daily_data:
-                daily_data = {
-                    'unique_id': self.unique_id,
-                    'date': today,
-                    'total_sessions': 0,
-                    'total_duration': 0,
-                    'peak_viewers': 0,
-                    'total_viewers': 0,
-                    'total_likes': 0,
-                    'total_comments': 0,
-                    'total_gifts': 0,
-                    'total_gift_value': 0,
-                    'total_follows': 0,
-                    'total_shares': 0,
-                    'sessions': [],
-                    'hourly_stats': {str(i): {'sessions': 0, 'avg_viewers': 0, 'likes': 0} for i in range(24)},
-                    'room_summary': {},
-                    'created_at': datetime.now().isoformat(),
-                    'updated_at': datetime.now().isoformat()
-                }
-            
-            # 更新房间摘要
-            daily_data['room_summary'] = summary_data
-            daily_data['updated_at'] = datetime.now().isoformat()
-            
-            # 保存数据
-            with open(daily_file, 'w', encoding='utf-8') as f:
-                json.dump(daily_data, f, ensure_ascii=False, indent=2)
-            
-            logger.info(f"房间摘要已更新到每日数据: {daily_file}")
-            
-        except Exception as e:
-            logger.error(f"更新每日数据中的房间摘要失败: {str(e)}")
+    # 删除了_update_daily_with_room_summary方法，新版本不再需要
     
     def _record_minute_data(self):
         """每分钟记录一次重要数据"""
@@ -1939,39 +1979,107 @@ def monitor_control_page():
 
 @app.route('/api/history/user/<unique_id>')
 def get_user_history(unique_id):
-    """获取指定用户的历史数据"""
+    """获取指定用户的历史数据（新版本）"""
     days = request.args.get('days', 7, type=int)
     days = min(max(days, 1), 90)  # 限制在1-90天之间
     
-    history = history_manager.get_user_history(unique_id, days)
-    return jsonify({
-        'status': 'success',
-        'unique_id': unique_id,
-        'days': days,
-        'data': history
-    })
+    try:
+        # 获取用户会话列表
+        sessions = history_manager.get_user_sessions(unique_id)
+        
+        # 过滤指定天数内的数据
+        cutoff_date = datetime.now() - timedelta(days=days)
+        recent_sessions = []
+        
+        for session in sessions:
+            try:
+                session_start = datetime.fromisoformat(session['start_time'])
+                if session_start >= cutoff_date:
+                    recent_sessions.append(session)
+            except Exception:
+                continue
+        
+        return jsonify({
+            'status': 'success',
+            'unique_id': unique_id,
+            'days': days,
+            'total_sessions': len(recent_sessions),
+            'sessions': recent_sessions
+        })
+    except Exception as e:
+        logger.error(f"获取用户历史数据失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/history/summary')
 def get_daily_summary():
-    """获取每日汇总数据"""
+    """获取每日汇总数据（新版本）"""
     date = request.args.get('date')  # 格式: YYYY-MM-DD
     
-    summaries = history_manager.get_all_users_summary(date)
-    return jsonify({
-        'status': 'success',
-        'date': date or datetime.now().strftime('%Y-%m-%d'),
-        'data': summaries
-    })
+    try:
+        # 如果没有提供日期，使用今天
+        if not date:
+            date = datetime.now().strftime('%Y-%m-%d')
+        
+        # 获取所有用户
+        users = history_manager.get_all_users()
+        summaries = []
+        
+        for user in users:
+            # 获取该用户的会话
+            sessions = history_manager.get_user_sessions(user)
+            
+            # 过滤指定日期的会话
+            daily_sessions = []
+            for session in sessions:
+                try:
+                    session_start = datetime.fromisoformat(session['start_time'])
+                    session_date = session_start.strftime('%Y-%m-%d')
+                    if session_date == date:
+                        daily_sessions.append(session)
+                except Exception:
+                    continue
+            
+            if daily_sessions:
+                # 计算该用户当日的汇总数据
+                total_duration = sum(s.get('duration_seconds', 0) for s in daily_sessions)
+                peak_viewers = max(s.get('peak_viewers', 0) for s in daily_sessions)
+                total_likes = sum(s.get('total_likes', 0) for s in daily_sessions)
+                
+                summaries.append({
+                    'unique_id': user,
+                    'date': date,
+                    'total_sessions': len(daily_sessions),
+                    'total_duration': total_duration,
+                    'peak_viewers': peak_viewers,
+                    'total_likes': total_likes
+                })
+        
+        # 按峰值观众数排序
+        summaries.sort(key=lambda x: x.get('peak_viewers', 0), reverse=True)
+        
+        return jsonify({
+            'status': 'success',
+            'date': date,
+            'total_users': len(summaries),
+            'data': summaries
+        })
+    except Exception as e:
+        logger.error(f"获取每日汇总失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/history/export')
 def export_history():
-    """导出历史数据"""
+    """导出历史数据（新版本）"""
     unique_id = request.args.get('unique_id')
-    start_date = request.args.get('start_date')
-    end_date = request.args.get('end_date')
+    format_type = request.args.get('format', 'json')  # json 或 csv
     
     try:
-        export_file = history_manager.export_data(unique_id, start_date, end_date)
+        if not unique_id:
+            return jsonify({'error': '请提供用户ID'}), 400
+        
+        # 使用新的导出方法
+        export_file = history_manager.export_user_data(unique_id, format_type)
+        
         if export_file:
             # 返回文件下载
             directory = os.path.dirname(export_file)
@@ -1985,25 +2093,36 @@ def export_history():
 
 @app.route('/api/history/users')
 def get_monitored_users():
-    """获取所有被监控过的用户列表"""
+    """获取所有被监控过的用户列表（新版本）"""
     try:
-        users = []
-        daily_dir = os.path.join('history', 'daily')
+        users = history_manager.get_all_users()
         
-        if os.path.exists(daily_dir):
-            # 获取所有日志文件
-            for filename in os.listdir(daily_dir):
-                if filename.endswith('.json'):
-                    # 从文件名提取用户ID
-                    parts = filename.split('_')
-                    if len(parts) >= 2:
-                        user_id = '_'.join(parts[:-1])  # 去掉日期部分
-                        if user_id not in users:
-                            users.append(user_id)
+        # 获取每个用户的基本统计信息
+        user_stats = []
+        for user in users:
+            sessions = history_manager.get_user_sessions(user, limit=1)  # 只获取最新一条
+            if sessions:
+                latest_session = sessions[0]
+                user_stats.append({
+                    'unique_id': user,
+                    'latest_session': latest_session['start_time'],
+                    'total_sessions': len(history_manager.get_user_sessions(user))
+                })
+            else:
+                user_stats.append({
+                    'unique_id': user,
+                    'latest_session': None,
+                    'total_sessions': 0
+                })
+        
+        # 按最新会话时间排序
+        user_stats.sort(key=lambda x: x.get('latest_session') or '', reverse=True)
         
         return jsonify({
             'status': 'success',
-            'users': sorted(users)
+            'users': [stat['unique_id'] for stat in user_stats],
+            'user_stats': user_stats,
+            'total_count': len(user_stats)
         })
     except Exception as e:
         logger.error(f"获取用户列表失败: {str(e)}")
@@ -2011,65 +2130,10 @@ def get_monitored_users():
 
 @app.route('/api/history/analytics/<unique_id>')
 def get_user_analytics(unique_id):
-    """获取用户数据分析"""
+    """获取用户数据分析（新版本）"""
     try:
         days = request.args.get('days', 30, type=int)
-        history = history_manager.get_user_history(unique_id, days)
-        
-        if not history:
-            return jsonify({
-                'status': 'success',
-                'unique_id': unique_id,
-                'analytics': {
-                    'total_sessions': 0,
-                    'avg_duration': 0,
-                    'peak_viewers': 0,
-                    'total_likes': 0,
-                    'best_time': None,
-                    'trend': 'stable'
-                }
-            })
-        
-        # 计算分析数据
-        total_sessions = sum(day.get('total_sessions', 0) for day in history)
-        total_duration = sum(day.get('total_duration', 0) for day in history)
-        avg_duration = total_duration / total_sessions if total_sessions > 0 else 0
-        peak_viewers = max(day.get('peak_viewers', 0) for day in history)
-        total_likes = sum(day.get('total_likes', 0) for day in history)
-        
-        # 找到最佳直播时间
-        best_hour = 0
-        max_avg_viewers = 0
-        for day in history:
-            hourly_stats = day.get('hourly_stats', {})
-            for hour, stats in hourly_stats.items():
-                if stats.get('avg_viewers', 0) > max_avg_viewers:
-                    max_avg_viewers = stats['avg_viewers']
-                    best_hour = int(hour)
-        
-        # 计算趋势
-        if len(history) >= 2:
-            recent_avg = sum(day.get('peak_viewers', 0) for day in history[:7]) / min(7, len(history))
-            old_avg = sum(day.get('peak_viewers', 0) for day in history[-7:]) / min(7, len(history))
-            
-            if recent_avg > old_avg * 1.1:
-                trend = 'rising'
-            elif recent_avg < old_avg * 0.9:
-                trend = 'falling'
-            else:
-                trend = 'stable'
-        else:
-            trend = 'stable'
-        
-        analytics = {
-            'total_sessions': total_sessions,
-            'avg_duration': round(avg_duration / 60, 1),  # 转换为分钟
-            'peak_viewers': peak_viewers,
-            'total_likes': total_likes,
-            'best_time': f"{best_hour:02d}:00",
-            'trend': trend,
-            'days_analyzed': len(history)
-        }
+        analytics = history_manager.get_user_analytics(unique_id, days)
         
         return jsonify({
             'status': 'success',
@@ -2079,6 +2143,29 @@ def get_user_analytics(unique_id):
         
     except Exception as e:
         logger.error(f"获取用户分析失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/history/session/<unique_id>/<session_id>')
+def get_session_detail(unique_id, session_id):
+    """获取指定会话的详细数据"""
+    try:
+        session_data = history_manager.get_session_detail(unique_id, session_id)
+        
+        if session_data:
+            return jsonify({
+                'status': 'success',
+                'unique_id': unique_id,
+                'session_id': session_id,
+                'data': session_data
+            })
+        else:
+            return jsonify({
+                'status': 'not_found',
+                'message': '会话数据未找到'
+            }), 404
+            
+    except Exception as e:
+        logger.error(f"获取会话详情失败: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 # 配置管理相关路由
@@ -2413,6 +2500,21 @@ def update_global_settings():
         logger.error(f"更新全局设置失败: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/monitor/global_settings', methods=['GET'])
+def get_global_settings():
+    """获取当前全局设置"""
+    try:
+        return jsonify({
+            'status': 'success',
+            'settings': {
+                'update_interval_base': CONCURRENT_CONFIG['update_interval_base'],
+                'max_concurrent_connections': CONCURRENT_CONFIG['max_concurrent_connections']
+            }
+        })
+    except Exception as e:
+        logger.error(f"获取全局设置失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
 # 自动加载配置的启动函数
 def auto_load_monitors():
     """应用启动时自动加载监控配置"""
@@ -2451,6 +2553,134 @@ def auto_load_monitors():
     except Exception as e:
         logger.error(f"自动加载监控配置失败: {str(e)}")
 
+def migrate_old_data():
+    """
+    数据迁移函数：将旧的history结构迁移到新结构
+    只在首次启动时运行一次
+    """
+    try:
+        migration_flag = os.path.join('history', '.migration_complete')
+        if os.path.exists(migration_flag):
+            logger.info("数据迁移已完成，跳过迁移过程")
+            return
+        
+        logger.info("开始数据迁移：将旧格式转换为新格式...")
+        
+        # 检查是否存在旧的数据结构
+        old_daily_dir = os.path.join('history', 'daily')
+        old_sessions_dir = os.path.join('history', 'sessions')
+        
+        migrated_users = set()
+        
+        # 迁移sessions数据（优先）
+        if os.path.exists(old_sessions_dir):
+            for filename in os.listdir(old_sessions_dir):
+                if filename.endswith('.json'):
+                    try:
+                        file_path = os.path.join(old_sessions_dir, filename)
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            session_data = json.load(f)
+                        
+                        unique_id = session_data.get('unique_id')
+                        if unique_id:
+                            # 创建新的会话数据结构
+                            new_session_data = {
+                                'unique_id': unique_id,
+                                'room_id': session_data.get('room_id'),
+                                'title': session_data.get('title', ''),
+                                'stream_status': session_data.get('stream_status', 0),
+                                'start_time': session_data.get('start_time'),
+                                'end_time': session_data.get('end_time'),
+                                'duration': session_data.get('duration', 0),
+                                'current_viewers': session_data.get('peak_viewers', 0),
+                                'total_viewers': session_data.get('total_viewers', 0),
+                                'like_count': session_data.get('like_count', 0),
+                                'comment_count': session_data.get('comment_count', 0),
+                                'gift_count': session_data.get('gift_count', 0),
+                                'gift_value': session_data.get('gift_value', 0),
+                                'follow_count': session_data.get('follow_count', 0),
+                                'share_count': session_data.get('share_count', 0),
+                                'subscribe_count': session_data.get('subscribe_count', 0),
+                                'gifts_detail': session_data.get('gifts_detail', {}),
+                                'minute_data': session_data.get('minute_data', []),
+                                'anti_detection_used': session_data.get('anti_detection_used', False)
+                            }
+                            
+                            # 使用新的保存方法
+                            history_manager.save_session_data(unique_id, new_session_data)
+                            migrated_users.add(unique_id)
+                            logger.info(f"迁移会话数据: {unique_id} - {filename}")
+                            
+                    except Exception as e:
+                        logger.error(f"迁移会话文件 {filename} 失败: {str(e)}")
+        
+        # 迁移daily数据（补充信息）
+        if os.path.exists(old_daily_dir):
+            for filename in os.listdir(old_daily_dir):
+                if filename.endswith('.json'):
+                    try:
+                        file_path = os.path.join(old_daily_dir, filename)
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            daily_data = json.load(f)
+                        
+                        unique_id = daily_data.get('unique_id')
+                        if unique_id and unique_id not in migrated_users:
+                            # 如果没有会话数据，从daily数据创建一个虚拟会话
+                            session_date = daily_data.get('date', datetime.now().strftime('%Y-%m-%d'))
+                            fake_session = {
+                                'unique_id': unique_id,
+                                'title': f"历史数据 {session_date}",
+                                'start_time': f"{session_date}T00:00:00",
+                                'end_time': f"{session_date}T23:59:59",
+                                'duration': daily_data.get('total_duration', 0),
+                                'current_viewers': daily_data.get('peak_viewers', 0),
+                                'total_viewers': daily_data.get('total_viewers', 0),
+                                'like_count': daily_data.get('total_likes', 0),
+                                'comment_count': daily_data.get('total_comments', 0),
+                                'gift_count': daily_data.get('total_gifts', 0),
+                                'gift_value': daily_data.get('total_gift_value', 0),
+                                'follow_count': daily_data.get('total_follows', 0),
+                                'share_count': daily_data.get('total_shares', 0),
+                                'subscribe_count': 0,
+                                'minute_data': [],
+                                'anti_detection_used': False
+                            }
+                            
+                            history_manager.save_session_data(unique_id, fake_session)
+                            migrated_users.add(unique_id)
+                            logger.info(f"从daily数据创建会话: {unique_id} - {filename}")
+                            
+                    except Exception as e:
+                        logger.error(f"迁移daily文件 {filename} 失败: {str(e)}")
+        
+        # 创建迁移完成标记
+        with open(migration_flag, 'w', encoding='utf-8') as f:
+            f.write(json.dumps({
+                'migration_date': datetime.now().isoformat(),
+                'migrated_users': list(migrated_users),
+                'total_migrated': len(migrated_users)
+            }, ensure_ascii=False, indent=2))
+        
+        logger.info(f"数据迁移完成！共迁移 {len(migrated_users)} 个用户的数据")
+        
+        # 可选：备份旧数据
+        if migrated_users:
+            backup_dir = os.path.join('history', 'backup_old_format')
+            os.makedirs(backup_dir, exist_ok=True)
+            
+            if os.path.exists(old_daily_dir):
+                import shutil
+                shutil.move(old_daily_dir, os.path.join(backup_dir, 'daily'))
+                logger.info("旧的daily数据已备份")
+            
+            if os.path.exists(old_sessions_dir):
+                import shutil
+                shutil.move(old_sessions_dir, os.path.join(backup_dir, 'sessions'))
+                logger.info("旧的sessions数据已备份")
+                
+    except Exception as e:
+        logger.error(f"数据迁移失败: {str(e)}")
+
 if __name__ == '__main__':
     # 打印启动信息和Web UI访问地址
     print("=" * 60)
@@ -2464,11 +2694,13 @@ if __name__ == '__main__':
     print()
     print("🔧 功能特性:")
     print("  ✓ 实时直播数据监控")
-    print("  ✓ 历史数据分析")
+    print("  ✓ 历史数据分析 (新结构)")
     print("  ✓ 配置管理")
     print("  ✓ 数据导出")
     print("  ✓ 自动日志轮转 (最大1MB)")
     print("  ✓ 多账号并发监控优化")
+    print("  ✓ 每账号独立文件夹存储")
+    print("  ✓ 每场直播独立记录文件")
     print()
     print("⚡ 多账号监控说明:")
     print(f"  最大并发连接: {CONCURRENT_CONFIG['max_concurrent_connections']} 个")
@@ -2476,12 +2708,20 @@ if __name__ == '__main__':
     print("  离线用户: 10分钟重试间隔")
     print("  错开启动: 避免API请求冲突")
     print()
+    print("📁 新数据结构:")
+    print("  history/{账号名}/session_YYYYMMDD_HHMMSS.json")
+    print("  优化存储：压缩格式，避免大文件")
+    print("  便于分析：每场直播独立文件")
+    print()
     print("📋 日志级别控制:")
     print("  生产环境: $env:LOG_LEVEL = 'WARNING'")
     print("  调试模式: $env:LOG_LEVEL = 'DEBUG'")
     print()
     print("=" * 60)
     print()
+    
+    # 数据迁移检查
+    migrate_old_data()
     
     # 启动时自动加载监控配置
     auto_load_monitors()

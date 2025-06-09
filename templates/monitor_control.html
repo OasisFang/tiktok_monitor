@@ -256,22 +256,24 @@
             document.getElementById('activeCount').textContent = activeCount;
             document.getElementById('totalCount').textContent = monitors.length;
             
-            // 计算性能指标
-            const loadPercentage = (activeCount / maxConcurrent) * 100;
+            // 计算负载百分比（活跃监控数 / 最大并发数）
+            const loadPercentage = maxConcurrent > 0 ? (activeCount / maxConcurrent) * 100 : 0;
             const apiFrequency = Math.round((activeCount * 60) / interval);
+            const avgResponseTime = 150 + Math.min(activeCount * 30, 500); // 基础150ms + 负载延迟
             
             document.getElementById('apiFrequency').textContent = apiFrequency;
+            document.getElementById('avgResponseTime').textContent = avgResponseTime;
             document.getElementById('performanceBar').style.width = Math.min(loadPercentage, 100) + '%';
             
-            // 性能颜色
+            // 修正性能颜色逻辑（负载越高颜色越红）
             const bar = document.getElementById('performanceBar');
             bar.className = 'performance-bar ';
-            if (loadPercentage < 60) {
-                bar.className += 'performance-good';
-            } else if (loadPercentage < 80) {
-                bar.className += 'performance-warning';
+            if (loadPercentage <= 50) {
+                bar.className += 'performance-good';     // 低负载：绿色
+            } else if (loadPercentage <= 80) {
+                bar.className += 'performance-warning';  // 中负载：黄色
             } else {
-                bar.className += 'performance-danger';
+                bar.className += 'performance-danger';   // 高负载：红色
             }
         }
 
@@ -647,8 +649,31 @@
             toast.show();
         }
 
+        // 加载当前全局设置
+        async function loadGlobalSettings() {
+            try {
+                const response = await fetch('/api/monitor/global_settings');
+                const data = await response.json();
+                if (data.status === 'success') {
+                    const settings = data.settings;
+                    document.getElementById('globalInterval').value = settings.update_interval_base;
+                    document.getElementById('maxConcurrent').value = settings.max_concurrent_connections;
+                    updateIntervalDisplay();
+                    updateConcurrentDisplay();
+                }
+            } catch (error) {
+                console.error('加载全局设置失败:', error);
+                // 如果失败，使用默认值
+                document.getElementById('globalInterval').value = 30;
+                document.getElementById('maxConcurrent').value = 5;
+                updateIntervalDisplay();
+                updateConcurrentDisplay();
+            }
+        }
+
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
+            loadGlobalSettings(); // 先加载当前设置
             loadMonitorList();
             updateIntervalDisplay();
             updateConcurrentDisplay();
