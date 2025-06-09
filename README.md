@@ -15,12 +15,12 @@ TikTok直播监控系统是一个功能完整的实时直播数据监控工具�
 ## 🚀 快速开始
 
 ### 1. 安装依赖
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### 2. 启动应用
-```bash
+   ```bash
 python main.py
 ```
 
@@ -141,7 +141,7 @@ python main.py
 ```powershell
 # 查看所有日志文件大小
 Get-ChildItem tiktok_monitor.log* | Select-Object Name, Length, LastWriteTime
-```
+   ```
 
 ## 🌐 Web界面功能
 
@@ -296,6 +296,13 @@ tiktok_monitor/
 - 关注日志文件中的异常信息
 - **生产环境使用WARNING日志级别**，减少不必要的日志输出
 - **调试时临时使用DEBUG级别**，问题解决后恢复默认级别
+
+### 多账号监控优化
+- **并发监控**: 最多支持5个账号同时连接
+- **智能间隔**: 监控间隔根据账号数量自动调整(30-60秒)
+- **错开启动**: 避免所有账号同时请求API
+- **离线处理**: 离线用户自动10分钟重试，不产生错误日志
+- **资源优化**: 房间摘要文件只保存在history目录
 
 ## 🆕 版本更新说明
 

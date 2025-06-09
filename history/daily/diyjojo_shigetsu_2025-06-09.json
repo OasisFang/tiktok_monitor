@@ -1,0 +1,243 @@
+{
+  "unique_id": "diyjojo_shigetsu",
+  "date": "2025-06-09",
+  "total_sessions": 8,
+  "total_duration": 53.607573,
+  "peak_viewers": 0,
+  "total_viewers": 72406,
+  "total_likes": 1425,
+  "total_comments": 80,
+  "total_gifts": 10,
+  "total_gift_value": 10,
+  "total_follows": 0,
+  "total_shares": 0,
+  "sessions": [
+    {
+      "session_id": "20250609_215331",
+      "start_time": "2025-06-09T21:53:23.786658",
+      "end_time": "2025-06-09T21:53:31.132053",
+      "duration": 7.345395,
+      "peak_viewers": 0,
+      "total_likes": 35,
+      "total_gifts": 1
+    },
+    {
+      "session_id": "20250609_220936",
+      "start_time": "2025-06-09T22:09:30.944332",
+      "end_time": "2025-06-09T22:09:36.536415",
+      "duration": 5.592083,
+      "peak_viewers": 0,
+      "total_likes": 44,
+      "total_gifts": 0
+    },
+    {
+      "session_id": "20250609_222659",
+      "start_time": "2025-06-09T22:26:55.102929",
+      "end_time": "2025-06-09T22:26:59.866766",
+      "duration": 4.763837,
+      "peak_viewers": 0,
+      "total_likes": 49,
+      "total_gifts": 1
+    },
+    {
+      "session_id": "20250609_230534",
+      "start_time": "2025-06-09T23:05:28.006041",
+      "end_time": "2025-06-09T23:05:34.446118",
+      "duration": 6.440077,
+      "peak_viewers": 0,
+      "total_likes": 98,
+      "total_gifts": 0
+    },
+    {
+      "session_id": "20250609_231539",
+      "start_time": "2025-06-09T23:15:33.360774",
+      "end_time": "2025-06-09T23:15:39.307814",
+      "duration": 5.94704,
+      "peak_viewers": 0,
+      "total_likes": 114,
+      "total_gifts": 1
+    },
+    {
+      "session_id": "20250609_231552",
+      "start_time": "2025-06-09T23:15:44.778649",
+      "end_time": "2025-06-09T23:15:52.041166",
+      "duration": 7.262517,
+      "peak_viewers": 0,
+      "total_likes": 260,
+      "total_gifts": 1
+    },
+    {
+      "session_id": "20250609_231604",
+      "start_time": "2025-06-09T23:15:56.663476",
+      "end_time": "2025-06-09T23:16:04.869066",
+      "duration": 8.20559,
+      "peak_viewers": 0,
+      "total_likes": 350,
+      "total_gifts": 1
+    },
+    {
+      "session_id": "20250609_231618",
+      "start_time": "2025-06-09T23:16:10.644132",
+      "end_time": "2025-06-09T23:16:18.695166",
+      "duration": 8.051034,
+      "peak_viewers": 0,
+      "total_likes": 475,
+      "total_gifts": 5
+    }
+  ],
+  "hourly_stats": {
+    "0": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "1": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "2": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "3": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "4": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "5": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "6": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "7": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "8": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "9": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "10": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "11": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "12": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "13": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "14": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "15": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "16": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "17": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "18": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "19": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "20": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "21": {
+      "sessions": 1,
+      "avg_viewers": 0.0,
+      "likes": 35
+    },
+    "22": {
+      "sessions": 2,
+      "avg_viewers": 0.0,
+      "likes": 93
+    },
+    "23": {
+      "sessions": 5,
+      "avg_viewers": 0.0,
+      "likes": 1297
+    }
+  },
+  "room_summary": {
+    "room_summary": {
+      "id": 7513915294658988808,
+      "title": "あなたをメンションしています",
+      "status": 2,
+      "user_count": 1087,
+      "create_time": 1749469743,
+      "stats": {
+        "comment_count": 0,
+        "deprecated1": 0,
+        "deprecated2": "",
+        "digg_count": 0,
+        "enter_count": 0,
+        "fan_ticket": 0,
+        "follow_count": 0,
+        "gift_uv_count": 0,
+        "id": 7513915294658988808,
+        "id_str": "7513915294658988808",
+        "like_count": 0,
+        "replay_fan_ticket": 0,
+        "replay_viewers": 8951,
+        "share_count": 0,
+        "total_user": 12867,
+        "total_user_desp": "",
+        "watermelon": 0
+      },
+      "owner": "DIYJOJO_Shigetsu"
+    },
+    "gift_count": 242,
+    "updated_at": "2025-06-09T23:16:28.376012"
+  },
+  "created_at": "2025-06-09T00:15:20.466273",
+  "updated_at": "2025-06-09T23:16:28.376012"
+}

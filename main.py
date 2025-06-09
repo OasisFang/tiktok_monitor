@@ -81,6 +81,13 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 active_monitors = {}
 monitor_threads = {}
 
+# 并发监控管理配置
+CONCURRENT_CONFIG = {
+    'max_concurrent_connections': 5,  # 最大同时连接数
+    'update_interval_base': 30,       # 基础更新间隔（秒）
+    'stagger_delay': 5,               # 错开启动延迟（秒）
+}
+
 class ConfigManager:
     """配置管理类"""
     
@@ -594,6 +601,11 @@ class TikTokLiveMonitor:
             unique_id=unique_id
         )
         
+        # 监控控制状态
+        self.is_paused = False        # 暂停状态（不同于停止）
+        self.custom_interval = None   # 自定义监控间隔
+        self.last_update_time = None  # 最后更新时间
+        
         # 如果提供了 sessionid，设置到客户端
         if sessionid:
             self.client.web.set_session_id(sessionid)
@@ -744,41 +756,53 @@ class TikTokLiveMonitor:
             try:
                 # 尝试所有可能的属性名称获取观众数量
                 viewer_count = 0
+                total_viewers = 0
                 tried_attrs = []
                 
-                # 尝试使用表示"当前"在线观众的属性，而不是累计观众
-                for attr_name in ["user_count", "total", "member_count", "m_total", 
-                                 "viewers", "audience", "audience_count", "popularity"]:
+                # 尝试获取当前观众数（实时在线人数）
+                for attr_name in ["user_count", "member_count", "m_total", "viewers", "audience", "audience_count"]:
                     tried_attrs.append(attr_name)
                     if hasattr(event, attr_name):
                         try:
                             viewer_count = getattr(event, attr_name)
-                            logger.debug(f"获取到观众数量: {viewer_count}，使用属性: {attr_name}")
+                            logger.debug(f"获取到当前观众数: {viewer_count}，使用属性: {attr_name}")
                             break
                         except Exception as e:
                             logger.error(f"获取属性 {attr_name} 时出错: {str(e)}")
                 
-                # 如果通过第一轮属性未获取到观众数量，尝试total_user作为后备
-                if viewer_count == 0 and hasattr(event, "total_user"):
+                # 尝试获取累计观众数
+                if hasattr(event, "total_user"):
                     try:
-                        total_user_count = getattr(event, "total_user")
-                        # 记录累计观众数，但不用作当前观众数
-                        if total_user_count > 0:
-                            logger.debug(f"获取到累计观众数量: {total_user_count}，但不作为当前观众数")
-                            self.stats['total_viewers'] = max(self.stats['total_viewers'], total_user_count)
+                        total_viewers = getattr(event, "total_user")
+                        logger.debug(f"获取到累计观众数: {total_viewers}")
+                        # 更新累计观众数
+                        self.stats['total_viewers'] = max(self.stats['total_viewers'], total_viewers)
                     except Exception as e:
                         logger.error(f"获取total_user属性时出错: {str(e)}")
+                elif hasattr(event, "total"):
+                    try:
+                        total_viewers = getattr(event, "total")
+                        logger.debug(f"获取到总观众数: {total_viewers}")
+                        # 可能是累计观众数，需要判断
+                        if total_viewers > viewer_count:
+                            self.stats['total_viewers'] = max(self.stats['total_viewers'], total_viewers)
+                    except Exception as e:
+                        logger.error(f"获取total属性时出错: {str(e)}")
                 
-                # 如果所有属性都尝试失败，尝试解析原始字符串
+                # 如果获取不到当前观众数，尝试解析原始字符串
                 if viewer_count == 0:
                     logger.warning(f"尝试所有属性都失败: {tried_attrs}，尝试解析原始字符串")
                     try:
                         event_str = str(event)
-                        # 尝试从字符串中提取数字
                         import re
                         numbers = re.findall(r'\d+', event_str)
                         if numbers:
-                            viewer_count = int(numbers[0])  # 使用第一个数字
+                            viewer_count = int(numbers[0])  # 使用第一个数字作为当前观众数
+                            if len(numbers) > 1:
+                                # 如果有多个数字，第二个可能是累计观众数
+                                potential_total = int(numbers[1])
+                                if potential_total > viewer_count:
+                                    self.stats['total_viewers'] = max(self.stats['total_viewers'], potential_total)
                             logger.debug(f"从字符串中提取的观众数量: {viewer_count}")
                     except Exception as e:
                         logger.error(f"解析字符串时出错: {str(e)}")
@@ -788,8 +812,15 @@ class TikTokLiveMonitor:
                     viewer_count = 1
                     logger.warning("无法获取有效的观众数量，设置为默认值1")
                 
-                # 更新统计和图表数据
+                # 更新当前观众数
                 self.stats['current_viewers'] = viewer_count
+                
+                # 如果没有获取到累计观众数，则用当前观众数的最大值作为累计观众数
+                if self.stats['total_viewers'] == 0:
+                    self.stats['total_viewers'] = viewer_count
+                else:
+                    # 确保累计观众数不小于当前观众数
+                    self.stats['total_viewers'] = max(self.stats['total_viewers'], viewer_count)
                 
                 # 每分钟记录一次重要数据
                 self._record_minute_data()
@@ -1152,19 +1183,16 @@ class TikTokLiveMonitor:
                 'owner': room_info.get('owner', {}).get('nickname', '') if room_info.get('owner') else ''
             }
             
-            # 保存精简版本到小文件
-            simplified_file = f"{self.unique_id}_room_summary.json"
+            # 准备room_summary数据（不再保存到根目录）
             summary_data = {
                 "room_summary": simplified_room_info, 
                 "gift_count": len(gift_info.get('gifts', [])) if gift_info else 0,
                 "updated_at": datetime.now().isoformat()
             }
-            with open(simplified_file, "w", encoding="utf-8") as f:
-                json.dump(summary_data, f, ensure_ascii=False, indent=2)
-            logger.info(f"已保存精简房间信息到: {simplified_file}")
             
-            # 同时将 room_summary 更新到今日的 daily 文件中
+            # 直接将 room_summary 更新到今日的 daily 文件中
             self._update_daily_with_room_summary(summary_data)
+            logger.debug(f"房间信息已更新到历史数据: {self.unique_id}")
             
             # 更新统计数据
             if room_info:
@@ -1181,10 +1209,14 @@ class TikTokLiveMonitor:
                 # 统计数据
                 if 'stats' in room_info:
                     stats = room_info['stats']
-                    # 累计观众
-                    self.stats['total_viewers'] = stats.get('total_user', 0)
-                    self.stats['like_count'] = stats.get('like_count', 0)
-                    self.stats['comment_count'] = stats.get('comment_count', 0)
+                    # 累计观众 - 使用max确保只增加不减少
+                    room_total_viewers = stats.get('total_user', 0)
+                    if room_total_viewers > 0:
+                        self.stats['total_viewers'] = max(self.stats['total_viewers'], room_total_viewers)
+                    
+                    # 其他统计数据也使用max确保只增加
+                    self.stats['like_count'] = max(self.stats['like_count'], stats.get('like_count', 0))
+                    self.stats['comment_count'] = max(self.stats['comment_count'], stats.get('comment_count', 0))
                     
                 # 当前在线人数 - 从room_info['user_count']获取
                 self.stats['current_viewers'] = room_info.get('user_count', 0)
@@ -1196,7 +1228,14 @@ class TikTokLiveMonitor:
             self._send_data_updates()
             return True
         except Exception as e:
-            logger.error(f"获取房间信息失败: {str(e)}", exc_info=True)
+            # 检查是否是用户离线错误或用户不存在错误
+            error_str = str(e)
+            if ("is offline" in error_str or "UserOfflineError" in error_str or 
+                "UserNotFoundError" in error_str or "No Message Provided" in error_str):
+                logger.info(f"@{self.unique_id} 当前离线或不存在，10分钟后重试")
+                return False
+            else:
+                logger.error(f"获取房间信息失败: {str(e)}")
             return False
             
     async def check_and_connect(self):
@@ -1308,11 +1347,14 @@ class TikTokLiveMonitor:
             'total_likes': self.stats['like_count'],
             'total_gifts': self.stats['gift_count'],
             'total_comments': self.stats['comment_count'],
+            'total_shares': self.stats['share_count'],
+            'total_follows': self.stats['follow_count'],
             'start_time': self.stats['start_time'].isoformat() if self.stats.get('start_time') else None,
             'chart_data': self.stats['chart_data'],
-            'comments': [],
-            'gifts': [],
-            'status': 'connecting' if self.is_running else 'idle'
+            'comments': self.stats['comments'],  # 现在只有10条
+            'gifts': self.stats['gifts'],        # 现在只有10条
+            'last_update_time': self.last_update_time,  # 添加最后更新时间
+            'status': 'live' if self.is_live else 'offline'
         })
     
     def _update_daily_with_room_summary(self, summary_data):
@@ -1410,6 +1452,9 @@ class TikTokLiveMonitor:
     
     def _send_data_updates(self):
         """发送数据更新"""
+        # 设置最后更新时间
+        self.last_update_time = datetime.now().isoformat()
+        
         socketio.emit('stream_data', {
             'unique_id': self.unique_id,
             'is_live': self.is_live,
@@ -1420,10 +1465,13 @@ class TikTokLiveMonitor:
             'total_likes': self.stats['like_count'],
             'total_gifts': self.stats['gift_count'],
             'total_comments': self.stats['comment_count'],
+            'total_shares': self.stats['share_count'],
+            'total_follows': self.stats['follow_count'],
             'start_time': self.stats['start_time'].isoformat() if self.stats.get('start_time') else None,
             'chart_data': self.stats['chart_data'],
             'comments': self.stats['comments'],  # 现在只有10条
             'gifts': self.stats['gifts'],        # 现在只有10条
+            'last_update_time': self.last_update_time,  # 添加最后更新时间
             'status': 'live' if self.is_live else 'offline'
         })
     
@@ -1441,8 +1489,16 @@ class TikTokLiveMonitor:
     async def start_monitoring(self):
         """启动监控"""
         self.is_running = True
+        self.is_paused = False  # 重置暂停状态
         # 用于跟踪连续失败次数
         consecutive_failures = 0
+        
+        # 错开启动时间避免同时请求API
+        active_count = len(active_monitors)
+        if active_count > 0:
+            stagger_delay = min(active_count * CONCURRENT_CONFIG['stagger_delay'], 30)
+            logger.info(f"@{self.unique_id} 错开启动延迟: {stagger_delay}秒")
+            await asyncio.sleep(stagger_delay)
         
         # 如果启用防检测，先进行随机延迟
         if self.anti_detection:
@@ -1450,6 +1506,12 @@ class TikTokLiveMonitor:
         
         # 尝试连接，如果失败则每30秒重试一次
         while self.is_running:
+            # 检查是否被暂停
+            if self.is_paused:
+                logger.debug(f"@{self.unique_id} 监控已暂停，等待恢复...")
+                await asyncio.sleep(5)  # 暂停时每5秒检查一次
+                continue
+                
             try:
                 connection_result = await self.check_and_connect()
                 
@@ -1460,16 +1522,35 @@ class TikTokLiveMonitor:
                     
                     # 连接成功，定期检查直播状态
                     while self.is_running and self.client.connected:
-                        # 使用防检测配置的间隔时间
+                        # 根据活跃监控数量动态调整间隔
+                        active_count = len(active_monitors)
+                        
                         if self.anti_detection:
                             import random
                             interval = random.randint(
                                 self.anti_detection_config['request_interval_min'],
                                 self.anti_detection_config['request_interval_max']
                             )
-                            logger.debug(f"防检测模式，下次检查间隔: {interval}秒")
+                            # 多账号时增加间隔避免API限制
+                            if active_count > 3:
+                                interval = int(interval * (1 + active_count * 0.1))
+                            logger.debug(f"防检测模式，下次检查间隔: {interval}秒 (活跃监控: {active_count})")
                         else:
-                            interval = 60
+                            # 使用自定义间隔或根据监控数量调整
+                            if self.custom_interval:
+                                interval = self.custom_interval
+                                logger.debug(f"使用自定义间隔: {interval}秒")
+                            else:
+                                # 基础间隔根据监控数量调整
+                                base_interval = CONCURRENT_CONFIG['update_interval_base']
+                                if active_count <= 3:
+                                    interval = base_interval
+                                elif active_count <= 6:
+                                    interval = base_interval + 15  # 45秒
+                                else:
+                                    interval = base_interval + 30  # 60秒
+                                
+                                logger.debug(f"更新间隔: {interval}秒 (活跃监控: {active_count})")
                         
                         await asyncio.sleep(interval)
                         
@@ -1478,21 +1559,29 @@ class TikTokLiveMonitor:
                             import random
                             await asyncio.sleep(random.uniform(0.5, 2))
                         
-                        # 只在还连接时才更新房间信息
-                        if self.is_running and self.client.connected:
+                        # 只在还连接且未暂停时才更新房间信息
+                        if self.is_running and self.client.connected and not self.is_paused:
                             await self.fetch_room_info()  # 定期更新房间信息
+                            self.last_update_time = datetime.now().isoformat()
                 else:
                     # 连接失败，增加失败计数并使用指数退避策略
                     consecutive_failures += 1
                     
-                    # 基础等待时间是30秒，最多等待5分钟
-                    base_wait = 30
-                    if self.anti_detection:
-                        # 防检测模式下使用稍长的等待时间
-                        base_wait = 45
+                    # 检查是否是离线状态（stream_status != 2）
+                    if hasattr(self, 'stats') and self.stats.get('stream_status') != 2:
+                        # 用户离线，使用10分钟间隔
+                        wait_time = 600  # 10分钟
+                        logger.info(f"@{self.unique_id} 离线中，{wait_time//60}分钟后重新检查")
+                    else:
+                        # 其他连接失败，使用指数退避策略
+                        base_wait = 30
+                        if self.anti_detection:
+                            # 防检测模式下使用稍长的等待时间
+                            base_wait = 45
+                        
+                        wait_time = min(base_wait * (2 ** (consecutive_failures - 1)), 300)
+                        logger.info(f"@{self.unique_id} 连接失败，{wait_time}秒后重试 (连续失败: {consecutive_failures}次)")
                     
-                    wait_time = min(base_wait * (2 ** (consecutive_failures - 1)), 300)
-                    logger.info(f"@{self.unique_id} 连接失败，{wait_time}秒后重试 (连续失败: {consecutive_failures}次)")
                     await asyncio.sleep(wait_time)
                     
             except Exception as e:
@@ -1509,8 +1598,8 @@ class TikTokLiveMonitor:
                 await self.client.disconnect()
                 # 等待断开完成
                 await asyncio.sleep(0.5)
-            # 断开连接后保存统计数据
-            await self.save_stats()
+                # 断开连接后保存统计数据
+                await self.save_stats()
         except Exception as e:
             logger.error(f"停止监控时出错 @{self.unique_id}: {str(e)}")
             # 即使出错也要保存统计数据
@@ -1594,6 +1683,7 @@ def start_monitor():
         unique_id = data.get('unique_id', '').strip()
         sessionid = data.get('sessionid', '').strip() or None
         anti_detection = data.get('anti_detection', False)
+        custom_interval = data.get('custom_interval')
         logger.info(f"收到开始监控请求: {unique_id}, sessionid: {'已提供' if sessionid else '未提供'}, 防检测: {anti_detection}")
     
         if not unique_id:
@@ -1618,6 +1708,12 @@ def start_monitor():
             # 创建新的监控实例
             logger.info(f"创建监控实例: {unique_id}")
             monitor = TikTokLiveMonitor(unique_id, sessionid, anti_detection)
+            
+            # 设置自定义间隔
+            if custom_interval and isinstance(custom_interval, int) and 1 <= custom_interval <= 500:
+                monitor.custom_interval = custom_interval
+                logger.info(f"设置自定义监控间隔: {custom_interval}秒")
+            
             active_monitors[unique_id] = monitor
         
             # 在新线程中启动监控
@@ -1788,10 +1884,13 @@ def get_stream_data():
         'total_likes': monitor.stats['like_count'],
         'total_gifts': monitor.stats['gift_count'],
         'total_comments': monitor.stats['comment_count'],
+        'total_shares': monitor.stats['share_count'],
+        'total_follows': monitor.stats['follow_count'],
         'start_time': monitor.stats['start_time'].isoformat() if monitor.stats.get('start_time') else None,
         'chart_data': monitor.stats['chart_data'],
         'comments': monitor.stats['comments'][-20:],  # 仅发送最新的20条
         'gifts': monitor.stats['gifts'][-20:],        # 仅发送最新的20条
+        'last_update_time': monitor.last_update_time,
         'status': 'success'
     })
 
@@ -1832,6 +1931,11 @@ def monitor_info(unique_id):
 def history_page():
     """历史数据分析页面"""
     return render_template('history.html')
+
+@app.route('/monitor_control')
+def monitor_control_page():
+    """监控管理控制台页面"""
+    return render_template('monitor_control.html')
 
 @app.route('/api/history/user/<unique_id>')
 def get_user_history(unique_id):
@@ -2096,6 +2200,219 @@ def get_history_stats():
         logger.error(f"获取历史数据统计失败: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
+# 监控管理API路由
+@app.route('/api/monitor/list_detailed', methods=['GET'])
+def get_detailed_monitor_list():
+    """获取详细的监控列表"""
+    try:
+        monitor_list = []
+        for unique_id, monitor in active_monitors.items():
+            status = 'stopped'
+            if monitor.is_running:
+                if monitor.is_paused:
+                    status = 'paused'
+                else:
+                    status = 'active'
+            
+            monitor_info = {
+                'unique_id': unique_id,
+                'status': status,
+                'is_live': monitor.is_live,
+                'current_viewers': monitor.stats.get('current_viewers', 0),
+                'total_viewers': monitor.stats.get('total_viewers', 0),
+                'anti_detection': monitor.anti_detection,
+                'interval': monitor.custom_interval or CONCURRENT_CONFIG['update_interval_base'],
+                'last_update': monitor.last_update_time,
+                'connected': monitor.client.connected if monitor.client else False
+            }
+            monitor_list.append(monitor_info)
+        
+        return jsonify({
+            'status': 'success',
+            'monitors': monitor_list,
+            'total_count': len(monitor_list),
+            'active_count': len([m for m in monitor_list if m['status'] == 'active'])
+        })
+    except Exception as e:
+        logger.error(f"获取监控列表失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/monitor/pause', methods=['POST'])
+def pause_monitor():
+    """暂停指定监控"""
+    try:
+        data = request.get_json()
+        unique_id = data.get('unique_id', '').strip()
+        
+        if not unique_id or unique_id not in active_monitors:
+            return jsonify({'error': '监控不存在'}), 400
+        
+        monitor = active_monitors[unique_id]
+        monitor.is_paused = True
+        
+        logger.info(f"已暂停监控: @{unique_id}")
+        return jsonify({
+            'status': 'success',
+            'message': f'已暂停监控 @{unique_id}',
+            'unique_id': unique_id
+        })
+    except Exception as e:
+        logger.error(f"暂停监控失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/monitor/resume', methods=['POST'])
+def resume_monitor():
+    """恢复指定监控"""
+    try:
+        data = request.get_json()
+        unique_id = data.get('unique_id', '').strip()
+        
+        if not unique_id or unique_id not in active_monitors:
+            return jsonify({'error': '监控不存在'}), 400
+        
+        monitor = active_monitors[unique_id]
+        monitor.is_paused = False
+        
+        logger.info(f"已恢复监控: @{unique_id}")
+        return jsonify({
+            'status': 'success',
+            'message': f'已恢复监控 @{unique_id}',
+            'unique_id': unique_id
+        })
+    except Exception as e:
+        logger.error(f"恢复监控失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/monitor/pause_all', methods=['POST'])
+def pause_all_monitors():
+    """暂停所有监控"""
+    try:
+        paused_count = 0
+        for unique_id, monitor in active_monitors.items():
+            if monitor.is_running and not monitor.is_paused:
+                monitor.is_paused = True
+                paused_count += 1
+        
+        logger.info(f"已暂停所有监控，共 {paused_count} 个")
+        return jsonify({
+            'status': 'success',
+            'message': f'已暂停 {paused_count} 个监控',
+            'paused_count': paused_count
+        })
+    except Exception as e:
+        logger.error(f"暂停所有监控失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/monitor/resume_all', methods=['POST'])
+def resume_all_monitors():
+    """恢复所有监控"""
+    try:
+        resumed_count = 0
+        for unique_id, monitor in active_monitors.items():
+            if monitor.is_running and monitor.is_paused:
+                monitor.is_paused = False
+                resumed_count += 1
+        
+        logger.info(f"已恢复所有监控，共 {resumed_count} 个")
+        return jsonify({
+            'status': 'success',
+            'message': f'已恢复 {resumed_count} 个监控',
+            'resumed_count': resumed_count
+        })
+    except Exception as e:
+        logger.error(f"恢复所有监控失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/monitor/update_interval', methods=['POST'])
+def update_monitor_interval():
+    """更新监控间隔"""
+    try:
+        data = request.get_json()
+        unique_id = data.get('unique_id', '').strip()
+        interval = data.get('interval')
+        
+        if not unique_id or unique_id not in active_monitors:
+            return jsonify({'error': '监控不存在'}), 400
+        
+        if not isinstance(interval, int) or interval < 1 or interval > 500:
+            return jsonify({'error': '间隔必须在1-500秒之间'}), 400
+        
+        monitor = active_monitors[unique_id]
+        monitor.custom_interval = interval
+        
+        logger.info(f"已更新监控间隔: @{unique_id} -> {interval}秒")
+        return jsonify({
+            'status': 'success',
+            'message': f'已更新 @{unique_id} 的监控间隔为 {interval}秒',
+            'unique_id': unique_id,
+            'interval': interval
+        })
+    except Exception as e:
+        logger.error(f"更新监控间隔失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/monitor/update_anti_detection', methods=['POST'])
+def update_anti_detection():
+    """更新防检测设置"""
+    try:
+        data = request.get_json()
+        unique_id = data.get('unique_id', '').strip()
+        anti_detection = data.get('anti_detection', False)
+        
+        if not unique_id or unique_id not in active_monitors:
+            return jsonify({'error': '监控不存在'}), 400
+        
+        monitor = active_monitors[unique_id]
+        monitor.anti_detection = anti_detection
+        
+        # 更新配置文件
+        config_manager.add_monitor_to_config(unique_id, monitor.sessionid, anti_detection)
+        
+        logger.info(f"已更新防检测设置: @{unique_id} -> {anti_detection}")
+        return jsonify({
+            'status': 'success',
+            'message': f'已{"启用" if anti_detection else "禁用"} @{unique_id} 的防检测模式',
+            'unique_id': unique_id,
+            'anti_detection': anti_detection
+        })
+    except Exception as e:
+        logger.error(f"更新防检测设置失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/monitor/global_settings', methods=['POST'])
+def update_global_settings():
+    """更新全局设置"""
+    try:
+        data = request.get_json()
+        global_interval = data.get('global_interval')
+        max_concurrent = data.get('max_concurrent')
+        
+        updated = []
+        
+        if global_interval and isinstance(global_interval, int) and 1 <= global_interval <= 500:
+            CONCURRENT_CONFIG['update_interval_base'] = global_interval
+            updated.append(f'监控间隔: {global_interval}秒')
+        
+        if max_concurrent and isinstance(max_concurrent, int) and 1 <= max_concurrent <= 30:
+            CONCURRENT_CONFIG['max_concurrent_connections'] = max_concurrent
+            updated.append(f'最大并发: {max_concurrent}个')
+        
+        if not updated:
+            return jsonify({'error': '无有效设置更新'}), 400
+        
+        logger.info(f"已更新全局设置: {', '.join(updated)}")
+        return jsonify({
+            'status': 'success',
+            'message': f'已更新全局设置: {", ".join(updated)}',
+            'settings': {
+                'update_interval_base': CONCURRENT_CONFIG['update_interval_base'],
+                'max_concurrent_connections': CONCURRENT_CONFIG['max_concurrent_connections']
+            }
+        })
+    except Exception as e:
+        logger.error(f"更新全局设置失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
 # 自动加载配置的启动函数
 def auto_load_monitors():
     """应用启动时自动加载监控配置"""
@@ -2151,6 +2468,13 @@ if __name__ == '__main__':
     print("  ✓ 配置管理")
     print("  ✓ 数据导出")
     print("  ✓ 自动日志轮转 (最大1MB)")
+    print("  ✓ 多账号并发监控优化")
+    print()
+    print("⚡ 多账号监控说明:")
+    print(f"  最大并发连接: {CONCURRENT_CONFIG['max_concurrent_connections']} 个")
+    print("  监控间隔: 30-60秒 (根据账号数量自动调整)")
+    print("  离线用户: 10分钟重试间隔")
+    print("  错开启动: 避免API请求冲突")
     print()
     print("📋 日志级别控制:")
     print("  生产环境: $env:LOG_LEVEL = 'WARNING'")

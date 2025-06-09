@@ -1,0 +1,198 @@
+{
+  "unique_id": "diynana_anya",
+  "date": "2025-06-09",
+  "total_sessions": 3,
+  "total_duration": 887.175872,
+  "peak_viewers": 0,
+  "total_viewers": 8893,
+  "total_likes": 4661,
+  "total_comments": 59,
+  "total_gifts": 14,
+  "total_gift_value": 72,
+  "total_follows": 0,
+  "total_shares": 0,
+  "sessions": [
+    {
+      "session_id": "20250609_002316",
+      "start_time": "2025-06-09T00:15:54.970822",
+      "end_time": "2025-06-09T00:23:16.391457",
+      "duration": 441.420635,
+      "peak_viewers": 0,
+      "total_likes": 2286,
+      "total_gifts": 7
+    },
+    {
+      "session_id": "20250609_002316",
+      "start_time": "2025-06-09T00:15:54.970822",
+      "end_time": "2025-06-09T00:23:16.581174",
+      "duration": 441.610352,
+      "peak_viewers": 0,
+      "total_likes": 2286,
+      "total_gifts": 7
+    },
+    {
+      "session_id": "20250609_230542",
+      "start_time": "2025-06-09T23:05:38.621062",
+      "end_time": "2025-06-09T23:05:42.765947",
+      "duration": 4.144885,
+      "peak_viewers": 0,
+      "total_likes": 89,
+      "total_gifts": 0
+    }
+  ],
+  "hourly_stats": {
+    "0": {
+      "sessions": 2,
+      "avg_viewers": 0.0,
+      "likes": 4572
+    },
+    "1": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "2": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "3": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "4": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "5": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "6": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "7": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "8": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "9": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "10": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "11": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "12": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "13": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "14": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "15": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "16": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "17": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "18": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "19": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "20": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "21": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "22": {
+      "sessions": 0,
+      "avg_viewers": 0,
+      "likes": 0
+    },
+    "23": {
+      "sessions": 1,
+      "avg_viewers": 0.0,
+      "likes": 89
+    }
+  },
+  "room_summary": {
+    "room_summary": {
+      "id": 7513894259494292225,
+      "title": "Anya diy 天然石大サービス‼️",
+      "status": 2,
+      "user_count": 61,
+      "create_time": 1749464851,
+      "stats": {
+        "comment_count": 0,
+        "deprecated1": 0,
+        "deprecated2": "",
+        "digg_count": 0,
+        "enter_count": 0,
+        "fan_ticket": 0,
+        "follow_count": 0,
+        "gift_uv_count": 0,
+        "id": 7513894259494292225,
+        "id_str": "7513894259494292225",
+        "like_count": 0,
+        "replay_fan_ticket": 0,
+        "replay_viewers": 1485,
+        "share_count": 0,
+        "total_user": 2326,
+        "total_user_desp": "",
+        "watermelon": 0
+      },
+      "owner": "diynana_Anya"
+    },
+    "gift_count": 242,
+    "updated_at": "2025-06-09T23:15:46.388431"
+  },
+  "created_at": "2025-06-09T00:15:47.906510",
+  "updated_at": "2025-06-09T23:15:46.389801"
+}
